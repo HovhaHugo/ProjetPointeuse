@@ -13,7 +13,7 @@ Objectifs finaux :
     -	Récupère les infos de la pointeuse
     -	Les sauvegardes dans un fichier
     -	Permet de consulter les valeurs
-    -	Permet de gérer les utilisateurs.
+    -	Permet de gérer les utilisateurs
 
 Convention de nommage : 
 Les fichiers son précéder d’une lettre correspondant à leurs fonctions : MSalarier -> Model pour gérer les salarier 
