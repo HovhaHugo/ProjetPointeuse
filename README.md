@@ -5,10 +5,10 @@
 **Date de fin du projet : ...**
 
 Objectifs finaux :
-  -	 1 application de simulation de pointeuse : 
-    - [ ]Permet à l’utilisateur de mettre son id pour pointer
-    - [ ]Mets les heures au quarts prêts
-    - [ ]Transmets les infos à l’application principale
+  -	 1 application de simulation de pointeuse :
+    -	[ ]Permet à l’utilisateur de mettre son id pour pointer
+    -	[ ]Mets les heures au quarts prêts
+    -	[ ]Transmets les infos à l’application principale
   -	1 application principale : 
     - [ ]Récupère les infos de la pointeuse
     - [ ]Les sauvegardes dans un fichier
