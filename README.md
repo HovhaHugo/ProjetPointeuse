@@ -21,6 +21,7 @@ Les variables seront toutes noter celons la convention suivante :
   -	constantes : CECI_EST_UNE_CONSTANTE
   -	variable : exempleVariable
   -	paramètre : pVariableExemple
+  -	fichiers : MFichier pour un Model, CFichier pour un Controler et VFichier pour une View.
 
 
 Diagramme de classe du projet : 
