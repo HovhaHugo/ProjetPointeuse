@@ -21,3 +21,7 @@ Les variables seront toutes noter celons la convention suivante :
   -	constantes : CECI_EST_UNE_CONSTANTE
   -	variable : exempleVariable
   -	paramètre : pVariableExemple
+
+
+Diagramme de classe du projet : 
+![Capture d’écran 2022-05-10 à 09 34 18](https://user-images.githubusercontent.com/92187603/167574686-5e0c2738-4640-40da-9b79-ef7afa35d83d.png)
