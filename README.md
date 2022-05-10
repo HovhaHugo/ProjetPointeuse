@@ -1,6 +1,6 @@
 # ProjetPointeuse
 **Projet réaliser dans le cadre de la 3éme année d'école d'ingénieur à Polytech Tours**
-**Auteurs : Hugo Hovhannessian, Julien Mathia, Clement Dufau, Emad Abdelouad**
+**Auteurs : Hugo Hovhannessian, Julien Mathia, Clément Dufau, Aimad Abdelouhab**
 **Date de début du projet : 5 Mai 2022**
 **Date de fin du projet : ...**
 
