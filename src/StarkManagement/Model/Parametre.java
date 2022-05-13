@@ -2,24 +2,20 @@ package StarkManagement.Model;
 
 public class Parametre {
 
-    String port;
-    String adresseIp;
+    private int port;
+    private String adresseIp;
 
-    void setAdresseIp(String newAdresseIp){
+    public void setAdresseIp(String newAdresseIp){
         adresseIp = newAdresseIp ;
     }
 
-    void setPort(String newPort){
+    public void setPort(int newPort){
         port = newPort ;
     }
 
-    String getAdresseIp(){
+    public String getAdresseIp(){
         return adresseIp;
     }
 
-    String getPort(){
-        return port;
-    }
-
-
+    public int getPort() { return port; }
 }
