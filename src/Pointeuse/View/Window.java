@@ -1,4 +1,6 @@
-package Pointeuse;
+package Pointeuse.View;
+
+import Pointeuse.View.MainScene;
 
 import javax.swing.*;
 import java.awt.*;

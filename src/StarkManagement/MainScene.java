@@ -38,13 +38,13 @@ public class MainScene extends JPanel {
 
         setLayout(null);
 
-        backgroundImage = ImageIO.read(new File("img.png"));
+        /*backgroundImage = ImageIO.read(new File("img.png"));
         stark = ImageIO.read(new File("stark.png"));
 
         wifi = ImageIO.read(new File("wifi.png"));
         meteo = ImageIO.read(new File("meteo.jpg"));
 
-        test = Toolkit.getDefaultToolkit().createImage("jarvis.gif");
+        test = Toolkit.getDefaultToolkit().createImage("jarvis.gif");*/
 
         ville = new JLabel("Tours");
         ville.setForeground(Color.WHITE);
@@ -74,9 +74,9 @@ public class MainScene extends JPanel {
         textField.setFont(new Font("SansSerif", Font.BOLD, 18));
 
         btn = new JLabel();
-        Image a = ImageIO.read(new File("button_check.png"));
+        /*Image a = ImageIO.read(new File("button_check.png"));
         a = a.getScaledInstance(60,35,Image.SCALE_SMOOTH);
-        btn.setIcon(new ImageIcon(a));
+        btn.setIcon(new ImageIcon(a));*/
         btn.setBounds(265, 267, 150,50);
         btn.addMouseListener(new MouseAdapter()
         {
