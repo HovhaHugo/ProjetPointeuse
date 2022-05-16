@@ -71,4 +71,12 @@ public class Hours {
 
         return hourString+":"+minuteString;
     }
+
+    public int getHours() {
+        return hours;
+    }
+
+    public int getMinutes() {
+        return minutes;
+    }
 }

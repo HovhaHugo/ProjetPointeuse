@@ -7,13 +7,17 @@ public class PersonnShort {
     String identity;
     int id;
 
-    public static ArrayList<PersonnShort> personnShortList = new ArrayList<>();
+    private static ArrayList<PersonnShort> personnShortList = new ArrayList<>();
 
     public PersonnShort(String pIdentity, int pId){
-
+        identity =pIdentity;
+        id = pId;
         personnShortList.add(this);
     }
 
+    public static void clearList(){
+        personnShortList.clear();
+    }
 
     public static PersonnShort getPersonn(String pIdentity){
 

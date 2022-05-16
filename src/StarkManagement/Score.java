@@ -1,6 +1,8 @@
 package StarkManagement;
 
-import Pointeuse.Hours;
+
+import Pointeuse.Controller.Hours;
+import StarkManagement.Model.Employee;
 
 public class Score
 {

@@ -2,7 +2,7 @@ package Pointeuse.View;
 
 import Pointeuse.Controller.Hours;
 import Pointeuse.Controller.PersonnShort;
-import Pointeuse.Controller.Score;
+import Pointeuse.Controller.ScoreShort;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,6 +12,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class MainScene extends JPanel {
 
@@ -27,19 +29,20 @@ public class MainScene extends JPanel {
     JLabel roundedHourLabel;
 
     JTextField inputTextfield;
+    LineBorder inputTextFieldBorder;
     JLabel checkButton;
 
     Hours currentHours;
     Hours hoursRounded;
 
     int tick;
-    private final static int tickrate = 200;
+    private final static int tickrate = 30;     //Je ne sais pas quel est le fps de base. Ici 30 ticks = environ 4 ou 5s
 
     //Error animation
     int tickErrorAnimation = 0;
     int tickBlink = 0;
-    final int tickBlinkLenght = 30;
-    final int tickErrorAnimationLenght = 300;
+    final int tickBlinkLenght = 1;
+    final int tickErrorAnimationLenght = 14;
 
     public MainScene() throws IOException {
 
@@ -73,15 +76,16 @@ public class MainScene extends JPanel {
 
         roundedHourLabel = new JLabel();
         roundedHourLabel.setForeground(Color.WHITE);
-        roundedHourLabel.setBounds(73, 190, 150,50);
+        roundedHourLabel.setBounds(82, 190, 150,50);
         roundedHourLabel.setFont(new Font("SansSerif", Font.BOLD, 30));
 
         inputTextfield = new JTextField();
         inputTextfield.setBounds(45,275,200,35);
         inputTextfield.setBackground(Color.DARK_GRAY);
-        inputTextfield.setBorder(new LineBorder(Color.CYAN,1));
+        inputTextFieldBorder = new LineBorder(Color.CYAN,1);
+        inputTextfield.setBorder(inputTextFieldBorder);
         inputTextfield.setForeground(Color.WHITE);
-        inputTextfield.setFont(new Font("SansSerif", Font.BOLD, 18));
+        inputTextfield.setFont(new Font("SansSerif", Font.BOLD, 17));
 
         checkButton = new JLabel();
         Image a = ImageIO.read(new File("data/img/button_check.png"));
@@ -108,26 +112,47 @@ public class MainScene extends JPanel {
 
     private void update(){
 
+        //Error animation
         if(tickErrorAnimation>0){
             tickErrorAnimation++;
             if(tickErrorAnimation==tickErrorAnimationLenght){
                 tickErrorAnimation=0;
+                inputTextFieldBorder = new LineBorder(Color.cyan,1);
+                inputTextfield.setBorder(inputTextFieldBorder);
                 return;
             }
             tickBlink++;
             if(tickBlink==tickBlinkLenght){
                 tickBlink=0;
-                inputTextfield.setBorder(new LineBorder(Color.RED,1));
+                if(inputTextFieldBorder.getLineColor()==Color.CYAN)
+                    inputTextFieldBorder = new LineBorder(Color.RED,2);
+                else
+                    inputTextFieldBorder = new LineBorder(Color.CYAN,1);
+                inputTextfield.setBorder(inputTextFieldBorder);
             }
         }
 
-        tick = 0;
-        currentHours.update();
-        hoursRounded.update();
-        hoursRounded.roundNextQuarter();
+        if(tick == tickrate){
+            tick = 0;
+            currentHours.update();
+            hoursRounded.update();
+            hoursRounded.roundNextQuarter();
 
-        currentHourLabel.setText(currentHours.toString());
-        roundedHourLabel.setText("~"+hoursRounded.toString());
+            currentHourLabel.setText(currentHours.toString());
+            roundedHourLabel.setText("~"+hoursRounded.toString());
+
+            if(currentHours.getMinutes() == 0){
+                if(ScoreShort.isTestSendThisHour() == false){
+                    ScoreShort.sendAllTemp();
+                    ScoreShort.setTestSendThisHour(true);
+                }
+            }
+            if(currentHours.getMinutes() == 1 && ScoreShort.isTestSendThisHour() == true){
+                ScoreShort.setTestSendThisHour(false);
+            }
+
+        }
+
     }
 
     private void checkText(){
@@ -150,9 +175,10 @@ public class MainScene extends JPanel {
         }
 
         if(exist!=null){
-            new Score(exist, new Hours(currentHours));
+            new ScoreShort(exist, new Hours(currentHours));
         }else{
-
+            inputTextfield.setText("Non reconnu");
+            tickErrorAnimation++;
         }
 
     }
@@ -160,10 +186,9 @@ public class MainScene extends JPanel {
     public void paintComponent(Graphics g) {
 
         tick++;
-        if(tick == tickrate)
-            update();
+        update();
 
-        // Draw the background image.
+        // Draw the background image
         g.drawImage(backgroundImage, 0, 0, Window.WIDTH,  Window.HEIGHT, this);
         g.drawImage(jarvisGif, (int) (Window.WIDTH *0.5f), (int) (Window.HEIGHT *0.16f), 230,230,this);
         g.drawImage(starkLogoImage, (int) (Window.WIDTH *0.74f), (int) (Window.HEIGHT *0.81f), 140,55,this);
