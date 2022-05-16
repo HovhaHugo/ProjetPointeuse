@@ -6,26 +6,30 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
+import java.net.SocketException;
 
-public class UDPServerBuilder extends UDPInfo{
-    InetSocketAddress isA;
-    DatagramSocket s;
-    DatagramPacket req, rep;
-    final int size = 2048;
+public class UDPServerBuilder extends UDPRWText {
+    InetSocketAddress isA; // the address
+    DatagramSocket s; // the socket object
+    DatagramPacket req, rep; // to prepare the request and reply messages
+    final int size = 2048; // the default size for the buffer array
 
-    UDPServerBuilder(){
-        isA = null; s = null; req = rep = null;
+    int port;
+    int timeOut = 30000;
+    String ip;
+
+    UDPServerBuilder(int port, String ip) {
+        isA = null;
+        s = null;
+        req = rep = null;
+        this.port = port;
+        this.ip = ip;
     }
 
-    protected void setConnection() throws IOException {
-        isA = new InetSocketAddress("192.168.43.239",8082);
-        s = new DatagramSocket(isA.getPort());
-        /** we can include more setting, later … */
-    }
-
-    protected void setConnection(Parametre param) throws IOException {
-        isA = new InetSocketAddress(param.getAdresseIp(),param.getPort());
-        s = new DatagramSocket(isA.getPort());
-        /** we can include more setting, later … */
+    public void setConnection() throws SocketException {
+        isA = new InetSocketAddress(ip, port);
+        s = new DatagramSocket(isA.getPort()); //Le port pour recevoir est defini
+        s.setSoTimeout(timeOut);
+        System.out.println("Serveur initialisé");
     }
 }

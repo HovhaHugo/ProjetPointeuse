@@ -5,20 +5,30 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 
-public class UDPClientBuilder extends UDPInfo{
+public class UDPClientBuilder extends UDPRWText {
 
     InetSocketAddress isA;
     DatagramSocket s;
     DatagramPacket req, rep;
     final int size = 2048;
+    int timeOut = 30000;
 
-    UDPClientBuilder(){
-        isA = null; s = null; req = rep = null;
+    int port;
+    String ip;
+
+    UDPClientBuilder(int port, String ip) {
+        isA = null;
+        s = null;
+        req = rep = null;
+
+        this.ip = ip;
+        this.port = port;
     }
 
-    protected void setConnection() throws IOException {
-        s = new DatagramSocket();
-        isA = new InetSocketAddress("localhost",8080);
-        /** we can include more setting, later … */
+    public void setConnection() throws IOException {
+        isA = new InetSocketAddress(ip,port);
+        s = new DatagramSocket();   //Le port pour envoyer est aleatoire
+        s.setSoTimeout(timeOut);
+        System.out.println("Client initialisé");
     }
 }
