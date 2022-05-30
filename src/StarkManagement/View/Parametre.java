@@ -2,7 +2,6 @@ package StarkManagement.View;
 
 import Pointeuse.Controller.Hours;
 import Pointeuse.Controller.PersonnShort;
-import Pointeuse.Controller.Score;
 import StarkManagement.Window;
 
 import javax.imageio.ImageIO;

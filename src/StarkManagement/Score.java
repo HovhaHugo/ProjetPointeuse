@@ -1,9 +1,5 @@
 package StarkManagement;
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 import Pointeuse.Controller.Hours;
 import StarkManagement.Model.Employee;
 
