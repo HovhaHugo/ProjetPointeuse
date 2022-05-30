@@ -1,5 +1,7 @@
 package StarkManagement;
 
+import StarkManagement.View.Parametre;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -8,7 +10,7 @@ import java.io.IOException;
 
 public class Window extends JFrame {
 
-    MainScene scene;
+    Parametre scene;
 
     public final static int WIDTH = 580;
     public final static int HEIGHT = 350;
@@ -17,12 +19,12 @@ public class Window extends JFrame {
     static int positionY;
 
 
-    public Window(){
+    public Window() {
 
         this.setSize(WIDTH, HEIGHT);
 
         try {
-            this.setContentPane(scene=new MainScene());
+            this.setContentPane(scene = new Parametre(this));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +34,7 @@ public class Window extends JFrame {
         this.addMouseMotionListener(frameDragListener);
 
         this.setUndecorated(true);
-        this.setBackground(new Color(0, 0, 0, 0));
+        this.setBackground(new Color(0, 0, 0, 255));
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 
@@ -54,17 +56,14 @@ public class Window extends JFrame {
         public void mousePressed(MouseEvent e) {
 
             mouseDownCompCoords = e.getPoint();
-            System.out.println(e.getX()+" "+e.getY());
+            System.out.println(e.getX() + " " + e.getY());
         }
 
         public void mouseDragged(MouseEvent e) {
             Point currCoords = e.getLocationOnScreen();
             positionX = currCoords.x - mouseDownCompCoords.x;
             positionY = currCoords.y - mouseDownCompCoords.y;
-            frame.setLocation(positionX,positionY);
+            frame.setLocation(positionX, positionY);
         }
     }
-
-
-
 }
