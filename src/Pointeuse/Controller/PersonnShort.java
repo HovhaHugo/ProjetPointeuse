@@ -39,5 +39,19 @@ public class PersonnShort {
         return null;
     }
 
+    public static ArrayList<String> getPersonnListString(){
+        ArrayList<String> list = new ArrayList<>();
+
+        for(PersonnShort p : personnShortList)
+            list.add(p.toString());
+
+        return list;
+    }
+
+    @Override
+    public String toString(){
+        return "-"+id+" "+identity;
+    }
+
 
 }

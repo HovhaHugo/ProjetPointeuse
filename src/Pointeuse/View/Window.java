@@ -1,5 +1,8 @@
 package Pointeuse.View;
 
+import Pointeuse.Model.FileManipulator;
+import Pointeuse.Model.Settings;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -8,7 +11,8 @@ import java.io.IOException;
 
 public class Window extends JFrame {
 
-    MainScene scene;
+    private MainScene mainScene;
+    private SettingsScene settingsScene;
 
     public final static int WIDTH = 580;
     public final static int HEIGHT = 350;
@@ -16,13 +20,17 @@ public class Window extends JFrame {
     static int positionX;
     static int positionY;
 
+    Settings settings;
 
     public Window(){
+
 
         this.setSize(WIDTH, HEIGHT);
 
         try {
-            this.setContentPane(scene=new MainScene());
+            settings = FileManipulator.importSetting();
+            this.setContentPane(mainScene =new MainScene(this));
+            settingsScene = new SettingsScene(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -38,6 +46,28 @@ public class Window extends JFrame {
 
     }
 
+    public void close(){
+        FileManipulator.exportSetting(settings);
+        dispose();
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettingsScene(){
+        this.setContentPane(settingsScene);
+        validate();
+    }
+
+    public void setMainScene(){
+        this.setContentPane(mainScene);
+        validate();
+        mainScene.forceUpdate();
+        settingsScene.clear();
+        settingsScene.save();
+    }
+
     static class FrameDragListener extends MouseAdapter {
 
         private final JFrame frame;
@@ -47,12 +77,7 @@ public class Window extends JFrame {
             this.frame = frame;
         }
 
-        public void mouseReleased(MouseEvent e) {
-            mouseDownCompCoords = null;
-        }
-
         public void mousePressed(MouseEvent e) {
-
             mouseDownCompCoords = e.getPoint();
             System.out.println(e.getX()+" "+e.getY());
         }

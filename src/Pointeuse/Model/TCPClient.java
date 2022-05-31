@@ -1,6 +1,6 @@
 package Pointeuse.Model;
 
-public class UDPClient {
+public class TCPClient {
 
 
 
