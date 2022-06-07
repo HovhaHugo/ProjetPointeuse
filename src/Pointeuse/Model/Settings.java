@@ -7,6 +7,11 @@ public class Settings implements Serializable {
     private String ip;
     private int port;
 
+    /**
+     * Constructor of Settings, stores ip and port of the StarkManagement application
+     * @param ip
+     * @param port
+     */
     public Settings(String ip, int port){
         this.ip = ip;
         this.port = port;

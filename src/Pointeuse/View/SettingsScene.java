@@ -31,6 +31,11 @@ public class SettingsScene extends JPanel {
 
     Window ownerWindow;
 
+    /**
+     * Constructor of the SettingsScene panel
+     * @param pOwner the owner window
+     * @throws IOException if an image was not found (to call the switch panel function)
+     */
     public SettingsScene(Window pOwner) throws IOException {
 
         setLayout(null);
@@ -143,11 +148,17 @@ public class SettingsScene extends JPanel {
 
     }
 
+    /**
+     * Update the application settings
+     */
     public void save(){
         ownerWindow.getSettings().setIp(ipTextField.getText());
         ownerWindow.getSettings().setPort(Integer.parseInt(portTextField.getText()));
     }
 
+    /**
+     * Clear the password textfield and reset the ip and port textfields
+     */
     public void clear(){
         passwordTextField.setText("");
 

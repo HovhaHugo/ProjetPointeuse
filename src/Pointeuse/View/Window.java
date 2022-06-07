@@ -9,6 +9,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
+/**
+ * Check application window
+ * Can switch between the mainScene panel and the settingsScene panel
+ */
 public class Window extends JFrame {
 
     private MainScene mainScene;
@@ -22,8 +26,11 @@ public class Window extends JFrame {
 
     Settings settings;
 
+    /**
+     * Constructor of the window
+     * Import the serialized settings
+     */
     public Window(){
-
 
         this.setSize(WIDTH, HEIGHT);
 
@@ -46,20 +53,33 @@ public class Window extends JFrame {
 
     }
 
+    /**
+     * Export Close the application
+     */
     public void close(){
         FileManipulator.exportSetting(settings);
         dispose();
     }
 
+    /**
+     * getter of the application settings
+     * @return the settings
+     */
     public Settings getSettings() {
         return settings;
     }
 
+    /**
+     * Set the current scene to settingsScene
+     */
     public void setSettingsScene(){
         this.setContentPane(settingsScene);
         validate();
     }
 
+    /**
+     * Set the current scene to mainScene and update it
+     */
     public void setMainScene(){
         this.setContentPane(mainScene);
         validate();
@@ -68,6 +88,11 @@ public class Window extends JFrame {
         settingsScene.save();
     }
 
+    /**
+     * Allows you to move the window.
+     * Function defined manually because we removed the decorations
+     * which also allowed the movement of the window
+     */
     static class FrameDragListener extends MouseAdapter {
 
         private final JFrame frame;
@@ -79,7 +104,6 @@ public class Window extends JFrame {
 
         public void mousePressed(MouseEvent e) {
             mouseDownCompCoords = e.getPoint();
-            System.out.println(e.getX()+" "+e.getY());
         }
 
         public void mouseDragged(MouseEvent e) {
@@ -89,7 +113,6 @@ public class Window extends JFrame {
             frame.setLocation(positionX,positionY);
         }
     }
-
 
 
 }

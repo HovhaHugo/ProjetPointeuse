@@ -20,7 +20,6 @@ public class MainScene extends JPanel {
     private Image starkLogoImage;
     private Image wifiImage;
     private Image weatherImage;
-    private Image settingsImage;
 
     private JLabel currentHourLabel;
     private JLabel cityLabel;
@@ -37,10 +36,11 @@ public class MainScene extends JPanel {
     private Hours currentHours;
     private Hours hoursRounded;
 
-    private final static int tickrate = 30;     //Je ne sais pas quel est le fps de base. Ici 30 ticks = environ 4 ou 5s
+    private final static int tickrate = 30;
     private int tick = tickrate;
 
     //Error animation
+
     private int tickErrorAnimation = 0;
     private int tickBlink = 0;
     private final int tickBlinkLenght = 1;
@@ -48,6 +48,11 @@ public class MainScene extends JPanel {
 
     private Window ownerWindow;
 
+    /**
+     * Constructor of the MainScene panel
+     * @param pOwner the owner window (to call the switch panel function)
+     * @throws IOException if an image was not found
+     */
     public MainScene(Window pOwner) throws IOException {
 
         setLayout(null);
@@ -58,13 +63,13 @@ public class MainScene extends JPanel {
         currentHours = new Hours();
         hoursRounded = new Hours();
 
+
         //Image loading
         backgroundImage = ImageIO.read(new File("data/img/img.png"));
         starkLogoImage = ImageIO.read(new File("data/img/stark.png"));
 
         wifiImage = ImageIO.read(new File("data/img/wifi.png"));
         weatherImage = ImageIO.read(new File("data/img/meteo.jpg"));
-        settingsImage = ImageIO.read(new File("data/img/settings.png"));
 
         jarvisGif = Toolkit.getDefaultToolkit().createImage("data/img/jarvis.gif");
 
@@ -131,6 +136,7 @@ public class MainScene extends JPanel {
             }
         });
 
+        //Exit button
         exitButton = new JLabel();
         Image exitImage = ImageIO.read(new File("data/img/exit.png"));
         exitImage = exitImage.getScaledInstance(50,50,Image.SCALE_SMOOTH);
@@ -143,6 +149,7 @@ public class MainScene extends JPanel {
             }
         });
 
+        //Add the elements to the panel
         add(exitButton);
         add(settingsButton);
         add(checkButton);
@@ -156,11 +163,18 @@ public class MainScene extends JPanel {
 
     }
 
+    /**
+     * Force the update of the window
+     */
     public void forceUpdate(){
         tick = tickrate;
         update();
     }
 
+    /**
+     * Update some values in the windows, depending of the current tick value
+     * Used for the error animation and the quarter-rounded hour
+     */
     private void update(){
 
         tick++;
@@ -185,6 +199,7 @@ public class MainScene extends JPanel {
             }
         }
 
+        //rounded hours
         if(tick >= tickrate){
             tick = 0;
             currentHours.update();
@@ -208,10 +223,14 @@ public class MainScene extends JPanel {
 
     }
 
+    /**
+     * Check if the entered text matches someone existing
+     * Create the score if the person is identified
+     */
     private void checkText(){
 
         String text = (String)combobox.getEditor().getItem();
-        if(text.equals("")){
+        if(text.equals("") || !ScoreShort.isDayValid()){
             tickErrorAnimation++;
             return;
         }

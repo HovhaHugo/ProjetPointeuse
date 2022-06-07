@@ -7,31 +7,36 @@ public class Hours {
     private int hours;
     private int minutes;
 
+    /**
+     * Constructor of Hours, initialise hours and minutes with LocalDatTime.now() values
+     */
     public Hours(){
         LocalDateTime now = LocalDateTime.now();
         hours = now.getHour();
         minutes = now.getMinute();
     }
 
+    /**
+     * Copy constructor of Hours
+     * @param toCopy the object to duplicate
+     */
     public Hours(Hours toCopy){
         hours = toCopy.hours;
         minutes = toCopy.minutes;
     }
 
+    /**
+     * Update the hours and minutes variables with LocalDateTime.now()
+     */
     public void update(){
         LocalDateTime now = LocalDateTime.now();
         hours = now.getHour();
         minutes = now.getMinute();
     }
 
-    public void passTime(int hours, int minutes){
-        passTime(minutes+60*hours);
-    }
-
-    public void passTime(int minutes){
-
-    }
-
+    /**
+     * Round the current time to the nearest fifteen minutes
+     */
     public void roundNextQuarter(){
         Hours toReturn = new Hours();
 
@@ -45,12 +50,6 @@ public class Hours {
             }
         }
 
-    }
-
-    public static Hours timeBetween(Hours early, Hours later){
-        Hours toReturn = new Hours();
-
-        return toReturn;
     }
 
     @Override
