@@ -1,13 +1,17 @@
 package Pointeuse.View;
 
+import Pointeuse.Controller.ScoreShort;
 import Pointeuse.Model.FileManipulator;
 import Pointeuse.Model.Settings;
+import Pointeuse.Model.TCPClient;
+import Pointeuse.Model.TCPServer;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Check application window
@@ -24,7 +28,12 @@ public class Window extends JFrame {
     static int positionX;
     static int positionY;
 
+    TCPServer server;
+    TCPClient client;
+
     Settings settings;
+
+    private boolean testSendThisHour = false;
 
     /**
      * Constructor of the window
@@ -38,6 +47,8 @@ public class Window extends JFrame {
             settings = FileManipulator.importSetting();
             this.setContentPane(mainScene =new MainScene(this));
             settingsScene = new SettingsScene(this);
+
+            new Thread(server = new TCPServer()).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -54,9 +65,27 @@ public class Window extends JFrame {
     }
 
     /**
+     * Send with TCP to the server all the temporary ScoreShort stocked
+     * Must be called regularly to empty the cache filled
+     * with previous send failures
+     */
+    public void sendAllScore(){
+        ArrayList<ScoreShort> scores = ScoreShort.getScoreList();
+        new Thread(client = new TCPClient(scores,settings));
+    }
+    public void setTestSendThisHour(boolean t) {
+        testSendThisHour = t;
+    }
+
+    public boolean isTestSendThisHour() {
+        return testSendThisHour;
+    }
+
+    /**
      * Export Close the application
      */
     public void close(){
+        server.shutdown();
         FileManipulator.exportSetting(settings);
         dispose();
     }

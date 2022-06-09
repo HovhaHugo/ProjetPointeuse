@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Settings implements Serializable {
 
-    private String ip;
-    private int port;
+    private String ipMainApplication;
+    private int portMainAppplication;
 
     /**
      * Constructor of Settings, stores ip and port of the StarkManagement application
@@ -13,23 +13,23 @@ public class Settings implements Serializable {
      * @param port
      */
     public Settings(String ip, int port){
-        this.ip = ip;
-        this.port = port;
+        this.ipMainApplication = ip;
+        this.portMainAppplication = port;
     }
 
-    public String getIp() {
-        return ip;
+    public String getIpMainApplication() {
+        return ipMainApplication;
     }
 
-    public int getPort() {
-        return port;
+    public int getPortMainAppplication() {
+        return portMainAppplication;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setIpMainApplication(String ipMainApplication) {
+        this.ipMainApplication = ipMainApplication;
     }
 
-    public void setPort(int port) {
-        this.port = port;
+    public void setPortMainAppplication(int portMainAppplication) {
+        this.portMainAppplication = portMainAppplication;
     }
 }

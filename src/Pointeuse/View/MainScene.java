@@ -210,13 +210,13 @@ public class MainScene extends JPanel {
             roundedHourLabel.setText("~"+hoursRounded.toString());
 
             if(currentHours.getMinutes() == 0){
-                if(ScoreShort.isTestSendThisHour() == false){
-                    ScoreShort.sendAllTemp();
-                    ScoreShort.setTestSendThisHour(true);
+                if(ownerWindow.isTestSendThisHour() == false){
+                    ownerWindow.sendAllScore();
+                    ownerWindow.setTestSendThisHour(true);
                 }
             }
-            if(currentHours.getMinutes() == 1 && ScoreShort.isTestSendThisHour() == true){
-                ScoreShort.setTestSendThisHour(false);
+            if(currentHours.getMinutes() == 1 && ownerWindow.isTestSendThisHour() == true){
+                ownerWindow.setTestSendThisHour(false);
             }
 
         }

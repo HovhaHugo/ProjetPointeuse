@@ -12,8 +12,6 @@ public class Main {
         new PersonnShort("Stan Lee",2);
         new PersonnShort("Tony Stark",3);
 
-
-
         Window w = new Window();
     }
 }

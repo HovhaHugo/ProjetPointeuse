@@ -133,8 +133,8 @@ public class SettingsScene extends JPanel {
             }
         });
 
-        ipTextField.setText(ownerWindow.getSettings().getIp());
-        portTextField.setText(ownerWindow.getSettings().getPort()+"");
+        ipTextField.setText(ownerWindow.getSettings().getIpMainApplication());
+        portTextField.setText(ownerWindow.getSettings().getPortMainAppplication()+"");
 
         add(checkButton);
         add(exitButton);
@@ -152,8 +152,8 @@ public class SettingsScene extends JPanel {
      * Update the application settings
      */
     public void save(){
-        ownerWindow.getSettings().setIp(ipTextField.getText());
-        ownerWindow.getSettings().setPort(Integer.parseInt(portTextField.getText()));
+        ownerWindow.getSettings().setIpMainApplication(ipTextField.getText());
+        ownerWindow.getSettings().setPortMainAppplication(Integer.parseInt(portTextField.getText()));
     }
 
     /**

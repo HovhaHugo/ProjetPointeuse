@@ -10,7 +10,6 @@ public class ScoreShort {
 
     private PersonnShort personne;
     private Hours heure;
-    private static boolean testSendThisHour = false;
 
     private static ArrayList<ScoreShort> ScoreList = new ArrayList<>();
 
@@ -23,39 +22,7 @@ public class ScoreShort {
         personne = pPerson;
         heure = pHours;
 
-        //Envoie TCP
-        //Si timeOut, enregistrement local
         ScoreList.add(this);
-    }
-
-    /**
-     * Send with TCP to the server all the temporary ScoreShort stocked
-     * Must be called regularly to empty the cache filled
-     * with previous send failures
-     */
-    public static void sendAllTemp(){
-
-        ArrayList<ScoreShort> toRemove = new ArrayList<>();
-
-        for(ScoreShort ss : ScoreList){
-
-            boolean success = true;
-            /*try{
-
-                //Utiliser UDPClient pour envoyer les données
-
-            }catch(IOException e){
-                success = false;
-            }
-
-            if(success==true){
-                toRemove.add(ss);
-            }*/
-
-        }
-
-        ScoreList.removeAll(toRemove);
-
     }
 
     /**
@@ -69,11 +36,9 @@ public class ScoreShort {
         return true;
     }
 
-    public static void setTestSendThisHour(boolean t) {
-        testSendThisHour = t;
+    public static ArrayList<ScoreShort> getScoreList() {
+        return ScoreList;
     }
 
-    public static boolean isTestSendThisHour() {
-        return testSendThisHour;
-    }
+
 }

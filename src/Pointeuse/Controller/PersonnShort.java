@@ -39,6 +39,10 @@ public class PersonnShort {
         return null;
     }
 
+    public static void setPersonnShortList(ArrayList<PersonnShort> pList){
+        personnShortList = pList;
+    }
+
     public static ArrayList<String> getPersonnListString(){
         ArrayList<String> list = new ArrayList<>();
 
