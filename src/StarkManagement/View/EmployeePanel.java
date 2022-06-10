@@ -1,13 +1,20 @@
 package StarkManagement.View;
 
+import StarkManagement.Model.Company;
 import StarkManagement.Model.Employee;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class EmployeePanel extends JPanel {
-    EmployeePanel(){
 
+    Company company;
+
+    EmployeePanel(Company pCompany){
+
+        company = pCompany;
 
         setLayout(new BorderLayout());
 
@@ -30,6 +37,13 @@ public class EmployeePanel extends JPanel {
 
         JButton buttonSearch = new JButton("Search");
         JButton buttonAdd = new JButton("Add");
+        buttonAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AddEmployeeWindow(company);
+            }
+        });
+
         JButton buttonUpdate = new JButton("Update");
         JButton buttonDelete = new JButton("Delete");
 

@@ -1,7 +1,6 @@
 package Pointeuse.Model;
 
-import Pointeuse.Controller.PersonnShort;
-import Pointeuse.Controller.ScoreShort;
+import Pointeuse.Controller.PersonnShortCheck;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class TCPServer implements Runnable{
+public class TCPServerCheck implements Runnable{
 
     private final int listeningPort = 8080;
 
@@ -24,7 +23,7 @@ public class TCPServer implements Runnable{
      * Listening on 'listeningPort'
      * Valid data are only ArrayList<PersonnShort> class
      */
-    public TCPServer(){
+    public TCPServerCheck(){
     }
 
     @Override
@@ -68,8 +67,8 @@ public class TCPServer implements Runnable{
         @Override
         public void run() {
             try {
-                ArrayList<PersonnShort> listeReceived =(ArrayList<PersonnShort>) ois.readObject();
-                PersonnShort.setPersonnShortList(listeReceived);
+                ArrayList<PersonnShortCheck> listeReceived =(ArrayList<PersonnShortCheck>) ois.readObject();
+                PersonnShortCheck.setPersonnShortList(listeReceived);
 
                 ois.close();
             } catch (IOException | ClassNotFoundException e) {

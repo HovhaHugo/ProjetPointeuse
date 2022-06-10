@@ -2,14 +2,14 @@ package Pointeuse.Controller;
 
 import java.util.ArrayList;
 
-public class PersonnShort {
+public class PersonnShortCheck {
 
     String identity;
     int id;
 
-    private static ArrayList<PersonnShort> personnShortList = new ArrayList<>();
+    private static ArrayList<PersonnShortCheck> personnShortList = new ArrayList<>();
 
-    public PersonnShort(String pIdentity, int pId){
+    public PersonnShortCheck(String pIdentity, int pId){
         identity =pIdentity;
         id = pId;
         personnShortList.add(this);
@@ -19,9 +19,9 @@ public class PersonnShort {
         personnShortList.clear();
     }
 
-    public static PersonnShort getPersonn(String pIdentity){
+    public static PersonnShortCheck getPersonn(String pIdentity){
 
-        for(PersonnShort p : personnShortList){
+        for(PersonnShortCheck p : personnShortList){
             if(p.identity.equals(pIdentity))
                 return p;
         }
@@ -29,9 +29,9 @@ public class PersonnShort {
         return null;
     }
 
-    public static PersonnShort getPersonn(int pId){
+    public static PersonnShortCheck getPersonn(int pId){
 
-        for(PersonnShort p : personnShortList){
+        for(PersonnShortCheck p : personnShortList){
             if(p.id == pId)
                 return p;
         }
@@ -39,14 +39,14 @@ public class PersonnShort {
         return null;
     }
 
-    public static void setPersonnShortList(ArrayList<PersonnShort> pList){
+    public static void setPersonnShortList(ArrayList<PersonnShortCheck> pList){
         personnShortList = pList;
     }
 
     public static ArrayList<String> getPersonnListString(){
         ArrayList<String> list = new ArrayList<>();
 
-        for(PersonnShort p : personnShortList)
+        for(PersonnShortCheck p : personnShortList)
             list.add(p.toString());
 
         return list;

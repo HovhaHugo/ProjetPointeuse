@@ -1,10 +1,10 @@
 package Pointeuse.View;
 
-import Pointeuse.Controller.ScoreShort;
-import Pointeuse.Model.FileManipulator;
-import Pointeuse.Model.Settings;
-import Pointeuse.Model.TCPClient;
-import Pointeuse.Model.TCPServer;
+import Pointeuse.Controller.ScoreShortCheck;
+import Pointeuse.Model.FileManipulatorCheck;
+import Pointeuse.Model.SettingsCheck;
+import Pointeuse.Model.TCPClientCheck;
+import Pointeuse.Model.TCPServerCheck;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,8 +19,8 @@ import java.util.ArrayList;
  */
 public class Window extends JFrame {
 
-    private MainScene mainScene;
-    private SettingsScene settingsScene;
+    private MainSceneCheck mainScene;
+    private SettingsSceneCheck settingsScene;
 
     public final static int WIDTH = 580;
     public final static int HEIGHT = 350;
@@ -28,10 +28,10 @@ public class Window extends JFrame {
     static int positionX;
     static int positionY;
 
-    TCPServer server;
-    TCPClient client;
+    TCPServerCheck server;
+    TCPClientCheck client;
 
-    Settings settings;
+    SettingsCheck settings;
 
     private boolean testSendThisHour = false;
 
@@ -44,11 +44,11 @@ public class Window extends JFrame {
         this.setSize(WIDTH, HEIGHT);
 
         try {
-            settings = FileManipulator.importSetting();
-            this.setContentPane(mainScene =new MainScene(this));
-            settingsScene = new SettingsScene(this);
+            settings = FileManipulatorCheck.importSetting();
+            this.setContentPane(mainScene =new MainSceneCheck(this));
+            settingsScene = new SettingsSceneCheck(this);
 
-            new Thread(server = new TCPServer()).start();
+            new Thread(server = new TCPServerCheck()).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,8 +70,8 @@ public class Window extends JFrame {
      * with previous send failures
      */
     public void sendAllScore(){
-        ArrayList<ScoreShort> scores = ScoreShort.getScoreList();
-        new Thread(client = new TCPClient(scores,settings));
+        ArrayList<ScoreShortCheck> scores = ScoreShortCheck.getScoreList();
+        new Thread(client = new TCPClientCheck(scores,settings));
     }
     public void setTestSendThisHour(boolean t) {
         testSendThisHour = t;
@@ -86,7 +86,7 @@ public class Window extends JFrame {
      */
     public void close(){
         server.shutdown();
-        FileManipulator.exportSetting(settings);
+        FileManipulatorCheck.exportSetting(settings);
         dispose();
     }
 
@@ -94,7 +94,7 @@ public class Window extends JFrame {
      * getter of the application settings
      * @return the settings
      */
-    public Settings getSettings() {
+    public SettingsCheck getSettings() {
         return settings;
     }
 

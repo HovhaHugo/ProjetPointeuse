@@ -3,10 +3,6 @@ package StarkManagement.Controller;
 import StarkManagement.Model.FileManipulator;
 import StarkManagement.Model.Setting;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 public class SettingControler {
     static Setting server = new Setting("localhost", 8000);
     static Setting pointeuse = new Setting("localhost", 8000);

@@ -17,7 +17,6 @@ public class FileManipulator {
         }
 
         return settings;
-
     }
 
     public static void exportPointeuseSetting(Setting settings){

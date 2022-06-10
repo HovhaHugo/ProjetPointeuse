@@ -2,7 +2,7 @@ package Pointeuse.Model;
 
 import java.io.Serializable;
 
-public class Settings implements Serializable {
+public class SettingsCheck implements Serializable {
 
     private String ipMainApplication;
     private int portMainAppplication;
@@ -12,7 +12,7 @@ public class Settings implements Serializable {
      * @param ip
      * @param port
      */
-    public Settings(String ip, int port){
+    public SettingsCheck(String ip, int port){
         this.ipMainApplication = ip;
         this.portMainAppplication = port;
     }

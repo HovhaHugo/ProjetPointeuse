@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Department implements Serializable {
+
     private String nameDepartment;
     private ArrayList<Employee> listEmployee;
 

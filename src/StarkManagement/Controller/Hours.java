@@ -1,11 +1,13 @@
 package StarkManagement.Controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Hours {
 
     private int hours;
     private int minutes;
+    LocalDate date;
 
     /**
      * Constructor of Hours, initialise hours and minutes with LocalDatTime.now() values
@@ -14,6 +16,7 @@ public class Hours {
         LocalDateTime now = LocalDateTime.now();
         hours = now.getHour();
         minutes = now.getMinute();
+        date = now.toLocalDate();
     }
 
     /**
@@ -23,6 +26,7 @@ public class Hours {
     public Hours(Hours toCopy){
         hours = toCopy.hours;
         minutes = toCopy.minutes;
+        date = toCopy.date;
     }
 
     /**
@@ -32,13 +36,13 @@ public class Hours {
         LocalDateTime now = LocalDateTime.now();
         hours = now.getHour();
         minutes = now.getMinute();
+        date = now.toLocalDate();
     }
 
     /**
      * Round the current time to the nearest fifteen minutes
      */
     public void roundNextQuarter(){
-        Hours toReturn = new Hours();
 
         while(minutes%15!=0){
             minutes++;
@@ -49,7 +53,10 @@ public class Hours {
                     hours=0;
             }
         }
+    }
 
+    public int minutesBetween(Hours scheduleHours){
+        return (scheduleHours.hours-hours)*60 + (scheduleHours.minutes-minutes);
     }
 
     @Override

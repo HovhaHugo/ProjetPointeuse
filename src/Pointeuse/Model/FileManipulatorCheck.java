@@ -2,19 +2,19 @@ package Pointeuse.Model;
 
 import java.io.*;
 
-public class FileManipulator {
+public class FileManipulatorCheck {
 
     /**
      * Import the stored settings, serialized in a file
      * @return the settings stored
      */
-    public static Settings importSetting(){
+    public static SettingsCheck importSetting(){
 
-        Settings settings = null;
+        SettingsCheck settings = null;
 
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream("data/serializable/settings.dat"))
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream("data/serializable/settingsPointeuse.dat"))
         ){
-            settings = (Settings) input.readObject();
+            settings = (SettingsCheck) input.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -27,9 +27,9 @@ public class FileManipulator {
      * Export settings and store it in a file
      * @param settings the settings to export
      */
-    public static void exportSetting(Settings settings){
+    public static void exportSetting(SettingsCheck settings){
 
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("data/serializable/settings.dat"))
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("data/serializable/settingsPointeuse.dat"))
         ){
             output.writeObject(settings);
 

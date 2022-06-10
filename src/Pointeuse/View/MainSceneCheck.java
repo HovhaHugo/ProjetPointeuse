@@ -1,8 +1,8 @@
 package Pointeuse.View;
 
-import Pointeuse.Controller.Hours;
-import Pointeuse.Controller.PersonnShort;
-import Pointeuse.Controller.ScoreShort;
+import Pointeuse.Controller.HoursCheck;
+import Pointeuse.Controller.PersonnShortCheck;
+import Pointeuse.Controller.ScoreShortCheck;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
-public class MainScene extends JPanel {
+public class MainSceneCheck extends JPanel {
 
     private Image backgroundImage;
     private Image jarvisGif;
@@ -33,8 +33,8 @@ public class MainScene extends JPanel {
     private JLabel settingsButton;
     private JLabel exitButton;
 
-    private Hours currentHours;
-    private Hours hoursRounded;
+    private HoursCheck currentHours;
+    private HoursCheck hoursRounded;
 
     private final static int tickrate = 30;
     private int tick = tickrate;
@@ -53,15 +53,15 @@ public class MainScene extends JPanel {
      * @param pOwner the owner window (to call the switch panel function)
      * @throws IOException if an image was not found
      */
-    public MainScene(Window pOwner) throws IOException {
+    public MainSceneCheck(Window pOwner) throws IOException {
 
         setLayout(null);
         setBackground(new Color(0,0,0,0));
 
         ownerWindow = pOwner;
 
-        currentHours = new Hours();
-        hoursRounded = new Hours();
+        currentHours = new HoursCheck();
+        hoursRounded = new HoursCheck();
 
 
         //Image loading
@@ -99,7 +99,7 @@ public class MainScene extends JPanel {
         roundedHourLabel.setFont(new Font("SansSerif", Font.BOLD, 30));
 
         //Combobox
-        combobox = new JComboBox(PersonnShort.getPersonnListString().toArray());
+        combobox = new JComboBox(PersonnShortCheck.getPersonnListString().toArray());
         combobox.setEditable(true);
         combobox.setMaximumRowCount(5);
         combobox.setSelectedIndex(-1);
@@ -230,26 +230,26 @@ public class MainScene extends JPanel {
     private void checkText(){
 
         String text = (String)combobox.getEditor().getItem();
-        if(text.equals("") || !ScoreShort.isDayValid()){
+        if(text.equals("") || !ScoreShortCheck.isDayValid()){
             tickErrorAnimation++;
             return;
         }
 
         System.out.println(text);
 
-        PersonnShort exist = null;
+        PersonnShortCheck exist = null;
 
         String extractId = text.replaceAll("[^0-9]", "");
         String extractName = text.replaceAll("[^a-zA-Z].*", "");
 
         if(!extractId.equals("")){
-            exist = PersonnShort.getPersonn(Integer.parseInt(extractId));
+            exist = PersonnShortCheck.getPersonn(Integer.parseInt(extractId));
         }
         if(exist==null)
-            exist = PersonnShort.getPersonn(extractName);
+            exist = PersonnShortCheck.getPersonn(extractName);
 
         if(exist!=null){
-            new ScoreShort(exist, new Hours(currentHours));
+            new ScoreShortCheck(exist, new HoursCheck(currentHours));
         }else{
             combobox.setSelectedIndex(-1);
             tickErrorAnimation++;

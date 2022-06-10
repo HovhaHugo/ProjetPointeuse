@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
-public class SettingsScene extends JPanel {
+public class SettingsSceneCheck extends JPanel {
 
     Image backgroundImage;
     Image starkLogoImage;
@@ -36,7 +36,7 @@ public class SettingsScene extends JPanel {
      * @param pOwner the owner window
      * @throws IOException if an image was not found (to call the switch panel function)
      */
-    public SettingsScene(Window pOwner) throws IOException {
+    public SettingsSceneCheck(Window pOwner) throws IOException {
 
         setLayout(null);
         setBackground(new Color(0,0,0,0));

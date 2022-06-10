@@ -6,19 +6,19 @@ import java.util.Calendar;
 /**
  * Light version of a Score. The full version is only used in the application StarkManagement
  */
-public class ScoreShort {
+public class ScoreShortCheck {
 
-    private PersonnShort personne;
-    private Hours heure;
+    private PersonnShortCheck personne;
+    private HoursCheck heure;
 
-    private static ArrayList<ScoreShort> ScoreList = new ArrayList<>();
+    private static ArrayList<ScoreShortCheck> ScoreList = new ArrayList<>();
 
     /**
      * Constructor of ScoreShort
      * @param pPerson the employee who checked
      * @param pHours the hours of the checking
      */
-    public ScoreShort(PersonnShort pPerson, Hours pHours){
+    public ScoreShortCheck(PersonnShortCheck pPerson, HoursCheck pHours){
         personne = pPerson;
         heure = pHours;
 
@@ -36,7 +36,7 @@ public class ScoreShort {
         return true;
     }
 
-    public static ArrayList<ScoreShort> getScoreList() {
+    public static ArrayList<ScoreShortCheck> getScoreList() {
         return ScoreList;
     }
 

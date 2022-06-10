@@ -1,28 +1,32 @@
 package Pointeuse.Controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Hours {
+public class HoursCheck {
 
     private int hours;
     private int minutes;
+    LocalDate date;
 
     /**
      * Constructor of Hours, initialise hours and minutes with LocalDatTime.now() values
      */
-    public Hours(){
+    public HoursCheck(){
         LocalDateTime now = LocalDateTime.now();
         hours = now.getHour();
         minutes = now.getMinute();
+        date = now.toLocalDate();
     }
 
     /**
      * Copy constructor of Hours
      * @param toCopy the object to duplicate
      */
-    public Hours(Hours toCopy){
+    public HoursCheck(HoursCheck toCopy){
         hours = toCopy.hours;
         minutes = toCopy.minutes;
+        date = toCopy.date;
     }
 
     /**
@@ -32,13 +36,13 @@ public class Hours {
         LocalDateTime now = LocalDateTime.now();
         hours = now.getHour();
         minutes = now.getMinute();
+        date = now.toLocalDate();
     }
 
     /**
      * Round the current time to the nearest fifteen minutes
      */
     public void roundNextQuarter(){
-        Hours toReturn = new Hours();
 
         while(minutes%15!=0){
             minutes++;
