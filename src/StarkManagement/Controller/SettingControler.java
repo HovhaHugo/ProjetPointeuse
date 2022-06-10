@@ -47,6 +47,6 @@ public class SettingControler {
     }
 
     public static void importeSetting(){
-        pointeuse = FileManipulator.importPointeuseSetting();
+        pointeuse = FileManipulator.importMainAppSetting();
     }
 }

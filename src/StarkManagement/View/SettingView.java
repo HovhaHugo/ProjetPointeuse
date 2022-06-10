@@ -1,7 +1,6 @@
 package StarkManagement.View;
 
 import StarkManagement.Controller.SettingControler;
-import StarkManagement.Window;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -36,7 +35,7 @@ public class SettingView extends JPanel {
     JLabel checkButton;
 
 
-    public SettingView(Window window) throws IOException {
+    public SettingView(ParameterWindow window) throws IOException {
 
         setLayout(null);
         setBackground(Color.BLACK);

@@ -7,13 +7,12 @@ public class Score
 {
     private Employee employee;
     private Hours heure;
-    private Historique Historique;
 
 
-    public Score(Employee employee, Hours heure, StarkManagement.Historique historique) {
+
+    public Score(Employee employee, Hours heure) {
         this.employee = employee;
         this.heure = heure;
-        Historique = historique;
     }
 
     public Hours getHeure() {
@@ -24,13 +23,9 @@ public class Score
         this.heure = heure;
     }
 
-    public StarkManagement.Historique getHistorique() {
-        return Historique;
-    }
 
-    public void setHistorique(StarkManagement.Historique historique) {
-        Historique = historique;
-    }
+
+
 
     public Employee getEmployee() {
         return employee;
