@@ -1,11 +1,11 @@
 package StarkManagement.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Department {
+public class Department implements Serializable {
     private String nameDepartment;
-    private ArrayList<Employee> listEmployee ;
-
+    private ArrayList<Employee> listEmployee;
 
     public Department() {
         this.listEmployee = new ArrayList<Employee>();

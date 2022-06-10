@@ -1,8 +1,6 @@
 package StarkManagement.View;
 
-import Pointeuse.Controller.Hours;
-import Pointeuse.Controller.PersonnShort;
-import StarkManagement.Window;
+import StarkManagement.Controller.SettingControler;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,14 +10,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.util.regex.Pattern;
 
-public class Parametre extends JPanel {
+public class SettingView extends JPanel {
 
     Image starkLogoImage;
-    String IPV4 = "^(25[0–5]|2[0–4][0–9]|[01]?[0–9][0–9]?)."+
-            "(25[0–5]|2[0–4][0–9]|[01]?[0–9][0–9]?).(25[0–5]|2[0–4][0–9]|[01]?[0–9][0–9]?)" +
-            ".(25[0–5]|2[0–4][0–9]|[01]?[0–9][0–9]?)$";
+    String IPV4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
     Boolean epileptique = true;
     Integer countEpileptique = 0;
 
@@ -32,22 +27,26 @@ public class Parametre extends JPanel {
     JTextField portTextfield;
     JLabel portLabel;
 
-    JLabel checkButton;
-
     JTextField adressTextfield;
     JLabel adressLabel;
 
-    public Parametre(Window window) throws IOException {
+    JLabel errorLabel;
+
+    JLabel checkButton;
+
+
+    public SettingView(ParameterWindow window) throws IOException {
 
         setLayout(null);
         setBackground(Color.BLACK);
+        SettingControler.importeSetting();
 
         starkLogoImage = ImageIO.read(new File("data/img/stark.png"));
 
         // Label
-        tabLabel = new JLabel("Parametre");
+        tabLabel = new JLabel("Parametre de la pointeuse");
         tabLabel.setForeground(Color.WHITE);
-        tabLabel.setBounds(18, 19, 150,50);
+        tabLabel.setBounds(18, 19, 350,50);
         tabLabel.setFont(new Font("SansSerif", Font.BOLD, 22));
 
         portLabel = new JLabel("Port : ");
@@ -60,6 +59,11 @@ public class Parametre extends JPanel {
         adressLabel.setBounds(45, 180, 150,50);
         adressLabel.setFont(new Font("SansSerif", Font.PLAIN, 18));
 
+        errorLabel = new JLabel("");
+        errorLabel.setForeground(Color.RED);
+        errorLabel.setBounds(165, 45, 350,50);
+        errorLabel.setFont(new Font("SansSerif", Font.PLAIN, 18));
+
         //TextField
         inputTextfield = new JTextField();
         inputTextfield.setBounds(45,275,200,35);
@@ -68,18 +72,18 @@ public class Parametre extends JPanel {
         inputTextfield.setForeground(Color.WHITE);
         inputTextfield.setFont(new Font("SansSerif", Font.BOLD, 18));
 
-        //portTextfield
         portTextfield = new JTextField();
         portTextfield.setBounds(100,105,200,35);
         portTextfield.setBackground(Color.BLACK);
+        portTextfield.setText(""+SettingControler.getPointeusePort());
         portTextfield.setBorder(new LineBorder(Color.CYAN,1));
         portTextfield.setForeground(Color.WHITE);
         portTextfield.setFont(new Font("SansSerif", Font.BOLD, 18));
 
-        //adressTextfield
         adressTextfield = new JTextField();
         adressTextfield.setBounds(130,190,200,35);
         adressTextfield.setBackground(Color.BLACK);
+        adressTextfield.setText(SettingControler.getPointeuseAdress());
         adressTextfield.setBorder(new LineBorder(Color.CYAN,1));
         adressTextfield.setForeground(Color.WHITE);
         adressTextfield.setFont(new Font("SansSerif", Font.BOLD, 18));
@@ -96,9 +100,9 @@ public class Parametre extends JPanel {
         exitButton.setBackground(Color.RED);
 
 
-        easterButton = new JButton("");
+        easterButton = new JButton("!");
         easterButton.setBounds(550,320, 30,30);
-        easterButton.setBackground(Color.RED);
+        easterButton.setBackground(Color.BLACK);
 
 
         //Method
@@ -128,6 +132,7 @@ public class Parametre extends JPanel {
         //Add
         add(checkButton);
         add(easterButton);
+        add(errorLabel);
         //add(inputTextfield);
         add(portTextfield);
         add(adressTextfield);
@@ -139,18 +144,39 @@ public class Parametre extends JPanel {
 
     private void checkText(){
         System.out.println("Vérification des données");
-        int port = -1;
+        int port;
         String adress = adressTextfield.getText();
         try{
             port = Integer.parseInt(portTextfield.getText());
+            portTextfield.setBorder(new LineBorder(Color.CYAN,1));
         }catch (NumberFormatException error){
             port = -1;
+            portTextfield.setBorder(new LineBorder(Color.RED,1));
+            errorLabel.setText("Error : Nombre non/mal saisie");
             System.out.println("Nombre nécessaire");
         }
 
-        if(Pattern.matches(IPV4, adress) == false){
-            adress = "";
-            System.out.println("Adresse IP non valide");
+        //Element to compare
+        String localhost = "localhost";
+
+        if(!adress.equals(localhost)){
+            if(!adress.matches(IPV4)){
+                adress = "";
+                System.out.println("Adresse IP non valide");
+                errorLabel.setText("Error : Adresse IP non valide");
+                adressTextfield.setBorder(new LineBorder(Color.RED,1));
+            }else{
+                adressTextfield.setBorder(new LineBorder(Color.CYAN,1));
+            }
+        }else{
+            adressTextfield.setBorder(new LineBorder(Color.CYAN,1));
+        }
+
+        if(port != -1 && !adress.equals("")){
+            errorLabel.setText("");
+            System.out.println("Tout est bon");
+            SettingControler.setSettings(port, adress);
+            SettingControler.exporteSetting();
         }
     }
 
@@ -160,7 +186,7 @@ public class Parametre extends JPanel {
         g.drawImage(starkLogoImage, (int) (Pointeuse.View.Window.WIDTH *0.74f), (int) (Pointeuse.View.Window.HEIGHT *0.81f), 140,55,this);
 
 
-        if(epileptique == false){
+        if(!epileptique){
             Color t = new Color((int) (Math.random() * 255),(int) (Math.random() * 255),(int)(Math.random() * 255));
             setBackground(t);
         }

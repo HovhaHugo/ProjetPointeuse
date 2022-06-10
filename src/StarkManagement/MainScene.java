@@ -1,13 +1,13 @@
 package StarkManagement;
 
-import javax.imageio.ImageIO;
+import StarkManagement.View.ParameterWindow;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -162,12 +162,12 @@ public class MainScene extends JPanel {
             update();
 
         // Draw the background image.
-        g.drawImage(backgroundImage, 0, 0, Window.WIDTH, Window.HEIGHT, this);
-        g.drawImage(test, (int) (Window.WIDTH*0.5f), (int) (Window.HEIGHT*0.16f), 230,230,this);
-        g.drawImage(stark, (int) (Window.WIDTH*0.74f), (int) (Window.HEIGHT*0.81f), 140,55,this);
+        g.drawImage(backgroundImage, 0, 0, ParameterWindow.WIDTH, ParameterWindow.HEIGHT, this);
+        g.drawImage(test, (int) (ParameterWindow.WIDTH*0.5f), (int) (ParameterWindow.HEIGHT*0.16f), 230,230,this);
+        g.drawImage(stark, (int) (ParameterWindow.WIDTH*0.74f), (int) (ParameterWindow.HEIGHT*0.81f), 140,55,this);
 
-        g.drawImage(meteo, (int) (Window.WIDTH*0.5f), (int) (Window.HEIGHT*0.15f), 40,40,this);
-        g.drawImage(wifi, (int) (Window.WIDTH*0.82f), (int) (Window.HEIGHT*0.15f), 40,40,this);
+        g.drawImage(meteo, (int) (ParameterWindow.WIDTH*0.5f), (int) (ParameterWindow.HEIGHT*0.15f), 40,40,this);
+        g.drawImage(wifi, (int) (ParameterWindow.WIDTH*0.82f), (int) (ParameterWindow.HEIGHT*0.15f), 40,40,this);
 
 
         super.paintComponent(g);

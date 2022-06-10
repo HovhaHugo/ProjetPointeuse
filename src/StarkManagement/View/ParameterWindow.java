@@ -1,6 +1,6 @@
-package StarkManagement;
+package StarkManagement.View;
 
-import StarkManagement.View.Parametre;
+import StarkManagement.View.SettingView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,9 +8,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-public class Window extends JFrame {
+public class ParameterWindow extends JFrame {
 
-    Parametre scene;
+    SettingView scene;
 
     public final static int WIDTH = 580;
     public final static int HEIGHT = 350;
@@ -19,12 +19,12 @@ public class Window extends JFrame {
     static int positionY;
 
 
-    public Window() {
+    public ParameterWindow() {
 
         this.setSize(WIDTH, HEIGHT);
 
         try {
-            this.setContentPane(scene = new Parametre(this));
+            this.setContentPane(scene = new SettingView(this));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -1,18 +1,29 @@
 package StarkManagement.Model;
 
-public class Employee {
+import StarkManagement.Score;
+
+import java.io.*;
+import java.util.ArrayList;
+
+public class Employee implements Serializable {
         private int identifiant;
         private String  surnameEmployee;
         private String  nameEmployee;
         private double stockHoure;
         private Department department;
 
+        public static ArrayList <Employee> listEmployee = new ArrayList<Employee>();;
+        public ArrayList <Score> historique;
+
         public Employee() {
-                this.identifiant = 0;
-                this.surnameEmployee ="";
-                this.nameEmployee = "";
-                this.stockHoure = 0d;
-                this.department = null;
+                identifiant = 0;
+                surnameEmployee ="";
+                nameEmployee = "";
+                stockHoure = 0d;
+                department = null;
+                new ArrayList<Score>();
+                listEmployee.add(this);
+
         }
 
         public Employee(int identifiant, String surnameEmployee, String nameEmployee, double stockHoure, Department department) {
@@ -21,6 +32,8 @@ public class Employee {
                 this.nameEmployee = nameEmployee;
                 this.stockHoure = stockHoure;
                 this.department  = department;
+                new ArrayList<Score>();
+                listEmployee.add(this);
         }
 
         public int getIdentifiant() {
@@ -63,4 +76,56 @@ public class Employee {
                 this.department = department;
         }
 
+        public void addStockHoure(double houreParam){
+                this.stockHoure +=houreParam;
+        }
+
+        public void subStockHoure(double houreParam){
+                this.stockHoure -=houreParam;
+        }
+
+        public ArrayList<Score> getHistorique() {
+                return historique;
+        }
+
+        public void setHistorique(ArrayList<Score> historique) {
+                this.historique = historique;
+        }
+
+        public static Employee getEmplyeeParId(int id){
+
+
+                for (Employee e: listEmployee ){
+                        if (e.getIdentifiant() == id){
+                                return e;
+                        }
+                }
+                return null;
+        }
+
+        public Score getLastScore(){
+                if (historique.isEmpty()) return null;
+                else return historique.get(historique.size()-1);
+        }
+
+        public void addScore(Score score){
+                historique.add(score);
+        }
+
+        public static void setEmployeeList(Company c){
+
+                for (Department d : c.getListDepartment()){
+                        listEmployee.addAll(d.getListEmployee());
+                }
+        }
+        @Override
+        public String toString() {
+                return "Employee{" +
+                        "identifiant=" + identifiant +
+                        ", surnameEmployee='" + surnameEmployee + '\'' +
+                        ", nameEmployee='" + nameEmployee + '\'' +
+                        ", stockHoure=" + stockHoure +
+                        ", department=" + department.getNameDepartment() +
+                        '}';
+        }
 }
