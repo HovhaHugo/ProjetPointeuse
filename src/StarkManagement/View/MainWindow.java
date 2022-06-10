@@ -21,9 +21,9 @@ public class MainWindow extends JFrame{
         JTabbedPane tabbedPane = new JTabbedPane();
 
         EmployeePanel employeePanel = new EmployeePanel();
-
+        ScorePanel scorePanel = new ScorePanel();
         tabbedPane.add("Employees", employeePanel);
-
+        tabbedPane.add("Les pointages",scorePanel);
         //Ajouter les onglets au frame
         add(tabbedPane);
         pack();

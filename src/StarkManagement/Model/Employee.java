@@ -1,7 +1,5 @@
 package StarkManagement.Model;
 
-import StarkManagement.Score;
-
 import java.io.*;
 import java.util.ArrayList;
 
