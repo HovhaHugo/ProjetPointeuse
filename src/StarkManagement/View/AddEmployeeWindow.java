@@ -68,9 +68,10 @@ public class AddEmployeeWindow extends JFrame {
         });
         reloadButton.setBounds(265,75, 80, 25);
 
-        newDepartmentButton = new JButton("New");
+        newDepartmentButton = new JButton("Edit");
         newDepartmentButton.addActionListener(e -> {
             //AjoutDepartement d = new AjoutDepartement();
+            new AddDepartmentWindow(pCompany);
         });
         newDepartmentButton.setBounds(350,75,70,25);
 
