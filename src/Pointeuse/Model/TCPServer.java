@@ -1,6 +1,7 @@
 package Pointeuse.Model;
 
 import Pointeuse.Controller.PersonnShort;
+import Pointeuse.Controller.ScoreShort;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,6 +19,11 @@ public class TCPServer implements Runnable{
 
     private boolean running = true;
 
+    /**
+     * Constructor of the server of the check application
+     * Listening on 'listeningPort'
+     * Valid data are only ArrayList<PersonnShort> class
+     */
     public TCPServer(){
     }
 
@@ -25,19 +31,19 @@ public class TCPServer implements Runnable{
     public void run() {
 
         try {
+
             serverSocket = new ServerSocket(listeningPort);
 
-            InputStream is = socket.getInputStream();
-
-            ObjectInputStream ois = new ObjectInputStream(is);
 
             while(running){
                 socket = serverSocket.accept();
-                threadAcceptConnection acceptConnection = new threadAcceptConnection(ois);
-                acceptConnection.run();
+
+                InputStream is = socket.getInputStream();
+                ObjectInputStream ois = new ObjectInputStream(is);
+
+                new Thread(new threadAcceptConnection(ois)).start();
             }
 
-            is.close();
             socket.close();
             serverSocket.close();
 
@@ -64,6 +70,8 @@ public class TCPServer implements Runnable{
             try {
                 ArrayList<PersonnShort> listeReceived =(ArrayList<PersonnShort>) ois.readObject();
                 PersonnShort.setPersonnShortList(listeReceived);
+
+                ois.close();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
