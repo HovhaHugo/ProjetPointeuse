@@ -233,6 +233,7 @@ public class EmployeePanel extends JPanel {
                     fridayStartTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Friday).getStartTime().toString());
                     fridayEndTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Friday).getEndTime().toString());
 
+                    departmentNameCombo.removeAllItems();
                     int currentRow = 0;
                     for(int i = 0; i< depListTemp.size(); i++){
                         Department d = depListTemp.get(i);

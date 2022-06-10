@@ -94,6 +94,7 @@ public class AddEmployeeWindow extends JFrame {
                 if(name!="" && surname!=""){
                     int index = departementCombo.getSelectedIndex();
                     Employee n = new Employee(name, surname, company.getListDepartment().get(index));
+                    company.getListDepartment().get(index).getListEmployee().add(n);
                     MainWindow.sendEmployeeList();
                 }
                 close();
