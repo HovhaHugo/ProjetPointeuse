@@ -2,6 +2,7 @@ package StarkManagement.View;
 
 import StarkManagement.Model.Company;
 import StarkManagement.Model.Department;
+import StarkManagement.Model.Employee;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -77,10 +78,12 @@ public class AddEmployeeWindow extends JFrame {
         addEmployeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //departement.getByNom ?
                 String name = nameTextField.getText();
                 String surname = surnameTextField.getText();
-                //new Employee(...)
+                if(name!="" && surname!=""){
+                    int index = departementCombo.getSelectedIndex();
+                    Employee n = new Employee(name, surname, company.getListDepartment().get(index));
+                }
                 close();
             }
         });

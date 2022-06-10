@@ -10,19 +10,24 @@ public class Employee implements Serializable {
         private double stockHoure;
         private Department department;
 
-        public static ArrayList <Employee> listEmployee = new ArrayList<Employee>();;
+        public static ArrayList <Employee> listEmployee = new ArrayList<>();;
         public ArrayList <Score> historique;
 
-        public Employee() {
-                identifiant = 0;
-                surnameEmployee ="";
-                nameEmployee = "";
-                stockHoure = 0d;
-                department = null;
-                new ArrayList<Score>();
-                listEmployee.add(this);
+        public Employee(String surnameEmployee, String nameEmployee, Department department) {
+                if(listEmployee.isEmpty())
+                        this.identifiant = 0;
+                else
+                        this.identifiant = listEmployee.get(listEmployee.size()-1).identifiant+1;
 
+                this.surnameEmployee = surnameEmployee;
+                this.nameEmployee = nameEmployee;
+                this.stockHoure = 0;
+                this.department  = department;
+                historique = new ArrayList<>();
+
+                listEmployee.add(this);
         }
+
 
         public Employee(int identifiant, String surnameEmployee, String nameEmployee, double stockHoure, Department department) {
                 this.identifiant = identifiant;
@@ -30,7 +35,7 @@ public class Employee implements Serializable {
                 this.nameEmployee = nameEmployee;
                 this.stockHoure = stockHoure;
                 this.department  = department;
-                new ArrayList<Score>();
+                historique = new ArrayList<>();
                 listEmployee.add(this);
         }
 

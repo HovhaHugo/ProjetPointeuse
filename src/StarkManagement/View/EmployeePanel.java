@@ -2,8 +2,11 @@ package StarkManagement.View;
 
 import StarkManagement.Model.Company;
 import StarkManagement.Model.Employee;
+import StarkManagement.Model.Score;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +22,14 @@ public class EmployeePanel extends JPanel {
     JButton reloadButton;
     JButton buttonAdd;
 
+    JButton buttonUpdate;
+    JButton buttonDelete;
+
+    JScrollPane scroll;
     JTable table;
+
+    Employee selectedEmployee;
+    int selectedRow;
 
     EmployeePanel(Company pCompany){
 
@@ -53,7 +63,7 @@ public class EmployeePanel extends JPanel {
         reloadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                table.removeAll();
+                loadJtable();
             }
         });
 
@@ -85,36 +95,13 @@ public class EmployeePanel extends JPanel {
                         .addComponent(reloadButton))
         );
 
-
-
         panelGauche.add(panelInfo,BorderLayout.NORTH);
 
-        String[] columns = new String[] {
-                "Id", "Name", "First Name","Department"
-        };
+        table = new JTable();
+        loadJtable();
+        scroll = new JScrollPane(table);
 
-        //données pour JTable dans un tableau 2D
-        Object[][] data = new Object[Employee.listEmployee.size()][4];
-
-        int index = 0;
-        for(Employee e : Employee.listEmployee){
-            data[index][0] = e.getIdentifiant();
-            data[index][1] = e.getNameEmployee();
-            data[index][2] = e.getSurnameEmployee();
-            data[index][3] = e.getDepartment().getNameDepartment();
-
-            index++;
-        }
-
-        //crée un JTable avec des données
-        table = new JTable(data, columns);
-        table.setDefaultEditor(Object.class, null);
-        JScrollPane scroll = new JScrollPane(table);
-        //table.setFillsViewportHeight(true);
-
-        //scroll.setPreferredSize();
         panelGauche.add(scroll,BorderLayout.CENTER);
-
 
         //Panel droit
         JPanel panelDroite = new JPanel();
@@ -138,22 +125,46 @@ public class EmployeePanel extends JPanel {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = table.rowAtPoint(evt.getPoint());
-                if (row >= 0 ) {
-                    Employee e = Employee.getEmplyeeParId((int)table.getValueAt(row,0));
+                if (row >= 0) {
+                    selectedEmployee = Employee.getEmplyeeParId((int)table.getValueAt(row,0));
+                    selectedRow = row;
 
-                    int heures = e.getLastScore().getHeure().getHours();
-                    int minutes = e.getLastScore().getHeure().getMinutes();
+                    int heures = 0;
+                    int minutes = 0;
+                    Score lastScore = selectedEmployee.getLastScore();
+                    if(lastScore!=null){
+                        heures = lastScore.getHeure().getHours();
+                        minutes = lastScore.getHeure().getMinutes();
+                    }
 
-                    employeeName.setText(e.getNameEmployee() + e.getSurnameEmployee());
-                    departmentName.setText(e.getDepartment().getNameDepartment());
-                    hoursDiff.setText(e.getStockHoure()+"");
+                    employeeName.setText(selectedEmployee.getNameEmployee() + selectedEmployee.getSurnameEmployee());
+                    departmentName.setText(selectedEmployee.getDepartment().getNameDepartment());
+                    hoursDiff.setText(selectedEmployee.getStockHoure()+"");
                     lastSeen.setText(heures+":"+minutes);
                 }
             }
         });
 
-        JButton buttonUpdate = new JButton("Update");
-        JButton buttonDelete = new JButton("Delete");
+        buttonUpdate = new JButton("Update");
+        buttonUpdate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadJtable();
+            }
+        });
+
+        buttonDelete = new JButton("Delete");
+        buttonDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(selectedRow>=table.getRowCount())
+                    return;
+
+                Employee.listEmployee.remove(selectedEmployee);
+                selectedEmployee.getDepartment().getListEmployee().remove(selectedEmployee);
+                ((DefaultTableModel)table.getModel()).removeRow(selectedRow);
+            }
+        });
 
         groupLayoutDroite.setHorizontalGroup(groupLayoutDroite.createSequentialGroup()
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -195,15 +206,20 @@ public class EmployeePanel extends JPanel {
         add(panelDroite, BorderLayout.EAST);
     }
 
-/*
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+    public void loadJtable(){
+        String[] entete = {"ID","Name","Firstname","Department"};
+        Object[][] data = new Object[Employee.listEmployee.size()][4];
+        int index = 0;
+        for(Employee e : Employee.listEmployee){
+            data[index][0] = e.getIdentifiant();
+            data[index][1] = e.getNameEmployee() ;
+            data[index][1] = e.getNameEmployee();
+            data[index][2] = e.getSurnameEmployee();
+            data[index][3] = e.getDepartment().getNameDepartment();
 
-        int r = (int) (Math.random() * 255);
-        int gr = (int) (Math.random() * 255);
-        int b = (int) (Math.random() * 255);
+            index++;
+        }
+        ((DefaultTableModel)table.getModel()).setDataVector(data,entete);
+    }
 
-        setBackground(new Color(r,gr,b));
-    }*/
 }

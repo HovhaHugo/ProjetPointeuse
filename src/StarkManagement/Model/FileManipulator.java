@@ -48,8 +48,7 @@ public class FileManipulator {
 
     public static Company importCompany(){
 
-        ArrayList<Department> listeDepartment= new ArrayList<Department>();
-        Company company = new Company("Stark Industry",listeDepartment );
+        Company company = null;
 
         try
         {
