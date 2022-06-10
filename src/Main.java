@@ -1,5 +1,3 @@
-import Pointeuse.Model.FileManipulatorCheck;
-import Pointeuse.Model.SettingsCheck;
 import Pointeuse.View.Window;
 import StarkManagement.Model.*;
 import StarkManagement.View.MainWindow;
@@ -11,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        createCompany();
+        //createCompany();
 
         try
         {
@@ -28,8 +26,8 @@ public class Main {
 
     public static void createCompany(){
 
-        Company d = new Company();
-        d.setNameCompany("Stark Industries");
+        Company company = new Company();
+        company.setNameCompany("Stark Industries");
 
         Department depInformatique = new Department("Informatique");
         depInformatique.getListEmployee().add(new Employee("Ali","Gator",depInformatique));
@@ -43,9 +41,11 @@ public class Main {
         depUsine.getListEmployee().add(new Employee("Élie","Coptère",depUsine));
         depUsine.getListEmployee().add(new Employee("Marc","Hassin",depUsine));
 
-        d.getListDepartment().add(depInformatique);
-        d.getListDepartment().add(depAdministration);
-        d.getListDepartment().add(depUsine);
+        company.getListDepartment().add(depInformatique);
+        company.getListDepartment().add(depAdministration);
+        company.getListDepartment().add(depUsine);
+
+        FileManipulator.exportCompany(company);
 
     }
 }

@@ -8,8 +8,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class ScorePanel extends JPanel {
 
@@ -18,11 +18,13 @@ public class ScorePanel extends JPanel {
     JPanel panelInfo;
     JButton buttonSearch;
     JButton buttonUpdate;
-    JRadioButton buttonDay;
-    JRadioButton buttonAll;
-    JRadioButton buttonIn;
-    JRadioButton buttonOut;
-    JRadioButton buttonBoth;
+
+    JRadioButton radioBtnDay;
+    JRadioButton radioBtnAllDay;
+    JRadioButton radioBtnIn;
+    JRadioButton radioBtnOut;
+    JRadioButton radioBtnInOut;
+
     JTable table;
     Employee selectedEmployee;
     JScrollPane scroll;
@@ -58,107 +60,54 @@ public class ScorePanel extends JPanel {
         buttonUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (buttonDay.isSelected()) {
-                    if(buttonBoth.isSelected()) {
-                        loadJtableScoreofthedayBoth();
-                    }
-                    if(buttonIn.isSelected()) {
-                        loadJtableScoreofthedayIn();
-                    }
-                    if(buttonOut.isSelected()) {
-                        loadJtableScoreofthedayOut();
-                    }
-                }
-                if (buttonAll.isSelected()) {
-                    if(buttonBoth.isSelected()) {
-                        loadJtableScoreBoth();
-                    }
-                    if(buttonIn.isSelected()) {
-                        loadJtableScoreIn();
-                    }
-                    if(buttonOut.isSelected()) {
-                        loadJtableScoreOut();
-                    }
-                }
+                loadJTable();
             }
         });
 
-        buttonIn = new JRadioButton("In");
-        buttonIn.addActionListener(new ActionListener() {
+        radioBtnIn = new JRadioButton("In");
+        radioBtnIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (buttonDay.isSelected()) {
-                    loadJtableScoreofthedayIn();
-                }
-                if (buttonAll.isSelected()) {
-                    loadJtableScoreIn();
-                }
+                loadJTable();
             }
         });
-        buttonOut = new JRadioButton("Out");
-        buttonOut.addActionListener(new ActionListener() {
+        radioBtnOut = new JRadioButton("Out");
+        radioBtnOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (buttonDay.isSelected()) {
-                    loadJtableScoreofthedayOut();
-                }
-                if (buttonAll.isSelected()) {
-                    loadJtableScoreOut();
-                }
+                loadJTable();
             }
         });
-        buttonBoth = new JRadioButton("Both", true);
-        buttonBoth.addActionListener(new ActionListener() {
+        radioBtnInOut = new JRadioButton("Both", true);
+        radioBtnInOut.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (buttonDay.isSelected()) {
-                    loadJtableScoreofthedayBoth();
-                }
-                if (buttonAll.isSelected()) {
-                    loadJtableScoreBoth();
-                }
+                loadJTable();
             }
         });
         ButtonGroup group2 = new ButtonGroup();
-        group2.add(buttonIn);
-        group2.add(buttonOut);
-        group2.add(buttonBoth);
-        buttonDay = new JRadioButton("Day");
-        buttonDay.addActionListener(new ActionListener() {
+        group2.add(radioBtnIn);
+        group2.add(radioBtnOut);
+        group2.add(radioBtnInOut);
+        radioBtnDay = new JRadioButton("Day");
+        radioBtnDay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(buttonBoth.isSelected()) {
-                    loadJtableScoreofthedayBoth();
-                }
-                if(buttonIn.isSelected()) {
-                    loadJtableScoreofthedayIn();
-                }
-                if(buttonOut.isSelected()) {
-                    loadJtableScoreofthedayOut();
-                }
+                loadJTable();
             }
         });
 
-        buttonAll = new JRadioButton("All", true);
-        buttonAll.addActionListener(new ActionListener() {
+        radioBtnAllDay = new JRadioButton("All", true);
+        radioBtnAllDay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    if(buttonBoth.isSelected()) {
-                        loadJtableScoreBoth();
-                    }
-                    if(buttonIn.isSelected()) {
-                        loadJtableScoreIn();
-                    }
-                    if(buttonOut.isSelected()) {
-                        loadJtableScoreOut();
-                    }
-
+                loadJTable();
             }
         });
 
         ButtonGroup group = new ButtonGroup();
-        group.add(buttonDay);
-        group.add(buttonAll);
+        group.add(radioBtnDay);
+        group.add(radioBtnAllDay);
 
 
         groupLayout.setHorizontalGroup(groupLayout.createSequentialGroup()
@@ -171,13 +120,13 @@ public class ScorePanel extends JPanel {
                         .addComponent(buttonSearch))
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(buttonUpdate)
-                        .addComponent(buttonBoth))
+                        .addComponent(radioBtnInOut))
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(buttonIn)
-                        .addComponent(buttonDay))
+                        .addComponent(radioBtnIn)
+                        .addComponent(radioBtnDay))
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(buttonOut)
-                        .addComponent(buttonAll))
+                        .addComponent(radioBtnOut)
+                        .addComponent(radioBtnAllDay))
 
 
         );
@@ -189,14 +138,14 @@ public class ScorePanel extends JPanel {
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(labelDepartment)
                         .addComponent(textFieldDepartment)
-                        .addComponent(buttonBoth)
-                        .addComponent(buttonIn)
-                        .addComponent(buttonOut))
+                        .addComponent(radioBtnInOut)
+                        .addComponent(radioBtnIn)
+                        .addComponent(radioBtnOut))
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addComponent(buttonSearch)
                         .addComponent(buttonUpdate)
-                        .addComponent(buttonDay)
-                        .addComponent(buttonAll))
+                        .addComponent(radioBtnDay)
+                        .addComponent(radioBtnAllDay))
         );
 
 
@@ -211,7 +160,7 @@ public class ScorePanel extends JPanel {
 
         //crée un JTable avec des données
         table = new JTable();
-        loadJtableScoreBoth();
+        loadJTable();
 
         scroll = new JScrollPane(table);
         //table.setFillsViewportHeight(true);
@@ -298,99 +247,49 @@ public class ScorePanel extends JPanel {
 
     }
 
-    public void loadJtableScoreBoth() {
+    public void loadJTable(){
         String[] entete = {"Name", "Hours", "Date"};
-         datascore = new Object[Score.historique.size()][3];
+
+        LocalDateTime now = LocalDateTime.now();
+        ArrayList<Score> scoreDayParameter= new ArrayList<>();
+
+        if(radioBtnDay.isSelected()){
+            for(Score s : Score.historique){
+                if(s.getHeure().getDate().equals(now.toLocalDate())){
+                    scoreDayParameter.add(s);
+                }
+            }
+        }else
+            scoreDayParameter.addAll(Score.historique);
+
+        ArrayList<Score> scoreInOutParameter= new ArrayList<>();
+        if(radioBtnInOut.isSelected() == false){
+            for(Score s : Score.historique){
+                if(radioBtnIn.isSelected()){
+                    if(s.getType() == Score.Type.IN)
+                        scoreInOutParameter.add(s);
+                }else{
+                    if(s.getType() == Score.Type.OUT)
+                        scoreInOutParameter.add(s);
+                }
+            }
+        }else
+            scoreInOutParameter.addAll(Score.historique);
+
+        scoreDayParameter.retainAll(scoreInOutParameter);
+
+        datascore = new Object[scoreDayParameter.size()][3];
         int index = 0;
-        for (Score s : Score.historique) {
+        for (Score s : scoreDayParameter) {
             datascore[index][0] = s.getEmployee().getNameEmployee();
             datascore[index][1] = s.getHeure().toString();
             datascore[index][2] = s.getHeure().getDate().toString();
 
             index++;
         }
+
         ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
 
-    }
-
-    public void loadJtableScoreofthedayBoth() {
-        String[] entete = {"Name", "Hours", "Date"};
-         datascore = new Object[Score.historique.size()][3];
-        int index = 0;
-        LocalDateTime now = LocalDateTime.now();
-        for (Score s : Score.historique) {
-            if (s.getHeure().getDate().equals(now.toLocalDate())) {
-                datascore[index][0] = s.getEmployee().getNameEmployee();
-                datascore[index][1] = s.getHeure().toString();
-                datascore[index][2] = s.getHeure().getDate().toString();// date
-                index++;
-            }
-        }
-        ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
-    }
-    public void loadJtableScoreIn() {
-        String[] entete = {"Name", "Hours", "Date"};
-        datascore = new Object[Score.historique.size()][3];
-        int index = 0;
-        for (Score s : Score.historique) {
-            if (s.getType() == Score.Type.IN) {
-                datascore[index][0] = s.getEmployee().getNameEmployee();
-                datascore[index][1] = s.getHeure().toString();
-                datascore[index][2] = s.getHeure().getDate().toString();
-                index++;
-            }
-        }
-        ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
-
-    }
-    public void loadJtableScoreofthedayIn() {
-        String[] entete = {"Name", "Hours", "Date"};
-        datascore = new Object[Score.historique.size()][3];
-        int index = 0;
-        LocalDateTime now = LocalDateTime.now();
-        for (Score s : Score.historique) {
-            if (s.getHeure().getDate().equals(now.toLocalDate())) {
-                if (s.getType() == Score.Type.IN) {
-                    datascore[index][0] = s.getEmployee().getNameEmployee();
-                    datascore[index][1] = s.getHeure().toString();
-                    datascore[index][2] = s.getHeure().getDate().toString();// date
-                    index++;
-                }
-            }
-        }
-        ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
-    }
-    public void loadJtableScoreOut() {
-        String[] entete = {"Name", "Hours", "Date"};
-        datascore = new Object[Score.historique.size()][3];
-        int index = 0;
-        for (Score s : Score.historique) {
-            if (s.getType() == Score.Type.OUT) {
-                datascore[index][0] = s.getEmployee().getNameEmployee();
-                datascore[index][1] = s.getHeure().toString();
-                datascore[index][2] = s.getHeure().getDate().toString();
-                index++;
-            }
-        }
-        ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
-
-    }
-    public void loadJtableScoreofthedayOut() {
-        String[] entete = {"Name", "Hours", "Date"};
-        datascore = new Object[Score.historique.size()][3];
-        int index = 0;
-        LocalDateTime now = LocalDateTime.now();
-        for (Score s : Score.historique) {
-            if (s.getHeure().getDate().equals(now.toLocalDate())) {
-                if (s.getType() == Score.Type.OUT) {
-                    datascore[index][0] = s.getEmployee().getNameEmployee();
-                    datascore[index][1] = s.getHeure().toString();
-                    datascore[index][2] = s.getHeure().getDate().toString();// date
-                    index++;
-                }
-            }
-        }
-        ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
     }
 
 }
