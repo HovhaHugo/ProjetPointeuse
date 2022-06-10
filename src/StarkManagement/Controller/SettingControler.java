@@ -39,7 +39,7 @@ public class SettingControler {
     }
 
     public static void exporteSetting(){
-        FileManipulator.exportPointeuseSetting(pointeuse);
+        FileManipulator.exportMainAppSetting(pointeuse);
     }
 
     public static void importeSetting(){

@@ -7,7 +7,7 @@ public class FileManipulator {
 
     public static Setting importMainAppSetting(){
 
-        Setting settings = new Setting("192.168.0.0",1);
+        Setting settings = null;
 
         try (ObjectInputStream input = new ObjectInputStream(new FileInputStream("data/serializable/mainAppSettings.dat"))
         ){
@@ -19,7 +19,7 @@ public class FileManipulator {
         return settings;
     }
 
-    public static void exportPointeuseSetting(Setting settings){
+    public static void exportMainAppSetting(Setting settings){
 
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("data/serializable/pointeuseSettings.dat"))
         ){

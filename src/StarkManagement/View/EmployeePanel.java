@@ -12,22 +12,28 @@ public class EmployeePanel extends JPanel {
 
     Company company;
 
+    JPanel panelGauche;
+    JPanel panelInfo;
+
+    JButton buttonSearch;
+    JButton reloadButton;
+    JButton buttonAdd;
+
+    JTable table;
+
     EmployeePanel(Company pCompany){
 
         company = pCompany;
 
         setLayout(new BorderLayout());
 
-        JPanel panelGauche = new JPanel(new BorderLayout());
+        panelGauche = new JPanel(new BorderLayout());
+        panelInfo = new JPanel();
 
-        //panelGauche.setSize((int) (Window.width*0.7f), Window.height);
-
-        JPanel panelInfo = new JPanel();
-
-        GroupLayout groupLayout = new GroupLayout(panelInfo);
-        groupLayout.setAutoCreateGaps(true);
-        groupLayout.setAutoCreateContainerGaps(true);
-        panelInfo.setLayout(groupLayout);
+        GroupLayout groupLayoutPanelDroite = new GroupLayout(panelInfo);
+        groupLayoutPanelDroite.setAutoCreateGaps(true);
+        groupLayoutPanelDroite.setAutoCreateContainerGaps(true);
+        panelInfo.setLayout(groupLayoutPanelDroite);
 
         JLabel labelName = new JLabel("Name: ");
         JTextField textFieldName = new JTextField();
@@ -35,45 +41,48 @@ public class EmployeePanel extends JPanel {
         JLabel labelDepartment = new JLabel("Department: ");
         JTextField textFieldDepartment = new JTextField();
 
-        JButton buttonSearch = new JButton("Search");
-        JButton buttonAdd = new JButton("Add");
+        buttonSearch = new JButton("Search");
+        buttonAdd = new JButton("Add");
         buttonAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new AddEmployeeWindow(company);
             }
         });
+        reloadButton = new JButton("Reload");
+        reloadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                table.removeAll();
+            }
+        });
 
-        JButton buttonUpdate = new JButton("Update");
-        JButton buttonDelete = new JButton("Delete");
-
-
-        groupLayout.setHorizontalGroup(groupLayout.createSequentialGroup()
-                .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        groupLayoutPanelDroite.setHorizontalGroup(groupLayoutPanelDroite.createSequentialGroup()
+                .addGroup(groupLayoutPanelDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(labelName)
                         .addComponent(labelDepartment))
-                .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(groupLayoutPanelDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(textFieldName)
                         .addComponent(textFieldDepartment)
                         .addComponent(buttonSearch))
-                        .addComponent(buttonAdd)
-                        .addComponent(buttonUpdate)
-                        .addComponent(buttonDelete)
+                .addGroup(groupLayoutPanelDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(buttonAdd))
+                .addGroup(groupLayoutPanelDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(reloadButton))
 
         );
 
-        groupLayout.setVerticalGroup(groupLayout.createSequentialGroup()
-                .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        groupLayoutPanelDroite.setVerticalGroup(groupLayoutPanelDroite.createSequentialGroup()
+                .addGroup(groupLayoutPanelDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(labelName)
                         .addComponent(textFieldName))
-                .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                .addGroup(groupLayoutPanelDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(labelDepartment)
                         .addComponent(textFieldDepartment))
-                .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                .addGroup(groupLayoutPanelDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(buttonSearch)
                         .addComponent(buttonAdd)
-                        .addComponent(buttonUpdate)
-                        .addComponent(buttonDelete))
+                        .addComponent(reloadButton))
         );
 
 
@@ -84,15 +93,13 @@ public class EmployeePanel extends JPanel {
                 "Id", "Name", "First Name","Department"
         };
 
-
-
         //données pour JTable dans un tableau 2D
         Object[][] data = new Object[Employee.listEmployee.size()][4];
 
         int index = 0;
         for(Employee e : Employee.listEmployee){
             data[index][0] = e.getIdentifiant();
-            data[index][1] = e.getNameEmployee() ;
+            data[index][1] = e.getNameEmployee();
             data[index][2] = e.getSurnameEmployee();
             data[index][3] = e.getDepartment().getNameDepartment();
 
@@ -100,7 +107,7 @@ public class EmployeePanel extends JPanel {
         }
 
         //crée un JTable avec des données
-        JTable table = new JTable(data, columns);
+        table = new JTable(data, columns);
         table.setDefaultEditor(Object.class, null);
         JScrollPane scroll = new JScrollPane(table);
         //table.setFillsViewportHeight(true);
@@ -145,18 +152,22 @@ public class EmployeePanel extends JPanel {
             }
         });
 
+        JButton buttonUpdate = new JButton("Update");
+        JButton buttonDelete = new JButton("Delete");
 
         groupLayoutDroite.setHorizontalGroup(groupLayoutDroite.createSequentialGroup()
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(nameLabel)
                         .addComponent(departmentLabel)
                         .addComponent(houseDiffLabel)
-                        .addComponent(lastSeenLabel))
+                        .addComponent(lastSeenLabel)
+                        .addComponent(buttonUpdate))
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(employeeName)
                         .addComponent(departmentName)
                         .addComponent(hoursDiff)
-                        .addComponent(lastSeen))
+                        .addComponent(lastSeen)
+                        .addComponent(buttonDelete))
         );
 
         groupLayoutDroite.setVerticalGroup(groupLayoutDroite.createSequentialGroup()
@@ -172,6 +183,9 @@ public class EmployeePanel extends JPanel {
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(lastSeenLabel)
                         .addComponent(lastSeen))
+                .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonUpdate)
+                        .addComponent(buttonDelete))
         );
 
         panelDroite.setPreferredSize(new Dimension(300,400));

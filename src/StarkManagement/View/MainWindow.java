@@ -1,6 +1,5 @@
 package StarkManagement.View;
 
-import StarkManagement.Controller.CompanyController;
 import StarkManagement.Model.Company;
 import StarkManagement.Model.Employee;
 import StarkManagement.Model.FileManipulator;
