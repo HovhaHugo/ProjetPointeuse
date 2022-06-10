@@ -1,5 +1,7 @@
 package StarkManagement.View;
 
+import StarkManagement.Model.Employee;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -27,9 +29,13 @@ public class ScorePanel extends JPanel {
         JTextField textFieldDepartment = new JTextField();
 
         JButton buttonSearch = new JButton("Search");
-        JButton buttonAdd = new JButton("Add");
-        JButton buttonUpdate = new JButton("Update");
-        JButton buttonDelete = new JButton("Delete");
+        JRadioButton buttonAdd = new JRadioButton("Day");
+        JRadioButton buttonUpdate = new JRadioButton("All");
+
+        ButtonGroup group = new ButtonGroup();
+        group.add(buttonAdd);
+        group.add(buttonUpdate);
+
 
 
         groupLayout.setHorizontalGroup(groupLayout.createSequentialGroup()
@@ -42,7 +48,6 @@ public class ScorePanel extends JPanel {
                         .addComponent(buttonSearch))
                 .addComponent(buttonAdd)
                 .addComponent(buttonUpdate)
-                .addComponent(buttonDelete)
 
         );
 
@@ -56,8 +61,7 @@ public class ScorePanel extends JPanel {
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addComponent(buttonSearch)
                         .addComponent(buttonAdd)
-                        .addComponent(buttonUpdate)
-                        .addComponent(buttonDelete))
+                        .addComponent(buttonUpdate))
         );
 
 
@@ -108,7 +112,7 @@ public class ScorePanel extends JPanel {
         JLabel employeeName = new JLabel("George Hamid");
         JLabel departmentName = new JLabel("Chafodaj");
         JLabel houseDiff = new JLabel("40");
-        JLabel lastSeen = new JLabel("10h30");
+        JLabel lastSeen = new JLabel();
 
 
         groupLayoutDroite.setHorizontalGroup(groupLayoutDroite.createSequentialGroup()
@@ -138,7 +142,22 @@ public class ScorePanel extends JPanel {
                         .addComponent(lastSeenLabel)
                         .addComponent(lastSeen))
         );
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                int row = table.rowAtPoint(evt.getPoint());
+                if (row >= 0 ) {
+                    Employee e = Employee.getEmplyeeParId((int)table.getValueAt(row,0));
 
+                    int heures = e.getLastScore().getHeure().getHours();
+                    int minutes = e.getLastScore().getHeure().getMinutes();
+
+                    employeeName.setText(e.getNameEmployee() + e.getSurnameEmployee());
+                    departmentName.setText(e.getDepartment().getNameDepartment());
+                    lastSeen.setText(heures+":"+minutes);
+                }
+            }
+        });
         panelDroite.setPreferredSize(new Dimension(300,400));
         panelDroite.setBackground(new Color(199, 199, 199));
         panelGauche.setBorder(BorderFactory.createEmptyBorder(5,5 ,5 , 10));
