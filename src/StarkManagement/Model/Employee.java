@@ -94,7 +94,6 @@ public class Employee implements Serializable {
 
         public static Employee getEmplyeeParId(int id){
 
-
                 for (Employee e: listEmployee ){
                         if (e.getIdentifiant() == id){
                                 return e;
@@ -118,6 +117,21 @@ public class Employee implements Serializable {
                         listEmployee.addAll(d.getListEmployee());
                 }
         }
+
+        public static void deleteEmployeeParId(int id){
+                for (Employee e: listEmployee ){
+                        if (e.getIdentifiant() == id){
+                               listEmployee.remove(e);
+                        }
+                }
+        }
+
+        public static void addEmployee(Employee e){
+                listEmployee.add(e);
+        }
+
+
+
         @Override
         public String toString() {
                 return "Employee{" +
@@ -128,4 +142,6 @@ public class Employee implements Serializable {
                         ", department=" + department.getNameDepartment() +
                         '}';
         }
+
+
 }
