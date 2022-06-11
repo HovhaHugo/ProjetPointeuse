@@ -118,15 +118,7 @@ public class ScorePanel extends JPanel {
         };
 
         //données pour JTable dans un tableau 2D
-        Object[][] data = new Object[][]{
-                {"Thomas", 12.00, 0},
-                {"Thomas", 12.00, 0},
-                {"Thomas", 12.00, 0},
-                {"Thomas", 12.00, 0},
-                {"Thomas", 12.00, 0},
-                {"Thomas", 12.00, 0},
-                {"Thomas", 12.00, 0}
-        };
+        Object[][] data = new Object[][]{};
 
         //crée un JTable avec des données
         table = new JTable(data,columns);

@@ -5,6 +5,7 @@ import Common.ScoreShort;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import static StarkManagement.Model.FileManipulator.exportPointeuseScore;
 import static StarkManagement.Model.FileManipulator.importPointeuseScore;
@@ -14,8 +15,8 @@ public class Score implements Serializable
     private Employee employee;
     private Hours heure;
 
-    public static ArrayList<Score> historique;
-    public static ArrayList<Score> historiqueTemp;
+    public static ArrayList<Score> historique ;
+    public static ArrayList<Score> historiqueTemp ;
 
     public Score(Employee employee, Hours heure) {
         this.employee = employee;
@@ -27,6 +28,14 @@ public class Score implements Serializable
         this.employee = Employee.getEmplyeeParId(scoreShort.getEmployeeId());
         this.heure= scoreShort.getHours();
         employee.addScore(this);
+        if (historique==null)
+        {
+            historique = new ArrayList<>();
+        }
+        if (historiqueTemp==null)
+        {
+            historiqueTemp = new ArrayList<>();
+        }
         historiqueTemp.add(this);
     }
 

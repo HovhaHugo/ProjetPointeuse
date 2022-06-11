@@ -35,7 +35,7 @@ public class Main {
             ee.printStackTrace();
         }
 
-        //new Thread(() -> new Window()).start();
+        new Thread(() -> new Window()).start();
         new Thread(() -> new MainWindow()).start();
 
     }
