@@ -1,21 +1,39 @@
 package StarkManagement.View;
 
 import StarkManagement.Model.Employee;
+import StarkManagement.Model.Score;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 
 public class ScorePanel extends JPanel {
 
-    ScorePanel(){
+    JPanel panelGauche;
+    JPanel panelDroite;
+    JPanel panelInfo;
+    JButton buttonSearch;
+    JButton buttonUpdate;
+    JRadioButton buttonDay;
+    JRadioButton buttonAll;
+    JTable table;
+    Employee selectedEmployee ;
+    JScrollPane scroll;
+
+
+    int selectedRow;
+    ScorePanel() {
 
         setLayout(new BorderLayout());
 
-        JPanel panelGauche = new JPanel(new BorderLayout());
+        panelGauche = new JPanel(new BorderLayout());
 
         //panelGauche.setSize((int) (Window.width*0.7f), Window.height);
 
-        JPanel panelInfo = new JPanel();
+        panelInfo = new JPanel();
 
         GroupLayout groupLayout = new GroupLayout(panelInfo);
         groupLayout.setAutoCreateGaps(true);
@@ -28,14 +46,36 @@ public class ScorePanel extends JPanel {
         JLabel labelDepartment = new JLabel("Department: ");
         JTextField textFieldDepartment = new JTextField();
 
-        JButton buttonSearch = new JButton("Search");
-        JRadioButton buttonAdd = new JRadioButton("Day");
-        JRadioButton buttonUpdate = new JRadioButton("All");
+        buttonSearch = new JButton("Search");
+
+        buttonUpdate = new JButton("Update");
+        buttonUpdate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Score.SaveListScore();
+                loadJtableScore();
+            }
+        });
+
+        buttonDay = new JRadioButton("Day");
+        buttonDay.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //loadJtableScoreoftheday();
+            }
+        });
+
+        buttonAll = new JRadioButton("All");
+        buttonAll.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadJtableScore();
+            }
+        });
 
         ButtonGroup group = new ButtonGroup();
-        group.add(buttonAdd);
-        group.add(buttonUpdate);
-
+        group.add(buttonDay);
+        group.add(buttonAll);
 
 
         groupLayout.setHorizontalGroup(groupLayout.createSequentialGroup()
@@ -46,8 +86,10 @@ public class ScorePanel extends JPanel {
                         .addComponent(textFieldName)
                         .addComponent(textFieldDepartment)
                         .addComponent(buttonSearch))
-                .addComponent(buttonAdd)
                 .addComponent(buttonUpdate)
+                .addComponent(buttonDay)
+                .addComponent(buttonAll)
+
 
         );
 
@@ -60,44 +102,41 @@ public class ScorePanel extends JPanel {
                         .addComponent(textFieldDepartment))
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addComponent(buttonSearch)
-                        .addComponent(buttonAdd)
-                        .addComponent(buttonUpdate))
+                        .addComponent(buttonUpdate)
+                        .addComponent(buttonDay)
+                        .addComponent(buttonAll))
         );
 
 
+        panelGauche.add(panelInfo, BorderLayout.NORTH);
 
-        panelGauche.add(panelInfo,BorderLayout.NORTH);
-
-        String[] columns = new String[] {
-                "Name", "Heure","Date"
+        String[] columns = new String[]{
+                "Name", "Heure", "Date"
         };
 
         //données pour JTable dans un tableau 2D
-        Object[][] data = new Object[][] {
-                {"Thomas", 12.00, 0 },
-                {"Thomas", 12.00, 0 },
-                {"Thomas", 12.00, 0 },
-                {"Thomas", 12.00, 0 },
-                {"Thomas", 12.00, 0 },
-                {"Thomas", 12.00, 0 },
-                {"Thomas", 12.00, 0 }
+        Object[][] data = new Object[][]{
+                {"Thomas", 12.00, 0},
+                {"Thomas", 12.00, 0},
+                {"Thomas", 12.00, 0},
+                {"Thomas", 12.00, 0},
+                {"Thomas", 12.00, 0},
+                {"Thomas", 12.00, 0},
+                {"Thomas", 12.00, 0}
         };
 
         //crée un JTable avec des données
-        JTable table = new JTable(data, columns);
-        table.setDefaultEditor(Object.class, null);
-        JScrollPane scroll = new JScrollPane(table);
+        table = new JTable(data,columns);
+
+        scroll = new JScrollPane(table);
         //table.setFillsViewportHeight(true);
 
         //scroll.setPreferredSize();
-        panelGauche.add(scroll,BorderLayout.CENTER);
-
-
-
+        panelGauche.add(scroll, BorderLayout.CENTER);
 
 
         //Panel droit
-        JPanel panelDroite = new JPanel();
+        panelDroite = new JPanel();
 
         GroupLayout groupLayoutDroite = new GroupLayout(panelDroite);
         groupLayoutDroite.setAutoCreateGaps(true);
@@ -109,9 +148,9 @@ public class ScorePanel extends JPanel {
         JLabel houseDiffLabel = new JLabel("Hours difference:");
         JLabel lastSeenLabel = new JLabel("LastSeen:");
 
-        JLabel employeeName = new JLabel("George Hamid");
-        JLabel departmentName = new JLabel("Chafodaj");
-        JLabel houseDiff = new JLabel("40");
+        JLabel employeeName = new JLabel();
+        JLabel departmentName = new JLabel();
+        JLabel houseDiff = new JLabel();
         JLabel lastSeen = new JLabel();
 
 
@@ -146,35 +185,46 @@ public class ScorePanel extends JPanel {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = table.rowAtPoint(evt.getPoint());
-                if (row >= 0 ) {
-                    Employee e = Employee.getEmplyeeParId((int)table.getValueAt(row,0));
+                if (row >= 0) {
+                    selectedEmployee = Score.historique.get(row).getEmployee();
+                    selectedRow = row;
 
-                    int heures = e.getLastScore().getHeure().getHours();
-                    int minutes = e.getLastScore().getHeure().getMinutes();
+                    int heures = 0;
+                    int minutes = 0;
+                    Score lastScore = selectedEmployee.getLastScore();
+                    if(lastScore!=null){
+                        heures = lastScore.getHeure().getHours();
+                        minutes = lastScore.getHeure().getMinutes();
+                    }
 
-                    employeeName.setText(e.getNameEmployee() + e.getSurnameEmployee());
-                    departmentName.setText(e.getDepartment().getNameDepartment());
+                    employeeName.setText(selectedEmployee.getNameEmployee() +" "+ selectedEmployee.getSurnameEmployee());
+                    departmentName.setText(selectedEmployee.getDepartment().getNameDepartment());
                     lastSeen.setText(heures+":"+minutes);
                 }
             }
         });
-        panelDroite.setPreferredSize(new Dimension(300,400));
+        panelDroite.setPreferredSize(new Dimension(300, 400));
         panelDroite.setBackground(new Color(199, 199, 199));
-        panelGauche.setBorder(BorderFactory.createEmptyBorder(5,5 ,5 , 10));
+        panelGauche.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 10));
         add(panelGauche, BorderLayout.CENTER);
         add(panelDroite, BorderLayout.EAST);
+
     }
+        public void loadJtableScore(){
+            String[] entete = {"Name","Hours","Date"};
+            Object[][] datascore = new Object[Score.historique.size()][3];
+            int index = 0;
+            for(Score s : Score.historique){
+                datascore[index][0] = s.getEmployee().getNameEmployee();
+                datascore[index][1] = s.getHeure().toString();
+                datascore[index][2] = 0;// date
 
-/*
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+                index++;
+            }
+            ((DefaultTableModel)table.getModel()).setDataVector(datascore,entete);
 
-        int r = (int) (Math.random() * 255);
-        int gr = (int) (Math.random() * 255);
-        int b = (int) (Math.random() * 255);
+        }
 
-        setBackground(new Color(r,gr,b));
-    }*/
+
 }
 
