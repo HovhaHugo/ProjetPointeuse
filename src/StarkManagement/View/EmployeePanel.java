@@ -137,7 +137,7 @@ public class EmployeePanel extends JPanel {
                         minutes = lastScore.getHeure().getMinutes();
                     }
 
-                    employeeName.setText(selectedEmployee.getNameEmployee() + selectedEmployee.getSurnameEmployee());
+                    employeeName.setText(selectedEmployee.getNameEmployee() +" "+ selectedEmployee.getSurnameEmployee());
                     departmentName.setText(selectedEmployee.getDepartment().getNameDepartment());
                     hoursDiff.setText(selectedEmployee.getStockHoure()+"");
                     lastSeen.setText(heures+":"+minutes);
