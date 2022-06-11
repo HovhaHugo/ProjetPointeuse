@@ -24,8 +24,8 @@ public class Main {
         FileManipulator.exportPointeuseSetting(s);
         FileManipulatorCheck.exportSetting(sPointeuse);*/
 
-        //new Thread(() -> new MainWindow()).start();
-        new Thread(() -> new Window()).start();
+        new Thread(() -> new MainWindow()).start();
+        //new Thread(() -> new Window()).start();
 
     }
 }

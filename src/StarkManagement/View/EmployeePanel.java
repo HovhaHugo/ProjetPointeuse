@@ -1,15 +1,16 @@
 package StarkManagement.View;
 
 import StarkManagement.Model.Company;
+import StarkManagement.Model.Department;
 import StarkManagement.Model.Employee;
 import StarkManagement.Model.Score;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class EmployeePanel extends JPanel {
 
@@ -28,8 +29,24 @@ public class EmployeePanel extends JPanel {
     JScrollPane scroll;
     JTable table;
 
+    //temp to avoid bug if the company dep list is change between an other change
+    ArrayList<Department> depListTemp;
     Employee selectedEmployee;
     int selectedRow;
+
+    boolean updateMode = false;
+
+    JLabel nameLabel = new JLabel("Name:");
+    JLabel firstnameLabel = new JLabel("Firstname:");
+    JLabel departmentLabel = new JLabel("Department:");
+    JLabel houseDiffLabel = new JLabel("Hours difference:");
+    JLabel lastSeenLabel = new JLabel("LastSeen:");
+
+    JTextField employeeNameTextfield;
+    JTextField employeeFirstnameTextfield;
+    JComboBox departmentNameCombo;
+    JLabel hoursDiff;
+    JLabel lastSeen;
 
     EmployeePanel(Company pCompany){
 
@@ -64,6 +81,7 @@ public class EmployeePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadJtable();
+                depListTemp = new ArrayList<>(company.getListDepartment());
             }
         });
 
@@ -95,6 +113,10 @@ public class EmployeePanel extends JPanel {
                         .addComponent(reloadButton))
         );
 
+
+
+
+
         panelGauche.add(panelInfo,BorderLayout.NORTH);
 
         table = new JTable();
@@ -111,15 +133,19 @@ public class EmployeePanel extends JPanel {
         groupLayoutDroite.setAutoCreateContainerGaps(true);
         panelDroite.setLayout(groupLayoutDroite);
 
-        JLabel nameLabel = new JLabel("Name:");
-        JLabel departmentLabel = new JLabel("Department:");
-        JLabel houseDiffLabel = new JLabel("Hours difference:");
-        JLabel lastSeenLabel = new JLabel("LastSeen:");
+        employeeNameTextfield = new JTextField();
+        employeeNameTextfield.setEditable(false);
 
-        JLabel employeeName = new JLabel();
-        JLabel departmentName = new JLabel();
-        JLabel hoursDiff = new JLabel();
-        JLabel lastSeen = new JLabel();
+        employeeFirstnameTextfield = new JTextField();
+        employeeFirstnameTextfield.setEditable(false);
+
+        departmentNameCombo = new JComboBox();
+        departmentNameCombo.setEnabled(false);
+
+        hoursDiff = new JLabel();
+        lastSeen = new JLabel();
+
+        depListTemp = new ArrayList<>(company.getListDepartment());
 
         table.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -137,10 +163,21 @@ public class EmployeePanel extends JPanel {
                         minutes = lastScore.getHeure().getMinutes();
                     }
 
-                    employeeName.setText(selectedEmployee.getNameEmployee() +" "+ selectedEmployee.getSurnameEmployee());
-                    departmentName.setText(selectedEmployee.getDepartment().getNameDepartment());
+                    employeeNameTextfield.setText(selectedEmployee.getNameEmployee());
+                    employeeFirstnameTextfield.setText(selectedEmployee.getSurnameEmployee());
                     hoursDiff.setText(selectedEmployee.getStockHoure()+"");
                     lastSeen.setText(heures+":"+minutes);
+
+                    int currentRow = 0;
+                    for(int i = 0; i< depListTemp.size(); i++){
+                        Department d = depListTemp.get(i);
+                        departmentNameCombo.addItem(d.getNameDepartment());
+                        if(d == selectedEmployee.getDepartment())
+                            currentRow = i;
+                    }
+                    departmentNameCombo.setSelectedIndex(currentRow);
+                    if(updateMode==true)
+                        toggleUpdateMode();
                 }
             }
         });
@@ -149,7 +186,16 @@ public class EmployeePanel extends JPanel {
         buttonUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadJtable();
+                if(updateMode==false){
+                    toggleUpdateMode();
+                }else{
+                    toggleUpdateMode();
+                    loadJtable();
+                    selectedEmployee.setNameEmployee(employeeNameTextfield.getText());
+                    selectedEmployee.setSurnameEmployee(employeeFirstnameTextfield.getText());
+                    selectedEmployee.setDepartment(depListTemp.get(departmentNameCombo.getSelectedIndex()));
+                    loadJtable();
+                }
             }
         });
 
@@ -169,13 +215,15 @@ public class EmployeePanel extends JPanel {
         groupLayoutDroite.setHorizontalGroup(groupLayoutDroite.createSequentialGroup()
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(nameLabel)
+                        .addComponent(firstnameLabel)
                         .addComponent(departmentLabel)
                         .addComponent(houseDiffLabel)
                         .addComponent(lastSeenLabel)
                         .addComponent(buttonUpdate))
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(employeeName)
-                        .addComponent(departmentName)
+                        .addComponent(employeeNameTextfield)
+                        .addComponent(employeeFirstnameTextfield)
+                        .addComponent(departmentNameCombo)
                         .addComponent(hoursDiff)
                         .addComponent(lastSeen)
                         .addComponent(buttonDelete))
@@ -184,10 +232,13 @@ public class EmployeePanel extends JPanel {
         groupLayoutDroite.setVerticalGroup(groupLayoutDroite.createSequentialGroup()
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(nameLabel)
-                        .addComponent(employeeName))
+                        .addComponent(employeeNameTextfield))
+                .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(firstnameLabel)
+                        .addComponent(employeeFirstnameTextfield))
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(departmentLabel)
-                        .addComponent(departmentName))
+                        .addComponent(departmentNameCombo))
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(houseDiffLabel)
                         .addComponent(hoursDiff))
@@ -206,7 +257,7 @@ public class EmployeePanel extends JPanel {
         add(panelDroite, BorderLayout.EAST);
     }
 
-    public void loadJtable(){
+    private void loadJtable(){
         String[] entete = {"ID","Name","Firstname","Department"};
         Object[][] data = new Object[Employee.listEmployee.size()][4];
         int index = 0;
@@ -221,5 +272,24 @@ public class EmployeePanel extends JPanel {
         }
         ((DefaultTableModel)table.getModel()).setDataVector(data,entete);
     }
+
+    private void toggleUpdateMode(){
+        if(updateMode==false){
+            updateMode = true;
+            buttonUpdate.setText("Confirm");
+            employeeNameTextfield.setEditable(true);
+            employeeFirstnameTextfield.setEditable(true);
+            departmentNameCombo.setEnabled(true);
+        }else{
+            updateMode = false;
+            buttonUpdate.setText("Update");
+            employeeNameTextfield.setEditable(false);
+            employeeFirstnameTextfield.setEditable(false);
+            departmentNameCombo.setEnabled(false);
+        }
+
+
+    }
+
 
 }
