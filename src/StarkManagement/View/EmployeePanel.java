@@ -6,6 +6,7 @@ import StarkManagement.Model.Employee;
 import StarkManagement.Model.Score;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;

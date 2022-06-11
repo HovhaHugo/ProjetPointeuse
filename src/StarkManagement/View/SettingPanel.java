@@ -29,13 +29,11 @@ public class SettingPanel extends JPanel {
     SettingPanel(Settings settings) {
 
         setLayout(new BorderLayout());
-        setBackground(Color.BLACK);
+        setBackground(Color.LIGHT_GRAY);
 
         JPanel panelGauche = new JPanel(new BorderLayout());
-        panelGauche.setBackground(Color.BLACK);
 
         JPanel panelInfo = new JPanel();
-        panelInfo.setBackground(Color.BLACK);
 
         GroupLayout groupLayout = new GroupLayout(panelInfo);
         groupLayout.setAutoCreateGaps(true);
@@ -47,22 +45,16 @@ public class SettingPanel extends JPanel {
 
         portTextfield = new JTextField();
         portTextfield.setText(""+settings.getPort());
-        portTextfield.setBackground(Color.BLACK);
-        portTextfield.setBorder(new LineBorder(Color.CYAN,1));
-        portTextfield.setForeground(Color.WHITE);
 
         adressLabel = new JLabel("Adress : ");
         adressLabel.setForeground(Color.WHITE);
 
         adressTextfield = new JTextField();
         adressTextfield.setText(settings.getIp());
-        adressTextfield.setBackground(Color.BLACK);
-        adressTextfield.setBorder(new LineBorder(Color.CYAN,1));
-        adressTextfield.setForeground(Color.WHITE);
-
 
         checkButton = new JButton("Valid");
 
+        JLabel spaceMaker = new JLabel("                          ");
 
         groupLayout.setHorizontalGroup(groupLayout.createSequentialGroup()
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -71,15 +63,16 @@ public class SettingPanel extends JPanel {
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(portTextfield)
                         .addComponent(adressTextfield)
-                .addComponent(checkButton)
-                )
-
+                        .addComponent(checkButton))
+                .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(spaceMaker))
         );
 
         groupLayout.setVerticalGroup(groupLayout.createSequentialGroup()
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(portLabel)
-                        .addComponent(portTextfield))
+                        .addComponent(portTextfield)
+                        .addComponent(spaceMaker))
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(adressLabel)
                         .addComponent(adressTextfield))
@@ -97,7 +90,7 @@ public class SettingPanel extends JPanel {
 
         //Panel droit
         JPanel panelDroite = new JPanel();
-        panelDroite.setBackground(Color.GRAY);
+        panelDroite.setBackground(Color.LIGHT_GRAY);
 
         GroupLayout groupLayoutDroite = new GroupLayout(panelDroite);
         groupLayoutDroite.setAutoCreateGaps(true);
@@ -106,10 +99,10 @@ public class SettingPanel extends JPanel {
 
         JLabel descriptionLabel = new JLabel("Description:");
 
-        JLabel descriptionText1 = new JLabel("Cette partie permet de regler le port et l'adresse ");
+        JLabel descriptionText1 = new JLabel("Cette partie permet de regler le port et l'ip ");
         JLabel descriptionText2 = new JLabel("qui vont nous être utile pour l'envoie de données");
-        JLabel descriptionPort = new JLabel(" - Port : Port d'acoute de la pointeuse");
-        JLabel descriptionAdress = new JLabel(" - Adresse : Adresse de la pointeuse)");
+        JLabel descriptionPort = new JLabel(" - Port : Port d'écoute de la pointeuse");
+        JLabel descriptionAdress = new JLabel(" - Adresse : Adresse de la pointeuse");
 
         errorLabel = new JLabel("");
         descriptionError = new JLabel("");
@@ -117,18 +110,18 @@ public class SettingPanel extends JPanel {
         groupLayoutDroite.setHorizontalGroup(groupLayoutDroite.createSequentialGroup()
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(descriptionLabel)
-                        .addComponent(errorLabel))
-                .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(descriptionText1)
                         .addComponent(descriptionText2)
                         .addComponent(descriptionPort)
                         .addComponent(descriptionAdress)
+                        .addComponent(errorLabel)
                         .addComponent(descriptionError))
         );
 
         groupLayoutDroite.setVerticalGroup(groupLayoutDroite.createSequentialGroup()
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(descriptionLabel)
+                        .addComponent(descriptionLabel))
+                .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(descriptionText1))
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(descriptionText2))
@@ -142,7 +135,7 @@ public class SettingPanel extends JPanel {
                         .addComponent(descriptionError))
         );
 
-        panelDroite.setPreferredSize(new Dimension(400,400));
+        panelDroite.setPreferredSize(new Dimension(300,400));
         panelGauche.setBorder(BorderFactory.createEmptyBorder(5,5 ,5 , 10));
         add(panelGauche, BorderLayout.CENTER);
         add(panelDroite, BorderLayout.EAST);
@@ -155,7 +148,7 @@ public class SettingPanel extends JPanel {
         String adress = adressTextfield.getText();
         try{
             port = Integer.parseInt(portTextfield.getText());
-            portTextfield.setBorder(new LineBorder(Color.CYAN,1));
+            portTextfield.setBorder(new LineBorder(Color.GREEN,1));
         }catch (NumberFormatException error){
             port = -1;
             portTextfield.setBorder(new LineBorder(Color.RED,1));
@@ -174,10 +167,10 @@ public class SettingPanel extends JPanel {
                 //errorLabel.setText("Error : Adresse IP non valide");
                 adressTextfield.setBorder(new LineBorder(Color.RED,1));
             }else{
-                adressTextfield.setBorder(new LineBorder(Color.CYAN,1));
+                adressTextfield.setBorder(new LineBorder(Color.GREEN,1));
             }
         }else{
-            adressTextfield.setBorder(new LineBorder(Color.CYAN,1));
+            adressTextfield.setBorder(new LineBorder(Color.GREEN,1));
         }
         errorLabel.setText("Error :");
         descriptionError.setText(errorText);

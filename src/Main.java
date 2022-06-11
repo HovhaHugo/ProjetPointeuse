@@ -4,6 +4,9 @@ import Pointeuse.View.Window;
 import StarkManagement.Model.*;
 import StarkManagement.View.MainWindow;
 
+import javax.swing.*;
+import java.awt.*;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -24,7 +27,15 @@ public class Main {
         FileManipulator.exportPointeuseSetting(s);
         FileManipulatorCheck.exportSetting(sPointeuse);*/
 
-        new Thread(() -> new Window()).start();
+        try
+        {
+            UIManager.put("TabbedPane.selected", Color.LIGHT_GRAY);
+
+        } catch (Exception ee){
+            ee.printStackTrace();
+        }
+
+        //new Thread(() -> new Window()).start();
         new Thread(() -> new MainWindow()).start();
 
     }

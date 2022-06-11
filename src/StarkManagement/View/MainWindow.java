@@ -8,6 +8,7 @@ import StarkManagement.TCPCommunication.TCPClientMain;
 import StarkManagement.TCPCommunication.TCPServerMain;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -22,9 +23,14 @@ public class MainWindow extends JFrame{
 
     public MainWindow() {
 
-
         /*settings = new Settings("localhost",8080);
         FileManipulator.exportMainAppSetting(settings);*/
+
+        setTitle("Stark Management");
+        ImageIcon img = new ImageIcon("data/img/stark.png");
+        setIconImage(img.getImage());
+
+        getContentPane().setBackground(Color.DARK_GRAY);
 
         settings = FileManipulator.importMainAppSetting();
         company = FileManipulator.importCompany();
@@ -41,6 +47,7 @@ public class MainWindow extends JFrame{
         });
 
         JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane.setBackground(Color.GRAY);
 
         EmployeePanel employeePanel = new EmployeePanel(company);
         ScorePanel scorePanel = new ScorePanel();
