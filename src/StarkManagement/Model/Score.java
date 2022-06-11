@@ -14,8 +14,8 @@ public class Score implements Serializable
     private Employee employee;
     private Hours heure;
 
-    private static ArrayList<Score> historique;
-    private static ArrayList<Score> historiqueTemp;
+    private static ArrayList<Score> historique = new ArrayList<>();
+    private static ArrayList<Score> historiqueTemp = new ArrayList<>();
 
     public Score(Employee employee, Hours heure) {
         this.employee = employee;

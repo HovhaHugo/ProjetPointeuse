@@ -1,12 +1,13 @@
 package Common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
  * Light version of a Score. The full version is only used in the application StarkManagement
  */
-public class ScoreShort {
+public class ScoreShort implements Serializable {
 
     private EmployeeShort employee;
     private Hours hours;

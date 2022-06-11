@@ -209,6 +209,7 @@ public class EmployeePanel extends JPanel {
                 Employee.listEmployee.remove(selectedEmployee);
                 selectedEmployee.getDepartment().getListEmployee().remove(selectedEmployee);
                 ((DefaultTableModel)table.getModel()).removeRow(selectedRow);
+                MainWindow.sendEmployeeList();
             }
         });
 

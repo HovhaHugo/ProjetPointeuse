@@ -86,7 +86,7 @@ public class Window extends JFrame {
      */
     public void sendAllScore(){
         ArrayList<ScoreShort> scores = ScoreShort.getScoreList();
-        new Thread(client = new TCPClientCheck(scores,settings));
+        new Thread(client = new TCPClientCheck(scores,settings)).start();
     }
 
     public void forceUpdate(){

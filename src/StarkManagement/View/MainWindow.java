@@ -22,8 +22,11 @@ public class MainWindow extends JFrame{
 
     public MainWindow() {
 
-        settings = new Settings("localhost",8080);
-        //settings = FileManipulator.importMainAppSetting();
+
+        /*settings = new Settings("localhost",8080);
+        FileManipulator.exportMainAppSetting(settings);*/
+
+        settings = FileManipulator.importMainAppSetting();
         company = FileManipulator.importCompany();
         Employee.setEmployeeList(company);
 

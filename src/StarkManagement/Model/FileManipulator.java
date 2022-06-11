@@ -9,7 +9,7 @@ public class FileManipulator {
 
         Settings settings = null;
 
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream("data/serializable/mainAppSettings.dat"))
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream("data/serializable/settingsMainApp.dat"))
         ){
             settings = (Settings) input.readObject();
         } catch (IOException | ClassNotFoundException e) {
@@ -21,7 +21,7 @@ public class FileManipulator {
 
     public static void exportMainAppSetting(Settings settings){
 
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("data/serializable/pointeuseSettings.dat"))
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("data/serializable/settingsMainApp.dat"))
         ){
             output.writeObject(settings);
 
@@ -62,12 +62,11 @@ public class FileManipulator {
             in.close();
             file.close();
 
-
         }
 
         catch(IOException ex)
         {
-            System.out.println("IOException is caught");
+            ex.printStackTrace();
         }
 
         catch(ClassNotFoundException ex)
