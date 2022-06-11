@@ -1,9 +1,6 @@
 package StarkManagement.View;
 
-import StarkManagement.Model.Company;
-import StarkManagement.Model.Employee;
-import StarkManagement.Model.FileManipulator;
-import StarkManagement.Model.Settings;
+import StarkManagement.Model.*;
 import StarkManagement.TCPCommunication.TCPClientMain;
 import StarkManagement.TCPCommunication.TCPServerMain;
 
@@ -21,6 +18,9 @@ public class MainWindow extends JFrame{
 
     static Settings settings;
 
+    ScorePanel scorePanel;
+    EmployeePanel employeePanel;
+
     public MainWindow() {
 
         /*settings = new Settings("localhost",8080);
@@ -36,7 +36,7 @@ public class MainWindow extends JFrame{
         company = FileManipulator.importCompany();
         Employee.setEmployeeList(company);
 
-        new Thread(tcpServerMain = new TCPServerMain()).start();
+        new Thread(tcpServerMain = new TCPServerMain(this)).start();
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -49,8 +49,8 @@ public class MainWindow extends JFrame{
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.setBackground(Color.GRAY);
 
-        EmployeePanel employeePanel = new EmployeePanel(company);
-        ScorePanel scorePanel = new ScorePanel();
+        employeePanel = new EmployeePanel(company);
+        scorePanel = new ScorePanel();
         SettingPanel settingPanel = new SettingPanel(settings);
 
         tabbedPane.add("Check", scorePanel);
@@ -74,6 +74,11 @@ public class MainWindow extends JFrame{
         FileManipulator.exportCompany(company);
         tcpServerMain.shutdown();
         dispose();
+    }
+
+    public void forceUpdate(){
+        Score.SaveListScore();
+        scorePanel.loadJtableScore();
     }
 
 

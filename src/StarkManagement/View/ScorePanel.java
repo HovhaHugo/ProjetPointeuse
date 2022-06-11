@@ -121,7 +121,8 @@ public class ScorePanel extends JPanel {
         Object[][] data = new Object[][]{};
 
         //crée un JTable avec des données
-        table = new JTable(data,columns);
+        table = new JTable();
+        loadJtableScore();
 
         scroll = new JScrollPane(table);
         //table.setFillsViewportHeight(true);
@@ -205,20 +206,22 @@ public class ScorePanel extends JPanel {
         add(panelDroite, BorderLayout.EAST);
 
     }
-        public void loadJtableScore(){
-            String[] entete = {"Name","Hours","Date"};
-            Object[][] datascore = new Object[Score.historique.size()][3];
-            int index = 0;
-            for(Score s : Score.historique){
-                datascore[index][0] = s.getEmployee().getNameEmployee();
-                datascore[index][1] = s.getHeure().toString();
-                datascore[index][2] = s.getHeure().getDate().toString();
 
-                index++;
-            }
-            ((DefaultTableModel)table.getModel()).setDataVector(datascore,entete);
+    public void loadJtableScore(){
+        String[] entete = {"Name","Hours","Date"};
+        Object[][] datascore = new Object[Score.historique.size()][3];
+        int index = 0;
+        for(Score s : Score.historique){
+            datascore[index][0] = s.getEmployee().getNameEmployee();
+            datascore[index][1] = s.getHeure().toString();
+            datascore[index][2] = s.getHeure().getDate().toString();
 
+            index++;
         }
+        ((DefaultTableModel)table.getModel()).setDataVector(datascore,entete);
+
+    }
+
     public void loadJtableScoreoftheday(){
         String[] entete = {"Name","Hours","Date"};
         Object[][] datascore = new Object[Score.historique.size()][3];

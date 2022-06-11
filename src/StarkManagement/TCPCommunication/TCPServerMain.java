@@ -2,6 +2,8 @@ package StarkManagement.TCPCommunication;
 
 import Common.ScoreShort;
 import StarkManagement.Model.Score;
+import StarkManagement.View.MainWindow;
+import com.sun.tools.javac.Main;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,12 +19,15 @@ public class TCPServerMain implements Runnable{
 
     private boolean running = true;
 
+    MainWindow owner;
+
     /**
      * Constructor of the server of the main application
      * Listening on 'listeningPort'
      * Valid data are only ArrayList<ScoreShort> class
      */
-    public TCPServerMain(){
+    public TCPServerMain(MainWindow pOwner){
+        owner=pOwner;
     }
 
     @Override
@@ -59,7 +64,7 @@ public class TCPServerMain implements Runnable{
     /**
      * Parallel thread to read the data sent
      */
-    private static class threadAcceptConnection implements Runnable{
+    private class threadAcceptConnection implements Runnable{
 
         ObjectInputStream ois;
 
@@ -74,6 +79,7 @@ public class TCPServerMain implements Runnable{
                 liste =(ArrayList<ScoreShort>) ois.readObject();
                 for(ScoreShort o : liste)
                     new Score(o);
+                owner.forceUpdate();
                 ois.close();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
