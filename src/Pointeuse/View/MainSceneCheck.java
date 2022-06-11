@@ -1,8 +1,8 @@
 package Pointeuse.View;
 
-import Pointeuse.Controller.HoursCheck;
-import Pointeuse.Controller.PersonnShortCheck;
-import Pointeuse.Controller.ScoreShortCheck;
+import Common.Hours;
+import Common.EmployeeShort;
+import Common.ScoreShort;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -12,9 +12,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 public class MainSceneCheck extends JPanel {
 
@@ -36,8 +33,8 @@ public class MainSceneCheck extends JPanel {
     private JLabel settingsButton;
     private JLabel exitButton;
 
-    private HoursCheck currentHours;
-    private HoursCheck hoursRounded;
+    private Hours currentHours;
+    private Hours hoursRounded;
 
     private final static int tickrate = 70; //environ 10 secondes
     private int tick = tickrate;
@@ -63,8 +60,8 @@ public class MainSceneCheck extends JPanel {
 
         ownerWindow = pOwner;
 
-        currentHours = new HoursCheck();
-        hoursRounded = new HoursCheck();
+        currentHours = new Hours();
+        hoursRounded = new Hours();
 
 
         //Image loading
@@ -102,7 +99,7 @@ public class MainSceneCheck extends JPanel {
         roundedHourLabel.setFont(new Font("SansSerif", Font.BOLD, 30));
 
         //Combobox
-        combobox = new JComboBox(PersonnShortCheck.getPersonnListString().toArray());
+        combobox = new JComboBox(EmployeeShort.getPersonnListString().toArray());
         combobox.setEditable(true);
         combobox.setMaximumRowCount(5);
         combobox.setSelectedIndex(-1);
@@ -171,6 +168,10 @@ public class MainSceneCheck extends JPanel {
      */
     public void forceUpdate(){
         tick = tickrate;
+        combobox.removeAllItems();
+        for(String e : EmployeeShort.getPersonnListString())
+            combobox.addItem(e);
+
         update();
     }
 
@@ -214,7 +215,7 @@ public class MainSceneCheck extends JPanel {
             roundedHourLabel.setText("~"+hoursRounded.toString());
 
             if(currentHours.getMinutes() % ownerWindow.minutesBetweentest == 0){
-                if(ownerWindow.isTestSendDone() == false && ScoreShortCheck.getScoreList().isEmpty()==false){
+                if(ownerWindow.isTestSendDone() == false && ScoreShort.getScoreList().isEmpty()==false){
                     ownerWindow.sendAllScore();
                     ownerWindow.setTestSendDone(true);
                 }
@@ -234,26 +235,24 @@ public class MainSceneCheck extends JPanel {
     private void checkText(){
 
         String text = (String)combobox.getEditor().getItem();
-        if(text.equals("") || !ScoreShortCheck.isDayValid()){
+        if(text.equals("") || !ScoreShort.isDayValid()){
             tickErrorAnimation++;
             return;
         }
 
-        System.out.println(text);
-
-        PersonnShortCheck exist = null;
+        EmployeeShort exist = null;
 
         String extractId = text.replaceAll("[^0-9]", "");
         String extractName = text.replaceAll("[^a-zA-Z].*", "");
 
         if(!extractId.equals("")){
-            exist = PersonnShortCheck.getPersonn(Integer.parseInt(extractId));
+            exist = EmployeeShort.getPersonn(Integer.parseInt(extractId));
         }
         if(exist==null)
-            exist = PersonnShortCheck.getPersonn(extractName);
+            exist = EmployeeShort.getPersonn(extractName);
 
         if(exist!=null){
-            new ScoreShortCheck(exist, new HoursCheck(currentHours));
+            new ScoreShort(exist, new Hours(currentHours));
             ownerWindow.sendAllScore();
         }else{
             combobox.setSelectedIndex(-1);

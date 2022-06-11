@@ -1,9 +1,8 @@
-package Pointeuse.Controller;
+package Common;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
-public class HoursCheck {
+public class Hours {
 
     private int hours;
     private int minutes;
@@ -12,7 +11,7 @@ public class HoursCheck {
     /**
      * Constructor of Hours, initialise hours and minutes with LocalDatTime.now() values
      */
-    public HoursCheck(){
+    public Hours() {
         LocalDateTime now = LocalDateTime.now();
         hours = now.getHour();
         minutes = now.getMinute();
@@ -21,9 +20,10 @@ public class HoursCheck {
 
     /**
      * Copy constructor of Hours
+     *
      * @param toCopy the object to duplicate
      */
-    public HoursCheck(HoursCheck toCopy){
+    public Hours(Hours toCopy) {
         hours = toCopy.hours;
         minutes = toCopy.minutes;
         date = toCopy.date;
@@ -32,7 +32,7 @@ public class HoursCheck {
     /**
      * Update the hours and minutes variables with LocalDateTime.now()
      */
-    public void update(){
+    public void update() {
         LocalDateTime now = LocalDateTime.now();
         hours = now.getHour();
         minutes = now.getMinute();
@@ -42,37 +42,40 @@ public class HoursCheck {
     /**
      * Round the current time to the nearest fifteen minutes
      */
-    public void roundNextQuarter(){
+    public void roundNextQuarter() {
 
-        while(minutes%15!=0){
+        while (minutes % 15 != 0) {
             minutes++;
-            if(minutes==60){
+            if (minutes == 60) {
                 minutes = 0;
                 hours++;
-                if(hours==24)
-                    hours=0;
+                if (hours == 24)
+                    hours = 0;
             }
         }
+    }
 
+    public int minutesBetween(Hours scheduleHours) {
+        return (scheduleHours.hours - hours) * 60 + (scheduleHours.minutes - minutes);
     }
 
     @Override
-    public String toString(){
+    public String toString() {
 
-        String hourString="";
-        String minuteString="";
+        String hourString = "";
+        String minuteString = "";
 
-        if(minutes<10){
-            minuteString+="0";
+        if (minutes < 10) {
+            minuteString += "0";
         }
-        minuteString +=minutes;
+        minuteString += minutes;
 
-        if(hours<10){
-            hourString+="0";
+        if (hours < 10) {
+            hourString += "0";
         }
-        hourString +=hours;
+        hourString += hours;
 
-        return hourString+":"+minuteString;
+        return hourString + ":" + minuteString;
     }
 
     public int getHours() {

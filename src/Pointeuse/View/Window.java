@@ -1,6 +1,6 @@
 package Pointeuse.View;
 
-import Pointeuse.Controller.ScoreShortCheck;
+import Common.ScoreShort;
 import Pointeuse.Model.FileManipulatorCheck;
 import Pointeuse.Model.SettingsCheck;
 import Pointeuse.Model.TCPClientCheck;
@@ -53,11 +53,11 @@ public class Window extends JFrame {
             this.setContentPane(mainScene =new MainSceneCheck(this));
             settingsScene = new SettingsSceneCheck(this);
 
-            ArrayList<ScoreShortCheck> remain = FileManipulatorCheck.importRemainingScoreShort();
+            ArrayList<ScoreShort> remain = FileManipulatorCheck.importRemainingScoreShort();
             if(remain !=null)
-                ScoreShortCheck.getScoreList().addAll(remain);
+                ScoreShort.getScoreList().addAll(remain);
 
-            new Thread(server = new TCPServerCheck()).start();
+            new Thread(server = new TCPServerCheck(this)).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,15 +85,12 @@ public class Window extends JFrame {
      * with previous send failures
      */
     public void sendAllScore(){
-        ArrayList<ScoreShortCheck> scores = ScoreShortCheck.getScoreList();
+        ArrayList<ScoreShort> scores = ScoreShort.getScoreList();
         new Thread(client = new TCPClientCheck(scores,settings));
     }
-    public void setTestSendDone(boolean t) {
-        testSendDone = t;
-    }
 
-    public boolean isTestSendDone() {
-        return testSendDone;
+    public void forceUpdate(){
+        mainScene.forceUpdate();
     }
 
     /**
@@ -102,7 +99,7 @@ public class Window extends JFrame {
     public void close(){
         server.shutdown();
         FileManipulatorCheck.exportSetting(settings);
-        FileManipulatorCheck.exportRemainingScoreShort(ScoreShortCheck.getScoreList());
+        FileManipulatorCheck.exportRemainingScoreShort(ScoreShort.getScoreList());
         dispose();
     }
 
@@ -131,6 +128,14 @@ public class Window extends JFrame {
         mainScene.forceUpdate();
         settingsScene.clear();
         settingsScene.save();
+    }
+
+    public void setTestSendDone(boolean t) {
+        testSendDone = t;
+    }
+
+    public boolean isTestSendDone() {
+        return testSendDone;
     }
 
     /**

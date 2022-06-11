@@ -5,13 +5,13 @@ import java.util.ArrayList;
 
 public class FileManipulator {
 
-    public static Setting importMainAppSetting(){
+    public static Settings importMainAppSetting(){
 
-        Setting settings = null;
+        Settings settings = null;
 
         try (ObjectInputStream input = new ObjectInputStream(new FileInputStream("data/serializable/mainAppSettings.dat"))
         ){
-            settings = (Setting) input.readObject();
+            settings = (Settings) input.readObject();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -19,7 +19,7 @@ public class FileManipulator {
         return settings;
     }
 
-    public static void exportMainAppSetting(Setting settings){
+    public static void exportMainAppSetting(Settings settings){
 
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("data/serializable/pointeuseSettings.dat"))
         ){

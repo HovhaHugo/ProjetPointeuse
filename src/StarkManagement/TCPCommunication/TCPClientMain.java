@@ -1,7 +1,8 @@
 package StarkManagement.TCPCommunication;
 
+import Common.EmployeeShort;
 import StarkManagement.Model.Employee;
-import StarkManagement.Model.Setting;
+import StarkManagement.Model.Settings;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -12,11 +13,14 @@ import java.util.ArrayList;
 public class TCPClientMain implements Runnable {
 
     Socket socket;
-    ArrayList<Employee> listToSend;
-    Setting settings;
+    ArrayList<EmployeeShort> listToSend;
+    Settings settings;
 
-    public TCPClientMain(ArrayList<Employee> pList, Setting pSettings){
-        listToSend = pList;
+    public TCPClientMain(ArrayList<Employee> pList, Settings pSettings){
+        listToSend = new ArrayList<>();
+        for(Employee e : pList){
+            listToSend.add(new EmployeeShort(e.getSurnameEmployee()+" "+e.getNameEmployee(), e.getIdentifiant()));
+        }
         settings = pSettings;
     }
 
@@ -27,14 +31,11 @@ public class TCPClientMain implements Runnable {
             OutputStream os = socket.getOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(os);
 
-            boolean success = true;
             try{
                 oos.writeObject(listToSend);
             } catch (IOException e) {
-                success = false;
+
             }
-            if(success)
-                listToSend.clear();
 
             oos.close();
             os.close();

@@ -1,5 +1,6 @@
 package StarkManagement.TCPCommunication;
 
+import Common.ScoreShort;
 import StarkManagement.Model.Score;
 
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class TCPServerMain implements Runnable{
 
     Socket socket;
+    final int listeningPort = 8081;
 
     private boolean running = true;
 
@@ -27,7 +29,6 @@ public class TCPServerMain implements Runnable{
     public void run() {
 
         try {
-            int listeningPort = 8080;
             ServerSocket serverSocket = new ServerSocket(listeningPort);
             serverSocket.setSoTimeout(0);
 
@@ -68,16 +69,15 @@ public class TCPServerMain implements Runnable{
 
         @Override
         public void run() {
-            ArrayList<Score> obj1;
-            /*try {
-                obj1 =(ArrayList<Score>) ois.readObject();
-                for(Score o : obj1){
-                    System.out.println(o.getHeure());
-                }
+            ArrayList<ScoreShort> liste;
+            try {
+                liste =(ArrayList<ScoreShort>) ois.readObject();
+                for(ScoreShort o : liste)
+                    new Score(o);
                 ois.close();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-            }*/
+            }
 
         }
     }

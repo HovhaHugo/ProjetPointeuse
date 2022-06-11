@@ -1,6 +1,6 @@
 package Pointeuse.Model;
 
-import Pointeuse.Controller.ScoreShortCheck;
+import Common.ScoreShort;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -11,10 +11,10 @@ import java.util.ArrayList;
 public class TCPClientCheck implements Runnable{
 
     Socket socket;
-    ArrayList<ScoreShortCheck> listToSend;
+    ArrayList<ScoreShort> listToSend;
     SettingsCheck settings;
 
-    public TCPClientCheck(ArrayList<ScoreShortCheck> pList, SettingsCheck pSettings){
+    public TCPClientCheck(ArrayList<ScoreShort> pList, SettingsCheck pSettings){
         listToSend = pList;
         settings = pSettings;
     }
@@ -28,7 +28,7 @@ public class TCPClientCheck implements Runnable{
 
             //If data are wrote in the object between writeObject and clear, they will be lost
             //So we create a temp list in an other ArrayList
-            ArrayList<ScoreShortCheck> listTempToSend = new ArrayList<>(listToSend);
+            ArrayList<ScoreShort> listTempToSend = new ArrayList<>(listToSend);
 
             boolean success = true;
             try{

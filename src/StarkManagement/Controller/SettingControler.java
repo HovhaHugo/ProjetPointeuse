@@ -1,11 +1,11 @@
 package StarkManagement.Controller;
 
 import StarkManagement.Model.FileManipulator;
-import StarkManagement.Model.Setting;
+import StarkManagement.Model.Settings;
 
 public class SettingControler {
-    static Setting server = new Setting("localhost", 8000);
-    static Setting pointeuse = new Setting("localhost", 8000);
+    static Settings server = new Settings("localhost", 8000);
+    static Settings pointeuse = new Settings("localhost", 8000);
 
     /**public static void main (String[] args) {
 

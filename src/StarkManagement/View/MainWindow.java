@@ -3,6 +3,8 @@ package StarkManagement.View;
 import StarkManagement.Model.Company;
 import StarkManagement.Model.Employee;
 import StarkManagement.Model.FileManipulator;
+import StarkManagement.Model.Settings;
+import StarkManagement.TCPCommunication.TCPClientMain;
 import StarkManagement.TCPCommunication.TCPServerMain;
 
 import javax.swing.*;
@@ -13,12 +15,15 @@ public class MainWindow extends JFrame{
 
     private Company company;
 
-    TCPServerMain tcpServerMain;
+    static TCPServerMain tcpServerMain;
+    static TCPClientMain tcpClientMain;
 
+    static Settings settings;
 
-    public MainWindow()
-    {
+    public MainWindow() {
 
+        settings = new Settings("localhost",8080);
+        //settings = FileManipulator.importMainAppSetting();
         company = FileManipulator.importCompany();
         Employee.setEmployeeList(company);
 
@@ -39,11 +44,18 @@ public class MainWindow extends JFrame{
 
         tabbedPane.add("Check",scorePanel);
         tabbedPane.add("Employees", employeePanel);
-        //Ajouter les onglets au frame
         add(tabbedPane);
         pack();
-        //setSize(width,height);
         setVisible(true);
+
+        sendEmployeeList();
+    }
+
+    /**
+     * Send with TCP to the checker the employee list
+     */
+    public static void sendEmployeeList(){
+        new Thread(tcpClientMain = new TCPClientMain(Employee.listEmployee,settings)).start();
     }
 
     public void close(){

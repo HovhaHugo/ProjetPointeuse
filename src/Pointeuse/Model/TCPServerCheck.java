@@ -1,6 +1,7 @@
 package Pointeuse.Model;
 
-import Pointeuse.Controller.PersonnShortCheck;
+import Common.EmployeeShort;
+import Pointeuse.View.Window;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,12 +19,15 @@ public class TCPServerCheck implements Runnable{
 
     private boolean running = true;
 
+    Window owner;
+
     /**
      * Constructor of the server of the check application
      * Listening on 'listeningPort'
      * Valid data are only ArrayList<PersonnShort> class
      */
-    public TCPServerCheck(){
+    public TCPServerCheck(Window pOwner){
+        owner = pOwner;
     }
 
     @Override
@@ -32,7 +36,6 @@ public class TCPServerCheck implements Runnable{
         try {
 
             serverSocket = new ServerSocket(listeningPort);
-
 
             while(running){
                 socket = serverSocket.accept();
@@ -67,9 +70,9 @@ public class TCPServerCheck implements Runnable{
         @Override
         public void run() {
             try {
-                ArrayList<PersonnShortCheck> listeReceived =(ArrayList<PersonnShortCheck>) ois.readObject();
-                PersonnShortCheck.setPersonnShortList(listeReceived);
-
+                ArrayList<EmployeeShort> listeReceived =(ArrayList<EmployeeShort>) ois.readObject();
+                EmployeeShort.setPersonnShortList(listeReceived);
+                owner.forceUpdate();
                 ois.close();
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

@@ -2,12 +2,12 @@ package StarkManagement.Model;
 
 import java.io.Serializable;
 
-public class Setting implements Serializable {
+public class Settings implements Serializable {
 
     private int port;
     private String ip;
 
-    public Setting(String newIp, int newPort){
+    public Settings(String newIp, int newPort){
         port = newPort;
         ip = newIp;
     }

@@ -1,6 +1,4 @@
-package StarkManagement.Controller;
-
-
+package Common;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,8 +8,8 @@ import java.util.Calendar;
  */
 public class ScoreShort {
 
-    private PersonnShort personne;
-    private Hours heure;
+    private EmployeeShort employee;
+    private Hours hours;
 
     private static ArrayList<ScoreShort> ScoreList = new ArrayList<>();
 
@@ -20,9 +18,9 @@ public class ScoreShort {
      * @param pPerson the employee who checked
      * @param pHours the hours of the checking
      */
-    public ScoreShort(PersonnShort pPerson, Hours pHours){
-        personne = pPerson;
-        heure = pHours;
+    public ScoreShort(EmployeeShort pPerson, Hours pHours){
+        employee = pPerson;
+        hours = pHours;
 
         ScoreList.add(this);
     }
@@ -32,25 +30,22 @@ public class ScoreShort {
      * @return false if it's saturday or sunday, else true
      */
     public static boolean isDayValid(){
-        int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
-        if(day==1 || day == 7)
-            return false;
+        //int day = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
+        //if(day==1 || day == 7)
+       //     return false;
         return true;
     }
 
     public static ArrayList<ScoreShort> getScoreList() {
         return ScoreList;
     }
-    public PersonnShort getPersonne() {
-        return this.personne;
+
+    public Hours getHours(){
+        return this.hours;
     }
+
 
     public int getEmployeeId() {
-        return this.personne.getId();
+        return employee.getId();
     }
-    public Hours getHeure(){
-        return  this.heure;
-    }
-
-
 }
