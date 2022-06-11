@@ -1,8 +1,9 @@
 package Common;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-public class Hours {
+public class Hours implements Serializable {
 
     private int hours;
     private int minutes;
