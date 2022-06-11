@@ -1,12 +1,9 @@
 package StarkManagement.View;
 
-import StarkManagement.Model.Company;
-import StarkManagement.Model.Department;
-import StarkManagement.Model.Employee;
-import StarkManagement.Model.Score;
+import Common.Hours;
+import StarkManagement.Model.*;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -45,9 +42,28 @@ public class EmployeePanel extends JPanel {
 
     JTextField employeeNameTextfield;
     JTextField employeeFirstnameTextfield;
+
+    JTextField mondayStartTimeTextfield;
+    JTextField mondayEndTimeTextfield;
+    JTextField tuesdayStartTimeTextfield;
+    JTextField tuesdayEndTimeTextfield;
+    JTextField wednesdayStartTimeTextfield;
+    JTextField wednesdayEndTimeTextfield;
+    JTextField thursdayStartTimeTextfield;
+    JTextField thursdayEndTimeTextfield;
+    JTextField fridayStartTimeTextfield;
+    JTextField fridayEndTimeTextfield;
     JComboBox departmentNameCombo;
     JLabel hoursDiff;
     JLabel lastSeen;
+    JLabel planningLabel;
+    JLabel mondayLabel;
+    JLabel tuesdayLabel;
+    JLabel wednesdayLabel;
+    JLabel thursdayLabel;
+    JLabel fridayLabel;
+
+
 
     EmployeePanel(Company pCompany){
 
@@ -146,6 +162,50 @@ public class EmployeePanel extends JPanel {
         hoursDiff = new JLabel();
         lastSeen = new JLabel();
 
+        Color c = Color.gray.brighter().brighter();
+
+        planningLabel = new JLabel("Planning :");
+        mondayLabel = new JLabel("  - Monday :");
+        mondayStartTimeTextfield = new JTextField();
+        mondayEndTimeTextfield= new JTextField();
+        mondayStartTimeTextfield.setEditable(false);
+        mondayEndTimeTextfield.setEditable(false);
+        mondayStartTimeTextfield.setBackground(c);
+        mondayEndTimeTextfield.setBackground(c);
+
+        tuesdayLabel = new JLabel("  - Tuesday :");
+        tuesdayStartTimeTextfield= new JTextField();
+        tuesdayEndTimeTextfield= new JTextField();
+        tuesdayStartTimeTextfield.setEditable(false);
+        tuesdayEndTimeTextfield.setEditable(false);
+        tuesdayStartTimeTextfield.setBackground(Color.LIGHT_GRAY);
+        tuesdayEndTimeTextfield.setBackground(Color.LIGHT_GRAY);
+
+        wednesdayLabel = new JLabel("  - Wednesday :");
+        wednesdayStartTimeTextfield= new JTextField();
+        wednesdayEndTimeTextfield= new JTextField();
+        wednesdayStartTimeTextfield.setEditable(false);
+        wednesdayEndTimeTextfield.setEditable(false);
+        wednesdayStartTimeTextfield.setBackground(Color.LIGHT_GRAY);
+        wednesdayEndTimeTextfield.setBackground(Color.LIGHT_GRAY);
+
+        thursdayLabel = new JLabel("  - Thursday :");
+        thursdayStartTimeTextfield= new JTextField();
+        thursdayEndTimeTextfield= new JTextField();
+        thursdayStartTimeTextfield.setEditable(false);
+        thursdayEndTimeTextfield.setEditable(false);
+        thursdayStartTimeTextfield.setBackground(Color.LIGHT_GRAY);
+        thursdayEndTimeTextfield.setBackground(Color.LIGHT_GRAY);
+
+        fridayLabel = new JLabel("  - Friday :");
+        fridayStartTimeTextfield= new JTextField();
+        fridayEndTimeTextfield= new JTextField();
+        fridayStartTimeTextfield.setEditable(false);
+        fridayEndTimeTextfield.setEditable(false);
+        fridayStartTimeTextfield.setBackground(Color.LIGHT_GRAY);
+        fridayEndTimeTextfield.setBackground(Color.LIGHT_GRAY);
+
+
         depListTemp = new ArrayList<>(company.getListDepartment());
 
         table.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -169,6 +229,17 @@ public class EmployeePanel extends JPanel {
                     hoursDiff.setText(selectedEmployee.getStockHoure()+"");
                     lastSeen.setText(heures+":"+minutes);
 
+                    mondayStartTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Monday).getStartTime().toString());
+                    mondayEndTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Monday).getEndTime().toString());
+                    tuesdayStartTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Tuesday).getStartTime().toString());
+                    tuesdayEndTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Tuesday).getEndTime().toString());
+                    wednesdayStartTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Wednesday).getStartTime().toString());
+                    wednesdayEndTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Wednesday).getEndTime().toString());
+                    thursdayStartTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Thursday).getStartTime().toString());
+                    thursdayEndTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Thursday).getEndTime().toString());
+                    fridayStartTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Friday).getStartTime().toString());
+                    fridayEndTimeTextfield.setText(selectedEmployee.getPlanning().getPlanning().get(Days.Friday).getEndTime().toString());
+
                     int currentRow = 0;
                     for(int i = 0; i< depListTemp.size(); i++){
                         Department d = depListTemp.get(i);
@@ -190,12 +261,40 @@ public class EmployeePanel extends JPanel {
                 if(updateMode==false){
                     toggleUpdateMode();
                 }else{
+                    if (isDateFormat()){
                     toggleUpdateMode();
                     loadJtable();
                     selectedEmployee.setNameEmployee(employeeNameTextfield.getText());
                     selectedEmployee.setSurnameEmployee(employeeFirstnameTextfield.getText());
                     selectedEmployee.setDepartment(depListTemp.get(departmentNameCombo.getSelectedIndex()));
-                    loadJtable();
+
+                    Hours hs1 = getHourFromText(mondayStartTimeTextfield.getText());
+                    Hours he1 = getHourFromText(mondayEndTimeTextfield.getText());
+                    selectedEmployee.getPlanning().getPlanning().get(Days.Monday).setStartTime(hs1);
+                    selectedEmployee.getPlanning().getPlanning().get(Days.Monday).setEndTime(he1);
+
+                    Hours hs2 = getHourFromText(tuesdayStartTimeTextfield.getText());
+                    Hours he2 = getHourFromText(tuesdayEndTimeTextfield.getText());
+                    selectedEmployee.getPlanning().getPlanning().get(Days.Tuesday).setStartTime(hs2);
+                    selectedEmployee.getPlanning().getPlanning().get(Days.Tuesday).setEndTime(he2);
+
+                    Hours hs3 = getHourFromText(wednesdayStartTimeTextfield.getText());
+                    Hours he3 = getHourFromText(wednesdayEndTimeTextfield.getText());
+                    selectedEmployee.getPlanning().getPlanning().get(Days.Wednesday).setStartTime(hs3);
+                    selectedEmployee.getPlanning().getPlanning().get(Days.Wednesday).setEndTime(he3);
+
+                    Hours hs4 = getHourFromText(thursdayStartTimeTextfield.getText());
+                    Hours he4 = getHourFromText(thursdayEndTimeTextfield.getText());
+                    selectedEmployee.getPlanning().getPlanning().get(Days.Thursday).setStartTime(hs4);
+                    selectedEmployee.getPlanning().getPlanning().get(Days.Thursday).setEndTime(he4);
+
+                    Hours hs5 = getHourFromText(fridayStartTimeTextfield.getText());
+                    Hours he5 = getHourFromText(fridayEndTimeTextfield.getText());
+                    selectedEmployee.getPlanning().getPlanning().get(Days.Friday).setStartTime(hs5);
+                    selectedEmployee.getPlanning().getPlanning().get(Days.Friday).setEndTime(he5);
+
+                    loadJtable();}
+                    else JOptionPane.showMessageDialog(new JFrame(), "mé bonn datt fdp.");
                 }
             }
         });
@@ -221,6 +320,12 @@ public class EmployeePanel extends JPanel {
                         .addComponent(departmentLabel)
                         .addComponent(houseDiffLabel)
                         .addComponent(lastSeenLabel)
+                        .addComponent(planningLabel)
+                        .addComponent(mondayLabel)
+                        .addComponent(tuesdayLabel)
+                        .addComponent(wednesdayLabel)
+                        .addComponent(thursdayLabel)
+                        .addComponent(fridayLabel)
                         .addComponent(buttonUpdate))
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addComponent(employeeNameTextfield)
@@ -228,6 +333,21 @@ public class EmployeePanel extends JPanel {
                         .addComponent(departmentNameCombo)
                         .addComponent(hoursDiff)
                         .addComponent(lastSeen)
+                        .addGroup(groupLayoutDroite.createSequentialGroup()
+                                .addComponent(mondayStartTimeTextfield)
+                                .addComponent(mondayEndTimeTextfield))
+                        .addGroup(groupLayoutDroite.createSequentialGroup()
+                                .addComponent(tuesdayStartTimeTextfield)
+                                .addComponent(tuesdayEndTimeTextfield))
+                        .addGroup(groupLayoutDroite.createSequentialGroup()
+                                .addComponent(wednesdayStartTimeTextfield)
+                                .addComponent(wednesdayEndTimeTextfield))
+                        .addGroup(groupLayoutDroite.createSequentialGroup()
+                                .addComponent(thursdayStartTimeTextfield)
+                                .addComponent(thursdayEndTimeTextfield))
+                        .addGroup(groupLayoutDroite.createSequentialGroup()
+                                .addComponent(fridayStartTimeTextfield)
+                                .addComponent(fridayEndTimeTextfield))
                         .addComponent(buttonDelete))
         );
 
@@ -247,6 +367,28 @@ public class EmployeePanel extends JPanel {
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(lastSeenLabel)
                         .addComponent(lastSeen))
+                .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(planningLabel))
+                .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(mondayLabel)
+                        .addComponent(mondayStartTimeTextfield)
+                        .addComponent(mondayEndTimeTextfield))
+                .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(tuesdayLabel)
+                        .addComponent(tuesdayStartTimeTextfield)
+                        .addComponent(tuesdayEndTimeTextfield))
+                .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(wednesdayLabel)
+                        .addComponent(wednesdayStartTimeTextfield)
+                        .addComponent(wednesdayEndTimeTextfield))
+                .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(thursdayLabel)
+                        .addComponent(thursdayStartTimeTextfield)
+                        .addComponent(thursdayEndTimeTextfield))
+                .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(fridayLabel)
+                        .addComponent(fridayStartTimeTextfield)
+                        .addComponent(fridayEndTimeTextfield))
                 .addGroup(groupLayoutDroite.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(buttonUpdate)
                         .addComponent(buttonDelete))
@@ -282,15 +424,63 @@ public class EmployeePanel extends JPanel {
             employeeNameTextfield.setEditable(true);
             employeeFirstnameTextfield.setEditable(true);
             departmentNameCombo.setEnabled(true);
+
+            mondayStartTimeTextfield.setEditable(true);
+            mondayEndTimeTextfield.setEditable(true);
+            tuesdayStartTimeTextfield.setEditable(true);
+            tuesdayEndTimeTextfield.setEditable(true);
+            wednesdayStartTimeTextfield.setEditable(true);
+            wednesdayEndTimeTextfield.setEditable(true);
+            thursdayStartTimeTextfield.setEditable(true);
+            thursdayEndTimeTextfield.setEditable(true);
+            fridayStartTimeTextfield.setEditable(true);
+            fridayEndTimeTextfield.setEditable(true);
         }else{
             updateMode = false;
             buttonUpdate.setText("Update");
             employeeNameTextfield.setEditable(false);
             employeeFirstnameTextfield.setEditable(false);
             departmentNameCombo.setEnabled(false);
+
+            mondayStartTimeTextfield.setEditable(false);
+            mondayEndTimeTextfield.setEditable(false);
+            tuesdayStartTimeTextfield.setEditable(false);
+            tuesdayEndTimeTextfield.setEditable(false);
+            wednesdayStartTimeTextfield.setEditable(false);
+            wednesdayEndTimeTextfield.setEditable(false);
+            thursdayStartTimeTextfield.setEditable(false);
+            thursdayEndTimeTextfield.setEditable(false);
+            fridayStartTimeTextfield.setEditable(false);
+            fridayEndTimeTextfield.setEditable(false);
         }
+    }
 
+    public Hours getHourFromText(String stringHour){
+        Hours h = null;
 
+        int hour =Integer.parseInt(stringHour.substring(0,stringHour.indexOf(':')));
+        int minutes =Integer.parseInt(stringHour.substring(stringHour.indexOf(':')+1));
+        h = new Hours(hour,minutes);
+
+        return h;
+    }
+
+    public boolean isDateFormat(){
+
+        String format = "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$";
+        if (mondayStartTimeTextfield.getText().matches(format)
+                && mondayEndTimeTextfield.getText().matches(format)
+                && tuesdayStartTimeTextfield.getText().matches(format)
+                && tuesdayEndTimeTextfield.getText().matches(format)
+                && wednesdayStartTimeTextfield.getText().matches(format)
+                && wednesdayEndTimeTextfield.getText().matches(format)
+                && thursdayStartTimeTextfield.getText().matches(format)
+                && thursdayEndTimeTextfield.getText().matches(format)
+                && fridayStartTimeTextfield.getText().matches(format)
+                && fridayEndTimeTextfield.getText().matches(format))
+            return true;
+
+        return false;
     }
 
 

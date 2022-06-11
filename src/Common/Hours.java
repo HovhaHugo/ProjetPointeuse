@@ -20,6 +20,10 @@ public class Hours implements Serializable {
         minutes = now.getMinute();
         date = now.toLocalDate();
     }
+    public Hours(int hours, int minutes) {
+        this.hours = hours;
+        this.minutes = minutes;
+    }
 
     /**
      * Copy constructor of Hours

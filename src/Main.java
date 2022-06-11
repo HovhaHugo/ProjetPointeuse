@@ -11,14 +11,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        /*Company d = new Company();
+        Company d = new Company();
         d.setNameCompany("Stark Industries");
         Department de = new Department("Informatique");
         de.getListEmployee().add(new Employee("Jean","Mi",de));
         de.getListEmployee().add(new Employee("Jean","M2",de));
         d.getListDepartment().add(de);
 
-        FileManipulator.exportCompany(d);*/
+        FileManipulator.exportCompany(d);
 
 
         /*Setting s = new Setting("localhost", 25565);

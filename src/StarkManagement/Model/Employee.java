@@ -12,6 +12,7 @@ public class Employee implements Serializable {
 
         public static ArrayList <Employee> listEmployee = new ArrayList<>();;
         public ArrayList <Score> historique;
+        private Planning planning ;
 
         public Employee(String surnameEmployee, String nameEmployee, Department department) {
                 if(listEmployee.isEmpty())
@@ -24,7 +25,7 @@ public class Employee implements Serializable {
                 this.stockHoure = 0;
                 this.department  = department;
                 historique = new ArrayList<>();
-
+                planning = new Planning();
                 listEmployee.add(this);
         }
 
@@ -93,6 +94,14 @@ public class Employee implements Serializable {
 
         public void setHistorique(ArrayList<Score> historique) {
                 this.historique = historique;
+        }
+
+        public Planning getPlanning() {
+                return planning;
+        }
+
+        public void setPlanning(Planning planning) {
+                this.planning = planning;
         }
 
         public static Employee getEmplyeeParId(int id){
