@@ -3,6 +3,8 @@ package Common;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
+
 public class Hours implements Serializable {
 
     private int hours;
@@ -86,4 +88,5 @@ public class Hours implements Serializable {
     public int getMinutes() {
         return minutes;
     }
+    public LocalDate getDate(){ return date;}
 }

@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.time.LocalDateTime;
 
 public class ScorePanel extends JPanel {
 
@@ -34,7 +35,6 @@ public class ScorePanel extends JPanel {
         //panelGauche.setSize((int) (Window.width*0.7f), Window.height);
 
         panelInfo = new JPanel();
-
 
 
 
@@ -64,7 +64,7 @@ public class ScorePanel extends JPanel {
         buttonDay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //loadJtableScoreoftheday();
+                loadJtableScoreoftheday();
             }
         });
 
@@ -220,13 +220,29 @@ public class ScorePanel extends JPanel {
             for(Score s : Score.historique){
                 datascore[index][0] = s.getEmployee().getNameEmployee();
                 datascore[index][1] = s.getHeure().toString();
-                datascore[index][2] = 0;// date
+                datascore[index][2] = s.getHeure().getDate().toString();
 
                 index++;
             }
             ((DefaultTableModel)table.getModel()).setDataVector(datascore,entete);
 
         }
+    public void loadJtableScoreoftheday(){
+        String[] entete = {"Name","Hours","Date"};
+        Object[][] datascore = new Object[Score.historique.size()][3];
+        int index = 0;
+        LocalDateTime now = LocalDateTime.now();
+        for(Score s : Score.historique){
+            if(s.getHeure().getDate() == now.toLocalDate()) {
+                datascore[index][0] = s.getEmployee().getNameEmployee();
+                datascore[index][1] = s.getHeure().toString();
+                datascore[index][2] = s.getHeure().getDate().toString();// date
+                index++;
+            }
+        }
+        ((DefaultTableModel)table.getModel()).setDataVector(datascore,entete);
+
+    }
 
 
 }
