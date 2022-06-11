@@ -35,6 +35,9 @@ public class ScorePanel extends JPanel {
 
         panelInfo = new JPanel();
 
+
+
+
         GroupLayout groupLayout = new GroupLayout(panelInfo);
         groupLayout.setAutoCreateGaps(true);
         groupLayout.setAutoCreateContainerGaps(true);
