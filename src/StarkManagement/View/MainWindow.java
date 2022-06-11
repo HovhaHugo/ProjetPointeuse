@@ -44,9 +44,11 @@ public class MainWindow extends JFrame{
 
         EmployeePanel employeePanel = new EmployeePanel(company);
         ScorePanel scorePanel = new ScorePanel();
+        SettingPanel settingPanel = new SettingPanel(settings);
 
-        tabbedPane.add("Check",scorePanel);
+        tabbedPane.add("Check", scorePanel);
         tabbedPane.add("Employees", employeePanel);
+        tabbedPane.add("Parameter", settingPanel);
         add(tabbedPane);
         pack();
         setVisible(true);

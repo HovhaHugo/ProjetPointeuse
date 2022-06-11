@@ -44,8 +44,6 @@ public class FileManipulator {
         }
     }
 
-
-
     public static Company importCompany(){
 
         Company company = null;
@@ -76,6 +74,7 @@ public class FileManipulator {
 
         return company;
     }
+
     public static ArrayList<Score> importPointeuseScore(){
 
         ArrayList<Score> scores = new ArrayList<Score>();
@@ -90,6 +89,7 @@ public class FileManipulator {
         return scores;
 
     }
+
     public static void exportPointeuseScore(ArrayList<Score> scores){
 
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("data/serializable/pointeuseScore.dat"))
