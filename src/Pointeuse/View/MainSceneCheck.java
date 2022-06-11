@@ -12,6 +12,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class MainSceneCheck extends JPanel {
 
@@ -36,7 +39,7 @@ public class MainSceneCheck extends JPanel {
     private HoursCheck currentHours;
     private HoursCheck hoursRounded;
 
-    private final static int tickrate = 30;
+    private final static int tickrate = 70; //environ 10 secondes
     private int tick = tickrate;
 
     //Error animation
@@ -201,6 +204,7 @@ public class MainSceneCheck extends JPanel {
 
         //rounded hours
         if(tick >= tickrate){
+
             tick = 0;
             currentHours.update();
             hoursRounded.update();
@@ -209,14 +213,14 @@ public class MainSceneCheck extends JPanel {
             currentHourLabel.setText(currentHours.toString());
             roundedHourLabel.setText("~"+hoursRounded.toString());
 
-            if(currentHours.getMinutes() == 0){
-                if(ownerWindow.isTestSendThisHour() == false){
+            if(currentHours.getMinutes() % ownerWindow.minutesBetweentest == 0){
+                if(ownerWindow.isTestSendDone() == false && ScoreShortCheck.getScoreList().isEmpty()==false){
                     ownerWindow.sendAllScore();
-                    ownerWindow.setTestSendThisHour(true);
+                    ownerWindow.setTestSendDone(true);
                 }
             }
-            if(currentHours.getMinutes() == 1 && ownerWindow.isTestSendThisHour() == true){
-                ownerWindow.setTestSendThisHour(false);
+            if(currentHours.getMinutes() == 1 && ownerWindow.isTestSendDone() == true){
+                ownerWindow.setTestSendDone(false);
             }
 
         }
@@ -250,6 +254,7 @@ public class MainSceneCheck extends JPanel {
 
         if(exist!=null){
             new ScoreShortCheck(exist, new HoursCheck(currentHours));
+            ownerWindow.sendAllScore();
         }else{
             combobox.setSelectedIndex(-1);
             tickErrorAnimation++;

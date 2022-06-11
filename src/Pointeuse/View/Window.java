@@ -35,11 +35,14 @@ public class Window extends JFrame {
 
     SettingsCheck settings;
 
-    private boolean testSendThisHour = false;
+    //allows to send data regularly if there was an error previously
+    private boolean testSendDone = false;
+    public final int minutesBetweentest = 5;
 
     /**
      * Constructor of the window
      * Import the serialized settings
+     * Is in charge of the overall operation of the application
      */
     public Window(){
 
@@ -49,6 +52,10 @@ public class Window extends JFrame {
             settings = FileManipulatorCheck.importSetting();
             this.setContentPane(mainScene =new MainSceneCheck(this));
             settingsScene = new SettingsSceneCheck(this);
+
+            ArrayList<ScoreShortCheck> remain = FileManipulatorCheck.importRemainingScoreShort();
+            if(remain !=null)
+                ScoreShortCheck.getScoreList().addAll(remain);
 
             new Thread(server = new TCPServerCheck()).start();
         } catch (IOException e) {
@@ -81,12 +88,12 @@ public class Window extends JFrame {
         ArrayList<ScoreShortCheck> scores = ScoreShortCheck.getScoreList();
         new Thread(client = new TCPClientCheck(scores,settings));
     }
-    public void setTestSendThisHour(boolean t) {
-        testSendThisHour = t;
+    public void setTestSendDone(boolean t) {
+        testSendDone = t;
     }
 
-    public boolean isTestSendThisHour() {
-        return testSendThisHour;
+    public boolean isTestSendDone() {
+        return testSendDone;
     }
 
     /**
@@ -95,6 +102,7 @@ public class Window extends JFrame {
     public void close(){
         server.shutdown();
         FileManipulatorCheck.exportSetting(settings);
+        FileManipulatorCheck.exportRemainingScoreShort(ScoreShortCheck.getScoreList());
         dispose();
     }
 
