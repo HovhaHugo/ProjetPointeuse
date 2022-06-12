@@ -20,10 +20,14 @@ public class ScorePanel extends JPanel {
     JButton buttonUpdate;
     JRadioButton buttonDay;
     JRadioButton buttonAll;
+    JRadioButton buttonIn;
+    JRadioButton buttonOut;
+    JRadioButton buttonBoth;
     JTable table;
-    Employee selectedEmployee ;
+    Employee selectedEmployee;
     JScrollPane scroll;
 
+    Object[][] datascore;
     int selectedRow;
 
     ScorePanel() {
@@ -35,7 +39,6 @@ public class ScorePanel extends JPanel {
         //panelGauche.setSize((int) (Window.width*0.7f), Window.height);
 
         panelInfo = new JPanel();
-
 
 
         GroupLayout groupLayout = new GroupLayout(panelInfo);
@@ -56,27 +59,100 @@ public class ScorePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (buttonDay.isSelected()) {
-                    loadJtableScoreoftheday();
+                    if(buttonBoth.isSelected()) {
+                        loadJtableScoreofthedayBoth();
+                    }
+                    if(buttonIn.isSelected()) {
+                        loadJtableScoreofthedayIn();
+                    }
+                    if(buttonOut.isSelected()) {
+                        loadJtableScoreofthedayOut();
+                    }
                 }
                 if (buttonAll.isSelected()) {
-                    loadJtableScore();
+                    if(buttonBoth.isSelected()) {
+                        loadJtableScoreBoth();
+                    }
+                    if(buttonIn.isSelected()) {
+                        loadJtableScoreIn();
+                    }
+                    if(buttonOut.isSelected()) {
+                        loadJtableScoreOut();
+                    }
                 }
             }
         });
 
+        buttonIn = new JRadioButton("In");
+        buttonIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (buttonDay.isSelected()) {
+                    loadJtableScoreofthedayIn();
+                }
+                if (buttonAll.isSelected()) {
+                    loadJtableScoreIn();
+                }
+            }
+        });
+        buttonOut = new JRadioButton("Out");
+        buttonOut.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (buttonDay.isSelected()) {
+                    loadJtableScoreofthedayOut();
+                }
+                if (buttonAll.isSelected()) {
+                    loadJtableScoreOut();
+                }
+            }
+        });
+        buttonBoth = new JRadioButton("Both", true);
+        buttonBoth.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (buttonDay.isSelected()) {
+                    loadJtableScoreofthedayBoth();
+                }
+                if (buttonAll.isSelected()) {
+                    loadJtableScoreBoth();
+                }
+            }
+        });
+        ButtonGroup group2 = new ButtonGroup();
+        group2.add(buttonIn);
+        group2.add(buttonOut);
+        group2.add(buttonBoth);
         buttonDay = new JRadioButton("Day");
         buttonDay.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadJtableScoreoftheday();
+                if(buttonBoth.isSelected()) {
+                    loadJtableScoreofthedayBoth();
+                }
+                if(buttonIn.isSelected()) {
+                    loadJtableScoreofthedayIn();
+                }
+                if(buttonOut.isSelected()) {
+                    loadJtableScoreofthedayOut();
+                }
             }
         });
 
-        buttonAll = new JRadioButton("All");
+        buttonAll = new JRadioButton("All", true);
         buttonAll.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadJtableScore();
+                    if(buttonBoth.isSelected()) {
+                        loadJtableScoreBoth();
+                    }
+                    if(buttonIn.isSelected()) {
+                        loadJtableScoreIn();
+                    }
+                    if(buttonOut.isSelected()) {
+                        loadJtableScoreOut();
+                    }
+
             }
         });
 
@@ -93,9 +169,15 @@ public class ScorePanel extends JPanel {
                         .addComponent(textFieldName)
                         .addComponent(textFieldDepartment)
                         .addComponent(buttonSearch))
-                .addComponent(buttonUpdate)
-                .addComponent(buttonDay)
-                .addComponent(buttonAll)
+                .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(buttonUpdate)
+                        .addComponent(buttonBoth))
+                .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(buttonIn)
+                        .addComponent(buttonDay))
+                .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(buttonOut)
+                        .addComponent(buttonAll))
 
 
         );
@@ -106,7 +188,10 @@ public class ScorePanel extends JPanel {
                         .addComponent(textFieldName))
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(labelDepartment)
-                        .addComponent(textFieldDepartment))
+                        .addComponent(textFieldDepartment)
+                        .addComponent(buttonBoth)
+                        .addComponent(buttonIn)
+                        .addComponent(buttonOut))
                 .addGroup(groupLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                         .addComponent(buttonSearch)
                         .addComponent(buttonUpdate)
@@ -126,7 +211,7 @@ public class ScorePanel extends JPanel {
 
         //crée un JTable avec des données
         table = new JTable();
-        loadJtableScore();
+        loadJtableScoreBoth();
 
         scroll = new JScrollPane(table);
         //table.setFillsViewportHeight(true);
@@ -192,14 +277,14 @@ public class ScorePanel extends JPanel {
                     int heures = 0;
                     int minutes = 0;
                     Score lastScore = selectedEmployee.getLastScore();
-                    if(lastScore!=null){
+                    if (lastScore != null) {
                         heures = lastScore.getHeure().getHours();
                         minutes = lastScore.getHeure().getMinutes();
                     }
 
-                    employeeName.setText(selectedEmployee.getNameEmployee() +" "+ selectedEmployee.getSurnameEmployee());
+                    employeeName.setText(selectedEmployee.getNameEmployee() + " " + selectedEmployee.getSurnameEmployee());
                     departmentName.setText(selectedEmployee.getDepartment().getNameDepartment());
-                    lastSeen.setText(heures+":"+minutes);
+                    lastSeen.setText(heures + ":" + minutes);
                 }
             }
         });
@@ -211,38 +296,101 @@ public class ScorePanel extends JPanel {
 
     }
 
-    public void loadJtableScore(){
-        String[] entete = {"Name","Hours","Date"};
-        Object[][] datascore = new Object[Score.historique.size()][3];
+    public void loadJtableScoreBoth() {
+        String[] entete = {"Name", "Hours", "Date"};
+         datascore = new Object[Score.historique.size()][3];
         int index = 0;
-        for(Score s : Score.historique){
+        for (Score s : Score.historique) {
             datascore[index][0] = s.getEmployee().getNameEmployee();
             datascore[index][1] = s.getHeure().toString();
             datascore[index][2] = s.getHeure().getDate().toString();
 
             index++;
         }
-        ((DefaultTableModel)table.getModel()).setDataVector(datascore,entete);
+        ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
 
     }
 
-    public void loadJtableScoreoftheday(){
-        String[] entete = {"Name","Hours","Date"};
-        Object[][] datascore = new Object[Score.historique.size()][3];
+    public void loadJtableScoreofthedayBoth() {
+        String[] entete = {"Name", "Hours", "Date"};
+         datascore = new Object[Score.historique.size()][3];
         int index = 0;
         LocalDateTime now = LocalDateTime.now();
-        for(Score s : Score.historique){
-            if(s.getHeure().getDate().equals(now.toLocalDate())) {
+        for (Score s : Score.historique) {
+            if (s.getHeure().getDate().equals(now.toLocalDate())) {
                 datascore[index][0] = s.getEmployee().getNameEmployee();
                 datascore[index][1] = s.getHeure().toString();
                 datascore[index][2] = s.getHeure().getDate().toString();// date
                 index++;
             }
         }
-        ((DefaultTableModel)table.getModel()).setDataVector(datascore,entete);
+        ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
+    }
+    public void loadJtableScoreIn() {
+        String[] entete = {"Name", "Hours", "Date"};
+        datascore = new Object[Score.historique.size()][3];
+        int index = 0;
+        for (Score s : Score.historique) {
+            if (s.getType() == Score.Type.IN) {
+                datascore[index][0] = s.getEmployee().getNameEmployee();
+                datascore[index][1] = s.getHeure().toString();
+                datascore[index][2] = s.getHeure().getDate().toString();
+                index++;
+            }
+        }
+        ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
 
     }
+    public void loadJtableScoreofthedayIn() {
+        String[] entete = {"Name", "Hours", "Date"};
+        datascore = new Object[Score.historique.size()][3];
+        int index = 0;
+        LocalDateTime now = LocalDateTime.now();
+        for (Score s : Score.historique) {
+            if (s.getHeure().getDate().equals(now.toLocalDate())) {
+                if (s.getType() == Score.Type.IN) {
+                    datascore[index][0] = s.getEmployee().getNameEmployee();
+                    datascore[index][1] = s.getHeure().toString();
+                    datascore[index][2] = s.getHeure().getDate().toString();// date
+                    index++;
+                }
+            }
+        }
+        ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
+    }
+    public void loadJtableScoreOut() {
+        String[] entete = {"Name", "Hours", "Date"};
+        datascore = new Object[Score.historique.size()][3];
+        int index = 0;
+        for (Score s : Score.historique) {
+            if (s.getType() == Score.Type.OUT) {
+                datascore[index][0] = s.getEmployee().getNameEmployee();
+                datascore[index][1] = s.getHeure().toString();
+                datascore[index][2] = s.getHeure().getDate().toString();
+                index++;
+            }
+        }
+        ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
 
+    }
+    public void loadJtableScoreofthedayOut() {
+        String[] entete = {"Name", "Hours", "Date"};
+        datascore = new Object[Score.historique.size()][3];
+        int index = 0;
+        LocalDateTime now = LocalDateTime.now();
+        for (Score s : Score.historique) {
+            if (s.getHeure().getDate().equals(now.toLocalDate())) {
+                if (s.getType() == Score.Type.OUT) {
+                    datascore[index][0] = s.getEmployee().getNameEmployee();
+                    datascore[index][1] = s.getHeure().toString();
+                    datascore[index][2] = s.getHeure().getDate().toString();// date
+                    index++;
+                }
+            }
+        }
+        ((DefaultTableModel) table.getModel()).setDataVector(datascore, entete);
+    }
 
 }
+
 

@@ -75,7 +75,7 @@ public class MainWindow extends JFrame{
     }
 
     public void forceUpdate(){
-        scorePanel.loadJtableScore();
+        scorePanel.loadJtableScoreBoth();
     }
 
     public void forceSave(){

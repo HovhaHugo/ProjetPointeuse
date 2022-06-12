@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
-
+/**
+ * Class to manage the time, and the days
+ */
 public class Hours implements Serializable {
 
     private int hours;
@@ -61,7 +63,9 @@ public class Hours implements Serializable {
             }
         }
     }
-
+    /**
+     * Calculate the diffrence between the hours "worked" and the schedule
+     */
     public int minutesBetween(Hours scheduleHours) {
         return (scheduleHours.hours - hours) * 60 + (scheduleHours.minutes - minutes);
     }
