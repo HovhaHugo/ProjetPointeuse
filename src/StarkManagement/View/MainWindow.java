@@ -10,6 +10,9 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * Class to create the main window of the application
+ */
 public class MainWindow extends JFrame{
 
     private Company company;
@@ -21,7 +24,9 @@ public class MainWindow extends JFrame{
 
     ScorePanel scorePanel;
     EmployeePanel employeePanel;
-
+    /**
+     * Constructor of the window
+     */
     public MainWindow() {
 
         setTitle("Stark Management");

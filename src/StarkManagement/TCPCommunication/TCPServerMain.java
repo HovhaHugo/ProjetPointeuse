@@ -12,7 +12,9 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-
+/**
+ *Class to send the data from the main application through TCP connexion
+ */
 public class TCPServerMain implements Runnable{
 
     Socket socket;

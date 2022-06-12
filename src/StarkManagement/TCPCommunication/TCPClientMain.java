@@ -9,13 +9,20 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-
+/**
+ *Class to receive the data from the Pointeuse through TCP connexion
+ */
 public class TCPClientMain implements Runnable {
 
     Socket socket;
     ArrayList<EmployeeShort> listToSend;
     Settings settings;
 
+    /**
+     * Constructor of the client form the main application
+     * @param pList
+     * @param pSettings
+     */
     public TCPClientMain(ArrayList<Employee> pList, Settings pSettings){
         listToSend = new ArrayList<>();
         for(Employee e : pList){

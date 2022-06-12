@@ -10,6 +10,9 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+/**
+ * Class for the panel to change /see the setting of the app
+ */
 public class SettingPanel extends JPanel {
 
     String IPV4 = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
@@ -25,7 +28,10 @@ public class SettingPanel extends JPanel {
 
     JButton checkButton;
 
-
+    /**
+     * Constructor of the class
+     * @param settings
+     */
     SettingPanel(Settings settings) {
 
         setLayout(new BorderLayout());
@@ -141,6 +147,9 @@ public class SettingPanel extends JPanel {
         add(panelDroite, BorderLayout.EAST);
     }
 
+    /**
+     * Method to check if the portentiel setting changed are good
+     */
     private void checkText(){
         System.out.println("Vérification des données");
         String errorText = "";

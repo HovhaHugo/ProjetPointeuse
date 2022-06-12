@@ -7,7 +7,9 @@ import StarkManagement.Model.Employee;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+/**
+ * Class to create a frame to add an employee inside to compagny
+ */
 public class AddEmployeeWindow extends JFrame {
 
     JLabel nameLabel;
@@ -26,6 +28,10 @@ public class AddEmployeeWindow extends JFrame {
 
     Company company;
 
+    /**
+     * Constructor of window
+     * @param pCompany
+     */
     public AddEmployeeWindow(Company pCompany){
 
         company = pCompany;
@@ -77,6 +83,10 @@ public class AddEmployeeWindow extends JFrame {
 
         addEmployeButton = new JButton("Add");
         addEmployeButton.addActionListener(new ActionListener() {
+            /**
+             * Button to get the information to create the nesw employee
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = nameTextField.getText();

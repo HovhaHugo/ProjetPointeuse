@@ -2,6 +2,9 @@ package StarkManagement.Model;
 
 import java.io.Serializable;
 
+/**
+ * Class to store the settings used for TCP connection
+ */
 public class Settings implements Serializable {
 
     private int port;

@@ -10,7 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
+/***
+ * Method to create the panel where we can see and sort the Checks from the pointeuse
+ */
 public class ScorePanel extends JPanel {
 
     JPanel panelGauche;
@@ -31,7 +33,9 @@ public class ScorePanel extends JPanel {
 
     Object[][] datascore;
     int selectedRow;
-
+    /**
+     * consturctor of the class
+     */
     ScorePanel() {
 
         setLayout(new BorderLayout());
@@ -58,6 +62,10 @@ public class ScorePanel extends JPanel {
 
         buttonUpdate = new JButton("Update");
         buttonUpdate.addActionListener(new ActionListener() {
+            /**
+             * Method to Update the data displayed
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadJTable();
@@ -66,6 +74,10 @@ public class ScorePanel extends JPanel {
 
         radioBtnIn = new JRadioButton("In");
         radioBtnIn.addActionListener(new ActionListener() {
+            /**
+             * Radio button to sort the checks by Type :In
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadJTable();
@@ -73,6 +85,10 @@ public class ScorePanel extends JPanel {
         });
         radioBtnOut = new JRadioButton("Out");
         radioBtnOut.addActionListener(new ActionListener() {
+            /**
+             * Radio button to sort the checks by Type :Out
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadJTable();
@@ -80,6 +96,10 @@ public class ScorePanel extends JPanel {
         });
         radioBtnInOut = new JRadioButton("Both", true);
         radioBtnInOut.addActionListener(new ActionListener() {
+            /**
+             * Radio button to display all the checks
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadJTable();
@@ -91,6 +111,10 @@ public class ScorePanel extends JPanel {
         group2.add(radioBtnInOut);
         radioBtnDay = new JRadioButton("Day");
         radioBtnDay.addActionListener(new ActionListener() {
+            /**
+             * Radio button to display the check of the day
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadJTable();
@@ -99,6 +123,10 @@ public class ScorePanel extends JPanel {
 
         radioBtnAllDay = new JRadioButton("All", true);
         radioBtnAllDay.addActionListener(new ActionListener() {
+            /**
+             * Radio button to display all the checks
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadJTable();
@@ -247,6 +275,10 @@ public class ScorePanel extends JPanel {
 
     }
 
+    /**
+     * Method to update the information showed in the table
+     * the method take in consideration the state of the radio buttons
+     */
     public void loadJTable(){
         String[] entete = {"Name", "Hours", "Date"};
 

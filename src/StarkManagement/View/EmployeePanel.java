@@ -9,7 +9,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
+/**
+ * Class to create a panel to manage/Delete/update the emplyees of the compagny and their planning
+ */
 public class EmployeePanel extends JPanel {
 
     Company company;
@@ -64,7 +66,10 @@ public class EmployeePanel extends JPanel {
     JLabel fridayLabel;
 
 
-
+    /**
+     * Constructor of the panel
+     * @param pCompany
+     */
     EmployeePanel(Company pCompany){
 
         company = pCompany;
@@ -244,6 +249,10 @@ public class EmployeePanel extends JPanel {
 
         buttonUpdate = new JButton("Update");
         buttonUpdate.addActionListener(new ActionListener() {
+            /**
+             * button to update the data of the compagny
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(updateMode==false){
@@ -289,6 +298,10 @@ public class EmployeePanel extends JPanel {
 
         buttonDelete = new JButton("Delete");
         buttonDelete.addActionListener(new ActionListener() {
+            /**
+             * button to delete an employee of the compgny
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(selectedRow>=table.getRowCount())
@@ -389,6 +402,9 @@ public class EmployeePanel extends JPanel {
         add(panelDroite, BorderLayout.EAST);
     }
 
+    /**
+     * Method to refresh the display of the inforamtion in the table
+     */
     private void loadJtable(){
         String[] entete = {"ID","Name","Firstname","Department"};
         Object[][] data = new Object[Employee.listEmployee.size()][4];
@@ -404,7 +420,9 @@ public class EmployeePanel extends JPanel {
         }
         ((DefaultTableModel)table.getModel()).setDataVector(data,entete);
     }
-
+    /**
+     * Method to Update the inforamtions in the panel
+     */
     private void toggleUpdateMode(){
         if(updateMode==false){
             updateMode = true;
@@ -442,7 +460,11 @@ public class EmployeePanel extends JPanel {
             fridayEndTimeTextfield.setEditable(false);
         }
     }
-
+    /**
+     * Method to get an hour object for a string
+     * @param stringHour
+     * @return h
+     */
     public Hours getHourFromText(String stringHour){
         Hours h = null;
 
@@ -452,7 +474,10 @@ public class EmployeePanel extends JPanel {
 
         return h;
     }
-
+    /**
+     * Method to check if the date is correct
+     * @return false or true
+     */
     public boolean isDateFormat(){
 
         String format = "^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$";

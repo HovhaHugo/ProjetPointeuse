@@ -7,7 +7,9 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-
+/**
+ * Class to represent a check from the pointeuse and store all the check in a list
+ */
 public class Score implements Serializable {
 
     private Employee employee;
@@ -25,12 +27,21 @@ public class Score implements Serializable {
     public final static int temporaryScoreLimit = 5;
 
     public static ArrayList<Score> historique = new ArrayList<>();
+    /**
+     * Constructor of Score
+     * @param employee
+     * @param heure
+     */
 
     public Score(Employee employee, Hours heure) {
         this.employee = employee;
         this.heure = heure;
     }
 
+    /**
+     * Constructor to create a Score from a Scoreshort
+     * @param scoreShort
+     */
     public Score(ScoreShort scoreShort){
         this.employee = Employee.getEmplyeeParId(scoreShort.getEmployeeId());
         this.heure= scoreShort.getHours();

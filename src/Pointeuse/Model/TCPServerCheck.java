@@ -10,7 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 /**
- *Class to send the data from the main application through TCP connexion
+ *Class to send the data from the pointeuse through TCP connexion
  */
 public class TCPServerCheck implements Runnable{
 

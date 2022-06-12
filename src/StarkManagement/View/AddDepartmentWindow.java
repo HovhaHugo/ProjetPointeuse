@@ -11,7 +11,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+/**
+ * Class to create a frame to add a departement inside to compagny
+ */
 
 public class AddDepartmentWindow extends JFrame {
 
@@ -26,6 +28,11 @@ public class AddDepartmentWindow extends JFrame {
     JScrollPane scroll;
     Company company;
     Department currentDepartment ;
+
+    /**
+     * Constructor of the window
+     * @param pCompany
+     */
     public AddDepartmentWindow(Company pCompany){
 
         company = pCompany;
@@ -47,6 +54,10 @@ public class AddDepartmentWindow extends JFrame {
         addDepartmentButton = new JButton("Add");
         addDepartmentButton.setBounds(300,10,80,25);
         addDepartmentButton.addActionListener(new ActionListener() {
+            /**
+             * Button that add the departement to the compagny (after creating it)
+             * @param e the event to be processed
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 String name = nameTextField.getText();
@@ -125,6 +136,9 @@ public class AddDepartmentWindow extends JFrame {
         dispose();
     }
 
+    /**
+     * Class to update the table
+     */
     public void loadJtable(){
         String[] entete = {"Department"};
         Object[][] data = new Object[company.getListDepartment().size()][1];
