@@ -16,6 +16,9 @@ Pour lancer le projet il suffit de lancer le Main dans le **package (default pac
 Pour relancer le programme et éviter les doublons, commenter la **ligne 14 du fichier Main.java comportant le code suivant : "createCompany();"**.
 Comme l'application simule une entreprise, les employees ne travaillant pas le week-end, l'application ne fonctionnera pas si le test est effectuer le week-end. Pour remédier à cela il est possible de modifier l'heure de votre ordinateur pour tester les fonctionnalités.
 
+## Ce qui ne marche pas : 
+- Le calcule des heure ce fait avec des heures entiére au lieu des heures arrondies
+- La recherche de scores ou d'employer ne fonctionne pas
 
 ## Diagramme de classe du projet : 
 ![Diagramme_de_classe_Turbo](https://user-images.githubusercontent.com/92187603/173245821-da484f0f-d1eb-4e2e-b1b0-18657fb599a4.jpeg)
