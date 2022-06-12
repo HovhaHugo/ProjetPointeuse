@@ -196,7 +196,7 @@ public class ScorePanel extends JPanel {
                         heures = lastScore.getHeure().getHours();
                         minutes = lastScore.getHeure().getMinutes();
                     }
-
+                    houseDiff.setText(""+selectedEmployee.getStockHoure());
                     employeeName.setText(selectedEmployee.getNameEmployee() +" "+ selectedEmployee.getSurnameEmployee());
                     departmentName.setText(selectedEmployee.getDepartment().getNameDepartment());
                     lastSeen.setText(heures+":"+minutes);

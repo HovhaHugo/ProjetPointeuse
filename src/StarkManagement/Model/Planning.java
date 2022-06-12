@@ -46,4 +46,12 @@ public class Planning implements Serializable {
     public void setHourlyToDay(Days day, Hourly hourly){
         this.getPlanning().replace(day,hourly);
     }
+
+    public Hours getStartForDays(Days day){
+        return this.planning.get(day).getStartTime();
+    }
+
+    public Hours getEndForDays(Days day){
+        return this.planning.get(day).getEndTime();
+    }
 }
