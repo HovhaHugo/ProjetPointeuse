@@ -115,4 +115,7 @@ public class Score implements Serializable {
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
+    public Type getType() {
+        return type;
+    }
 }

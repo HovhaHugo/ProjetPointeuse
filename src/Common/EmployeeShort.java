@@ -2,6 +2,9 @@ package Common;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+/**
+ * Class Employe reduced to make the transfer between the app, and the serialization easier
+ */
 
 public class EmployeeShort implements Serializable {
 
@@ -10,16 +13,27 @@ public class EmployeeShort implements Serializable {
 
     private static ArrayList<EmployeeShort> employeeShortList = new ArrayList<>();
 
+    /**
+     * Constructor of EmployeeShort, stores id and identity of the employee and append it to a EmployeeShort List
+     * @param pIdentity
+     * @param pId
+     */
     public EmployeeShort(String pIdentity, int pId){
         identity =pIdentity;
         id = pId;
         employeeShortList.add(this);
     }
 
+    /**
+     * Method to clear the List of EmployeeShort
+     */
     public static void clearList(){
         employeeShortList.clear();
     }
-
+    /**
+     * Method to get an employeeShort from the List with his pIdentity
+     * @param pIdentity
+     */
     public static EmployeeShort getPersonn(String pIdentity){
 
         for(EmployeeShort p : employeeShortList){
@@ -30,6 +44,11 @@ public class EmployeeShort implements Serializable {
         return null;
     }
 
+    /**
+     * Method to get an employeeShort from the List with his pId
+     * @param pId
+     * @return null
+     */
     public static EmployeeShort getPersonn(int pId){
 
         for(EmployeeShort p : employeeShortList){

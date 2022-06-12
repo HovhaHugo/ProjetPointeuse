@@ -7,13 +7,20 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-
+/**
+ *Class to receive the data from the main application through TCP connexion
+ */
 public class TCPClientCheck implements Runnable{
 
     Socket socket;
     ArrayList<ScoreShort> listToSend;
     SettingsCheck settings;
 
+    /**
+     * Constructor of the client of the check application
+     * @param pList
+     * @param pSettings
+     */
     public TCPClientCheck(ArrayList<ScoreShort> pList, SettingsCheck pSettings){
         listToSend = pList;
         settings = pSettings;

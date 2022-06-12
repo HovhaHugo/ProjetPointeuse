@@ -4,7 +4,9 @@ import Common.ScoreShort;
 
 import java.io.*;
 import java.util.ArrayList;
-
+/**
+ * Class to import/export the data from seizalized files for the "pointeuse"
+ */
 public class FileManipulatorCheck {
 
     /**

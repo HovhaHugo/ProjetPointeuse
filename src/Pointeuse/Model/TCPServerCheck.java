@@ -9,7 +9,9 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-
+/**
+ *Class to send the data from the main application through TCP connexion
+ */
 public class TCPServerCheck implements Runnable{
 
     private final int listeningPort = 8080;
