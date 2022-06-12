@@ -56,7 +56,12 @@ public class ScorePanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Score.SaveListScore();
-                loadJtableScore();
+                if (buttonDay.isSelected()) {
+                    loadJtableScoreoftheday();
+                }
+                if (buttonAll.isSelected()) {
+                    loadJtableScore();
+                }
             }
         });
 
