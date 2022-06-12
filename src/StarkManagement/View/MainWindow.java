@@ -23,9 +23,6 @@ public class MainWindow extends JFrame{
 
     public MainWindow() {
 
-        /*settings = new Settings("localhost",8080);
-        FileManipulator.exportMainAppSetting(settings);*/
-
         setTitle("Stark Management");
         ImageIcon img = new ImageIcon("data/img/stark.png");
         setIconImage(img.getImage());
@@ -35,6 +32,7 @@ public class MainWindow extends JFrame{
         settings = FileManipulator.importMainAppSetting();
         company = FileManipulator.importCompany();
         Employee.setEmployeeList(company);
+        Score.setScoreList(company);
 
         new Thread(tcpServerMain = new TCPServerMain(this)).start();
 
@@ -77,8 +75,11 @@ public class MainWindow extends JFrame{
     }
 
     public void forceUpdate(){
-        Score.SaveListScore();
         scorePanel.loadJtableScore();
+    }
+
+    public void forceSave(){
+        FileManipulator.exportCompany(company);
     }
 
 

@@ -75,31 +75,4 @@ public class FileManipulator {
         return company;
     }
 
-    public static ArrayList<Score> importPointeuseScore(){
-
-        ArrayList<Score> scores = new ArrayList<Score>();
-
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream("data/serializable/pointeuseScore.dat"))
-        ){
-            scores = (ArrayList<Score>) input.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return scores;
-
-    }
-
-    public static void exportPointeuseScore(ArrayList<Score> scores){
-
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("data/serializable/pointeuseScore.dat"))
-        ){
-            output.writeObject(scores);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 }

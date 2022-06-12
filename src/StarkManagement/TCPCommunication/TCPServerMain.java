@@ -1,6 +1,7 @@
 package StarkManagement.TCPCommunication;
 
 import Common.ScoreShort;
+import StarkManagement.Model.FileManipulator;
 import StarkManagement.Model.Score;
 import StarkManagement.View.MainWindow;
 import com.sun.tools.javac.Main;
@@ -79,6 +80,12 @@ public class TCPServerMain implements Runnable{
                 liste =(ArrayList<ScoreShort>) ois.readObject();
                 for(ScoreShort o : liste)
                     new Score(o);
+
+                if(Score.temporaryScoreCreate >= Score.temporaryScoreLimit){
+                    Score.temporaryScoreCreate = 0;
+                    owner.forceSave();
+                }
+
                 owner.forceUpdate();
                 ois.close();
             } catch (IOException | ClassNotFoundException e) {

@@ -4,48 +4,62 @@ import Common.Hours;
 import Common.ScoreShort;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 
-import static StarkManagement.Model.FileManipulator.exportPointeuseScore;
-import static StarkManagement.Model.FileManipulator.importPointeuseScore;
+public class Score implements Serializable {
 
-public class Score implements Serializable
-{
     private Employee employee;
     private Hours heure;
 
+    public enum Type{
+        IN,
+        OUT,
+        ANORMAL
+    }
+
+    Type type;
+
+    public static int temporaryScoreCreate = 0;
+    public final static int temporaryScoreLimit = 5;
+
     public static ArrayList<Score> historique = new ArrayList<>();
-    public static ArrayList<Score> historiqueTemp = new ArrayList<>();
 
     public Score(Employee employee, Hours heure) {
         this.employee = employee;
         this.heure = heure;
-        historiqueTemp.add(this);
     }
 
     public Score(ScoreShort scoreShort){
         this.employee = Employee.getEmplyeeParId(scoreShort.getEmployeeId());
         this.heure= scoreShort.getHours();
         employee.addScore(this);
-        if (historique==null)
-        {
-            historique = new ArrayList<>();
+
+        LocalDateTime now = LocalDateTime.now();
+        type = Type.IN;
+        for(Score s : Score.historique){
+            if(s.getHeure().getDate().equals(now.toLocalDate())) {  //Other check in the same day
+                if(s.employee == employee){                         //from the same person
+                    if(s.type == Type.IN)
+                        type = Type.OUT;
+                    if(s.type == Type.OUT)
+                        type = Type.ANORMAL;
+                    if(s.type == Type.ANORMAL)
+                        type = Type.ANORMAL;
+                }
+            }
         }
-        if (historiqueTemp==null)
-        {
-            historiqueTemp = new ArrayList<>();
-        }
-        historiqueTemp.add(this);
+
+        historique.add(this);
+        temporaryScoreCreate++;
     }
 
-    public static void SaveListScore() {
-        ArrayList<Score> temp = new ArrayList<>();
-        temp.addAll(historique);
-        temp.addAll(historiqueTemp);
-        exportPointeuseScore(temp);
-        historique = importPointeuseScore();
-        historiqueTemp.clear();
+    public static void setScoreList(Company c){
+        for(Department d : c.getListDepartment()){
+            for(Employee e : d.getListEmployee()){
+                historique.addAll(e.historique);
+            }
+        }
     }
 
     public Hours getHeure() {

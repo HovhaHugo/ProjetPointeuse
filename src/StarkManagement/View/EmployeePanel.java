@@ -162,48 +162,36 @@ public class EmployeePanel extends JPanel {
         hoursDiff = new JLabel();
         lastSeen = new JLabel();
 
-        Color c = Color.gray.brighter().brighter();
-
         planningLabel = new JLabel("Planning :");
         mondayLabel = new JLabel("  - Monday :");
         mondayStartTimeTextfield = new JTextField();
         mondayEndTimeTextfield= new JTextField();
         mondayStartTimeTextfield.setEditable(false);
         mondayEndTimeTextfield.setEditable(false);
-        mondayStartTimeTextfield.setBackground(c);
-        mondayEndTimeTextfield.setBackground(c);
 
         tuesdayLabel = new JLabel("  - Tuesday :");
         tuesdayStartTimeTextfield= new JTextField();
         tuesdayEndTimeTextfield= new JTextField();
         tuesdayStartTimeTextfield.setEditable(false);
         tuesdayEndTimeTextfield.setEditable(false);
-        tuesdayStartTimeTextfield.setBackground(Color.LIGHT_GRAY);
-        tuesdayEndTimeTextfield.setBackground(Color.LIGHT_GRAY);
 
         wednesdayLabel = new JLabel("  - Wednesday :");
         wednesdayStartTimeTextfield= new JTextField();
         wednesdayEndTimeTextfield= new JTextField();
         wednesdayStartTimeTextfield.setEditable(false);
         wednesdayEndTimeTextfield.setEditable(false);
-        wednesdayStartTimeTextfield.setBackground(Color.LIGHT_GRAY);
-        wednesdayEndTimeTextfield.setBackground(Color.LIGHT_GRAY);
 
         thursdayLabel = new JLabel("  - Thursday :");
         thursdayStartTimeTextfield= new JTextField();
         thursdayEndTimeTextfield= new JTextField();
         thursdayStartTimeTextfield.setEditable(false);
         thursdayEndTimeTextfield.setEditable(false);
-        thursdayStartTimeTextfield.setBackground(Color.LIGHT_GRAY);
-        thursdayEndTimeTextfield.setBackground(Color.LIGHT_GRAY);
 
         fridayLabel = new JLabel("  - Friday :");
         fridayStartTimeTextfield= new JTextField();
         fridayEndTimeTextfield= new JTextField();
         fridayStartTimeTextfield.setEditable(false);
         fridayEndTimeTextfield.setEditable(false);
-        fridayStartTimeTextfield.setBackground(Color.LIGHT_GRAY);
-        fridayEndTimeTextfield.setBackground(Color.LIGHT_GRAY);
 
 
         depListTemp = new ArrayList<>(company.getListDepartment());

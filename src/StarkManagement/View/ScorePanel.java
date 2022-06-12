@@ -24,8 +24,8 @@ public class ScorePanel extends JPanel {
     Employee selectedEmployee ;
     JScrollPane scroll;
 
-
     int selectedRow;
+
     ScorePanel() {
 
         setLayout(new BorderLayout());
@@ -55,7 +55,6 @@ public class ScorePanel extends JPanel {
         buttonUpdate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Score.SaveListScore();
                 if (buttonDay.isSelected()) {
                     loadJtableScoreoftheday();
                 }
@@ -233,7 +232,7 @@ public class ScorePanel extends JPanel {
         int index = 0;
         LocalDateTime now = LocalDateTime.now();
         for(Score s : Score.historique){
-            if(s.getHeure().getDate() == now.toLocalDate()) {
+            if(s.getHeure().getDate().equals(now.toLocalDate())) {
                 datascore[index][0] = s.getEmployee().getNameEmployee();
                 datascore[index][1] = s.getHeure().toString();
                 datascore[index][2] = s.getHeure().getDate().toString();// date
