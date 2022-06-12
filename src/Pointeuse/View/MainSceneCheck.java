@@ -1,5 +1,6 @@
 package Pointeuse.View;
 
+import Common.FileManipulatorCommon;
 import Common.Hours;
 import Common.EmployeeShort;
 import Common.ScoreShort;
@@ -65,13 +66,13 @@ public class MainSceneCheck extends JPanel {
 
 
         //Image loading
-        backgroundImage = ImageIO.read(new File("data/img/img.png"));
-        starkLogoImage = ImageIO.read(new File("data/img/stark.png"));
+        backgroundImage = FileManipulatorCommon.getImage("img.png");
+        starkLogoImage = FileManipulatorCommon.getImage("stark.png");
 
-        wifiImage = ImageIO.read(new File("data/img/wifi.png"));
-        weatherImage = ImageIO.read(new File("data/img/meteo.jpg"));
+        wifiImage = FileManipulatorCommon.getImage("wifi.png");
+        weatherImage = FileManipulatorCommon.getImage("meteo.jpg");
 
-        jarvisGif = Toolkit.getDefaultToolkit().createImage("data/img/jarvis.gif");
+        jarvisGif = FileManipulatorCommon.getGif("jarvis.gif");
 
 
         //City
@@ -112,7 +113,7 @@ public class MainSceneCheck extends JPanel {
 
         //Check Button
         checkButton = new JLabel();
-        Image checkImage = ImageIO.read(new File("data/img/button_check.png"));
+        Image checkImage = FileManipulatorCommon.getImage("button_check.png");
         checkImage = checkImage.getScaledInstance(60,35,Image.SCALE_SMOOTH);
         checkButton.setIcon(new ImageIcon(checkImage));
         checkButton.setBounds(265, 267, 150,50);
@@ -125,7 +126,7 @@ public class MainSceneCheck extends JPanel {
 
         //Settings button
         settingsButton = new JLabel();
-        Image settingImg = ImageIO.read(new File("data/img/settings.png"));
+        Image settingImg = FileManipulatorCommon.getImage("settings.png");
         settingImg = settingImg.getScaledInstance(50,50,Image.SCALE_SMOOTH);
         settingsButton.setIcon(new ImageIcon(settingImg));
         settingsButton.setBounds(510, 180, 100,100);
@@ -138,7 +139,7 @@ public class MainSceneCheck extends JPanel {
 
         //Exit button
         exitButton = new JLabel();
-        Image exitImage = ImageIO.read(new File("data/img/exit.png"));
+        Image exitImage = FileManipulatorCommon.getImage("exit.png");
         exitImage = exitImage.getScaledInstance(50,50,Image.SCALE_SMOOTH);
         exitButton.setIcon(new ImageIcon(exitImage));
         exitButton.setBounds(510, 110, 100,100);

@@ -9,7 +9,8 @@ public class FileManipulator {
 
         Settings settings = null;
 
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream("data/serializable/settingsMainApp.dat"))
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(
+                "data"+File.separator+"serializable"+File.separator+"settingsMainApp.dat"))
         ){
             settings = (Settings) input.readObject();
         } catch (IOException | ClassNotFoundException e) {
@@ -21,7 +22,8 @@ public class FileManipulator {
 
     public static void exportMainAppSetting(Settings settings){
 
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("data/serializable/settingsMainApp.dat"))
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(
+                "data"+File.separator+"serializable"+File.separator+"settingsMainApp.dat"))
         ){
             output.writeObject(settings);
 
@@ -33,7 +35,8 @@ public class FileManipulator {
 
     public static void exportCompany(Company company){
 
-        try(FileOutputStream fos = new FileOutputStream("data/serializable/company.dat");
+        try(FileOutputStream fos = new FileOutputStream(
+                "data"+File.separator+"serializable"+File.separator+"company.dat");
             ObjectOutputStream output = new ObjectOutputStream(fos)) {
 
             output.writeObject(company);
@@ -48,17 +51,12 @@ public class FileManipulator {
 
         Company company = null;
 
-        try
-        {
-            // Reading the object from a file
-            FileInputStream file = new FileInputStream("data/serializable/company.dat");
-            ObjectInputStream in = new ObjectInputStream(file);
+        try( FileInputStream file = new FileInputStream(
+                "data"+File.separator+"serializable"+File.separator+"company.dat");
+             ObjectInputStream in = new ObjectInputStream(file)) {
 
             // Method for deserialization of object
             company = (Company) in.readObject();
-
-            in.close();
-            file.close();
 
         }
 

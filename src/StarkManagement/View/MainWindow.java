@@ -1,5 +1,6 @@
 package StarkManagement.View;
 
+import Common.FileManipulatorCommon;
 import StarkManagement.Model.*;
 import StarkManagement.TCPCommunication.TCPClientMain;
 import StarkManagement.TCPCommunication.TCPServerMain;
@@ -24,8 +25,7 @@ public class MainWindow extends JFrame{
     public MainWindow() {
 
         setTitle("Stark Management");
-        ImageIcon img = new ImageIcon("data/img/stark.png");
-        setIconImage(img.getImage());
+        setIconImage(FileManipulatorCommon.getImage("stark.png"));
 
         getContentPane().setBackground(Color.DARK_GRAY);
 

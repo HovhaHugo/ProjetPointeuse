@@ -21,8 +21,8 @@ public class Main {
             ee.printStackTrace();
         }
 
-        new Thread(() -> new Window()).start();
         new Thread(() -> new MainWindow()).start();
+        new Thread(() -> new Window()).start();
 
     }
 
@@ -46,8 +46,6 @@ public class Main {
         d.getListDepartment().add(depInformatique);
         d.getListDepartment().add(depAdministration);
         d.getListDepartment().add(depUsine);
-
-        FileManipulator.exportCompany(d);
 
     }
 }
