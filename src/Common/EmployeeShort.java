@@ -59,10 +59,18 @@ public class EmployeeShort implements Serializable {
         return null;
     }
 
+    /**
+     * Setter for employeeShortList
+     * @param pList the new list
+     */
     public static void setPersonnShortList(ArrayList<EmployeeShort> pList){
         employeeShortList = pList;
     }
 
+    /**
+     * Getter for employeeShortList
+     * @return a copy of the list
+     */
     public static ArrayList<String> getPersonnListString(){
         ArrayList<String> list = new ArrayList<>();
 
@@ -76,6 +84,9 @@ public class EmployeeShort implements Serializable {
     public String toString(){
         return id+" - "+identity;
     }
-
+    /**
+     * Getter for id
+     * @return the id
+     */
     public int getId(){return id;}
 }

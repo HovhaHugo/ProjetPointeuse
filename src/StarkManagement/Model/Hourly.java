@@ -4,6 +4,9 @@ import Common.Hours;
 
 import java.io.Serializable;
 
+/**
+ * Class to represent a day of work inside the schedule
+ */
 public class Hourly implements Serializable {
     private Hours startTime;
     private Hours endTime;
@@ -12,6 +15,12 @@ public class Hourly implements Serializable {
         startTime = null;
         endTime = null;
     }
+
+    /**
+     * Constructor of Hourly
+     * @param startTime
+     * @param endTime
+     */
     public Hourly(Hours startTime, Hours endTime) {
         this.startTime = startTime;
         this.endTime = endTime;

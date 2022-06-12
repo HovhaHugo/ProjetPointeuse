@@ -44,7 +44,6 @@ public class TCPServerCheck implements Runnable{
 
                 InputStream is = socket.getInputStream();
                 ObjectInputStream ois = new ObjectInputStream(is);
-
                 new Thread(new threadAcceptConnection(ois)).start();
             }
 

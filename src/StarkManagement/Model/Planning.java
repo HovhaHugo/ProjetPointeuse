@@ -6,9 +6,15 @@ import Common.Hours;
 import java.io.Serializable;
 import java.util.HashMap;
 
+/**
+ * Class to represent a working planning inside the compagny
+ */
 public class Planning implements Serializable {
     private HashMap<Days, Hourly> planning;
 
+    /**
+     * Constructor of Planning that initialize a week of work (8h-16h)
+     */
     public Planning() {
         planning = new HashMap<>();
         Hours hs1 = new Hours(8,0);

@@ -2,9 +2,14 @@ package StarkManagement.Model;
 
 import java.io.*;
 import java.util.ArrayList;
-
+/**
+ * Class to save/import the data of the compagny and the settings
+ */
 public class FileManipulator {
-
+    /**
+     * Method to import the setting of the main App form a serialized file
+     * @return settings
+     */
     public static Settings importMainAppSetting(){
 
         Settings settings = null;
@@ -19,7 +24,9 @@ public class FileManipulator {
 
         return settings;
     }
-
+    /**
+     * Method to export the setting of the main App to a serialized file
+     */
     public static void exportMainAppSetting(Settings settings){
 
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(
@@ -32,6 +39,10 @@ public class FileManipulator {
         }
 
     }
+
+    /**
+     * Method to export the compagny's data into a serialized file
+     */
 
     public static void exportCompany(Company company){
 
@@ -46,6 +57,10 @@ public class FileManipulator {
             e.printStackTrace();
         }
     }
+    /**
+     * Method to import the compagny's data from a serialized file
+     * @return  company
+     */
 
     public static Company importCompany(){
 
@@ -74,3 +89,6 @@ public class FileManipulator {
     }
 
 }
+
+
+
