@@ -283,6 +283,8 @@ public class ScorePanel extends JPanel {
                     }
 
                     employeeName.setText(selectedEmployee.getNameEmployee() + " " + selectedEmployee.getSurnameEmployee());
+                    houseDiff.setText(""+selectedEmployee.getStockHoure());
+                    employeeName.setText(selectedEmployee.getNameEmployee() +" "+ selectedEmployee.getSurnameEmployee());
                     departmentName.setText(selectedEmployee.getDepartment().getNameDepartment());
                     lastSeen.setText(heures + ":" + minutes);
                 }

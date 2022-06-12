@@ -11,21 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        /*Company d = new Company();
-        d.setNameCompany("Stark Industries");
-        Department de = new Department("Informatique");
-        de.getListEmployee().add(new Employee("Jean","Mi",de));
-        de.getListEmployee().add(new Employee("Jean","M2",de));
-        d.getListDepartment().add(de);
-
-        FileManipulator.exportCompany(d);*/
-
-
-        /*Setting s = new Setting("localhost", 25565);
-        SettingsCheck sPointeuse = new SettingsCheck("localhost", 25565);
-
-        FileManipulator.exportPointeuseSetting(s);
-        FileManipulatorCheck.exportSetting(sPointeuse);*/
+        createCompany();
 
         try
         {
@@ -37,6 +23,31 @@ public class Main {
 
         new Thread(() -> new Window()).start();
         new Thread(() -> new MainWindow()).start();
+
+    }
+
+    public static void createCompany(){
+
+        Company d = new Company();
+        d.setNameCompany("Stark Industries");
+
+        Department depInformatique = new Department("Informatique");
+        depInformatique.getListEmployee().add(new Employee("Ali","Gator",depInformatique));
+        depInformatique.getListEmployee().add(new Employee("Clément","Tine",depInformatique));
+
+        Department depAdministration = new Department("Administration");
+        depAdministration.getListEmployee().add(new Employee("Jean","Eymar",depAdministration));
+        depAdministration.getListEmployee().add(new Employee("Jean","Tanrien",depAdministration));
+
+        Department depUsine = new Department("Usine");
+        depUsine.getListEmployee().add(new Employee("Élie","Coptère",depUsine));
+        depUsine.getListEmployee().add(new Employee("Marc","Hassin",depUsine));
+
+        d.getListDepartment().add(depInformatique);
+        d.getListDepartment().add(depAdministration);
+        d.getListDepartment().add(depUsine);
+
+        FileManipulator.exportCompany(d);
 
     }
 }

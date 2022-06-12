@@ -41,13 +41,13 @@ public class SettingPanel extends JPanel {
         panelInfo.setLayout(groupLayout);
 
         portLabel = new JLabel("Port : ");
-        portLabel.setForeground(Color.WHITE);
+        portLabel.setForeground(Color.BLACK);
 
         portTextfield = new JTextField();
         portTextfield.setText(""+settings.getPort());
 
         adressLabel = new JLabel("Adress : ");
-        adressLabel.setForeground(Color.WHITE);
+        adressLabel.setForeground(Color.BLACK);
 
         adressTextfield = new JTextField();
         adressTextfield.setText(settings.getIp());
@@ -135,7 +135,7 @@ public class SettingPanel extends JPanel {
                         .addComponent(descriptionError))
         );
 
-        panelDroite.setPreferredSize(new Dimension(300,400));
+        panelDroite.setPreferredSize(new Dimension(310,400));
         panelGauche.setBorder(BorderFactory.createEmptyBorder(5,5 ,5 , 10));
         add(panelGauche, BorderLayout.CENTER);
         add(panelDroite, BorderLayout.EAST);
