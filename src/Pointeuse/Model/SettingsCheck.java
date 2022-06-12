@@ -1,7 +1,9 @@
 package Pointeuse.Model;
 
 import java.io.Serializable;
-
+/**
+ *Class to store the ip/port of the main application
+ */
 public class SettingsCheck implements Serializable {
 
     private String ipMainApplication;
