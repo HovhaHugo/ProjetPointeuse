@@ -70,21 +70,21 @@ public class Score implements Serializable {
         if(type == Type.IN){
             //If the hourStart > hourScore
             if(hoursScore.minutesBetween(hourStart) > 0){
-                employee.setStockHoure(employee.getStockHoure() + hoursScore.minutesBetween(hourStart)/60);
+                employee.setStockHoure(employee.getStockHoure() + hoursScore.minutesBetween(hourStart));
             }
             else{ //If the hourScore > hourStart
-                employee.setStockHoure(employee.getStockHoure() - hourStart.minutesBetween(hoursScore)/60);
+                employee.setStockHoure(employee.getStockHoure() - hourStart.minutesBetween(hoursScore));
             }
         }
         else{
             if(type == Type.OUT){
                 //If the employee go out before is planning, we remove some hours
                 if(hoursScore.minutesBetween(hourEnd) > 0){
-                    employee.setStockHoure(employee.getStockHoure() - hoursScore.minutesBetween(hourEnd)/60);
+                    employee.setStockHoure(employee.getStockHoure() - hoursScore.minutesBetween(hourEnd));
                 }
                 //If the employee go out after is planning, we add some hours
                 else{
-                    employee.setStockHoure(employee.getStockHoure() + hourEnd.minutesBetween(hoursScore)/60);
+                    employee.setStockHoure(employee.getStockHoure() + hourEnd.minutesBetween(hoursScore));
                 }
             }
         }

@@ -37,7 +37,7 @@ public class EmployeePanel extends JPanel {
     JLabel nameLabel = new JLabel("Name:");
     JLabel firstnameLabel = new JLabel("Firstname:");
     JLabel departmentLabel = new JLabel("Department:");
-    JLabel houseDiffLabel = new JLabel("Hours difference:");
+    JLabel houseDiffLabel = new JLabel("Minutes difference:");
     JLabel lastSeenLabel = new JLabel("LastSeen:");
 
     JTextField employeeNameTextfield;
