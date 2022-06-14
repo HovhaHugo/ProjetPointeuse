@@ -45,7 +45,6 @@ public class ScoreShort implements Serializable {
         return this.hours;
     }
 
-
     public int getEmployeeId() {
         return employee.getId();
     }
